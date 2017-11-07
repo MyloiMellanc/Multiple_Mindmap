@@ -14,6 +14,12 @@
 		BFB150041FB1F049008D0BCE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BFB150021FB1F049008D0BCE /* Main.storyboard */; };
 		BFB150101FB1F04A008D0BCE /* PensivTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB1500F1FB1F04A008D0BCE /* PensivTests.swift */; };
 		BFB1501B1FB1F04A008D0BCE /* PensivUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB1501A1FB1F04A008D0BCE /* PensivUITests.swift */; };
+		BFB150291FB1F569008D0BCE /* PNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB150281FB1F569008D0BCE /* PNode.swift */; };
+		BFB1502B1FB1F574008D0BCE /* PLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB1502A1FB1F574008D0BCE /* PLine.swift */; };
+		BFB1502D1FB1F57C008D0BCE /* PAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB1502C1FB1F57C008D0BCE /* PAction.swift */; };
+		BFB1502F1FB1F58B008D0BCE /* PTouchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB1502E1FB1F58B008D0BCE /* PTouchManager.swift */; };
+		BFB150311FB1F593008D0BCE /* PSideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB150301FB1F593008D0BCE /* PSideMenu.swift */; };
+		BFB150331FB1F68F008D0BCE /* PGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB150321FB1F68F008D0BCE /* PGroup.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +54,12 @@
 		BFB150161FB1F04A008D0BCE /* PensivUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PensivUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFB1501A1FB1F04A008D0BCE /* PensivUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PensivUITests.swift; sourceTree = "<group>"; };
 		BFB1501C1FB1F04A008D0BCE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BFB150281FB1F569008D0BCE /* PNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PNode.swift; sourceTree = "<group>"; };
+		BFB1502A1FB1F574008D0BCE /* PLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLine.swift; sourceTree = "<group>"; };
+		BFB1502C1FB1F57C008D0BCE /* PAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PAction.swift; sourceTree = "<group>"; };
+		BFB1502E1FB1F58B008D0BCE /* PTouchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PTouchManager.swift; sourceTree = "<group>"; };
+		BFB150301FB1F593008D0BCE /* PSideMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSideMenu.swift; sourceTree = "<group>"; };
+		BFB150321FB1F68F008D0BCE /* PGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PGroup.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +112,12 @@
 			children = (
 				BFB14FF91FB1F049008D0BCE /* AppDelegate.swift */,
 				BFB14FFB1FB1F049008D0BCE /* ViewController.swift */,
+				BFB150281FB1F569008D0BCE /* PNode.swift */,
+				BFB150321FB1F68F008D0BCE /* PGroup.swift */,
+				BFB1502A1FB1F574008D0BCE /* PLine.swift */,
+				BFB1502C1FB1F57C008D0BCE /* PAction.swift */,
+				BFB1502E1FB1F58B008D0BCE /* PTouchManager.swift */,
+				BFB150301FB1F593008D0BCE /* PSideMenu.swift */,
 				BFB150001FB1F049008D0BCE /* Assets.xcassets */,
 				BFB150021FB1F049008D0BCE /* Main.storyboard */,
 				BFB150051FB1F049008D0BCE /* Info.plist */,
@@ -260,8 +278,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFB150331FB1F68F008D0BCE /* PGroup.swift in Sources */,
+				BFB150291FB1F569008D0BCE /* PNode.swift in Sources */,
+				BFB1502B1FB1F574008D0BCE /* PLine.swift in Sources */,
+				BFB1502D1FB1F57C008D0BCE /* PAction.swift in Sources */,
 				BFB14FFC1FB1F049008D0BCE /* ViewController.swift in Sources */,
+				BFB150311FB1F593008D0BCE /* PSideMenu.swift in Sources */,
 				BFB14FFA1FB1F049008D0BCE /* AppDelegate.swift in Sources */,
+				BFB1502F1FB1F58B008D0BCE /* PTouchManager.swift in Sources */,
 				BFB14FFF1FB1F049008D0BCE /* Pensiv.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
