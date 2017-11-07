@@ -1,0 +1,565 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		BFB14FFA1FB1F049008D0BCE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB14FF91FB1F049008D0BCE /* AppDelegate.swift */; };
+		BFB14FFC1FB1F049008D0BCE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB14FFB1FB1F049008D0BCE /* ViewController.swift */; };
+		BFB14FFF1FB1F049008D0BCE /* Pensiv.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BFB14FFD1FB1F049008D0BCE /* Pensiv.xcdatamodeld */; };
+		BFB150011FB1F049008D0BCE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BFB150001FB1F049008D0BCE /* Assets.xcassets */; };
+		BFB150041FB1F049008D0BCE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BFB150021FB1F049008D0BCE /* Main.storyboard */; };
+		BFB150101FB1F04A008D0BCE /* PensivTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB1500F1FB1F04A008D0BCE /* PensivTests.swift */; };
+		BFB1501B1FB1F04A008D0BCE /* PensivUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB1501A1FB1F04A008D0BCE /* PensivUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		BFB1500C1FB1F04A008D0BCE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFB14FEE1FB1F049008D0BCE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BFB14FF51FB1F049008D0BCE;
+			remoteInfo = Pensiv;
+		};
+		BFB150171FB1F04A008D0BCE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFB14FEE1FB1F049008D0BCE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BFB14FF51FB1F049008D0BCE;
+			remoteInfo = Pensiv;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		BFB14FF61FB1F049008D0BCE /* Pensiv.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pensiv.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BFB14FF91FB1F049008D0BCE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		BFB14FFB1FB1F049008D0BCE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		BFB14FFE1FB1F049008D0BCE /* Pensiv.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Pensiv.xcdatamodel; sourceTree = "<group>"; };
+		BFB150001FB1F049008D0BCE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		BFB150031FB1F049008D0BCE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		BFB150051FB1F049008D0BCE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BFB150061FB1F049008D0BCE /* Pensiv.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Pensiv.entitlements; sourceTree = "<group>"; };
+		BFB1500B1FB1F04A008D0BCE /* PensivTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PensivTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BFB1500F1FB1F04A008D0BCE /* PensivTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PensivTests.swift; sourceTree = "<group>"; };
+		BFB150111FB1F04A008D0BCE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BFB150161FB1F04A008D0BCE /* PensivUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PensivUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BFB1501A1FB1F04A008D0BCE /* PensivUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PensivUITests.swift; sourceTree = "<group>"; };
+		BFB1501C1FB1F04A008D0BCE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BFB14FF31FB1F049008D0BCE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BFB150081FB1F04A008D0BCE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BFB150131FB1F04A008D0BCE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		BFB14FED1FB1F049008D0BCE = {
+			isa = PBXGroup;
+			children = (
+				BFB14FF81FB1F049008D0BCE /* Pensiv */,
+				BFB1500E1FB1F04A008D0BCE /* PensivTests */,
+				BFB150191FB1F04A008D0BCE /* PensivUITests */,
+				BFB14FF71FB1F049008D0BCE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		BFB14FF71FB1F049008D0BCE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BFB14FF61FB1F049008D0BCE /* Pensiv.app */,
+				BFB1500B1FB1F04A008D0BCE /* PensivTests.xctest */,
+				BFB150161FB1F04A008D0BCE /* PensivUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BFB14FF81FB1F049008D0BCE /* Pensiv */ = {
+			isa = PBXGroup;
+			children = (
+				BFB14FF91FB1F049008D0BCE /* AppDelegate.swift */,
+				BFB14FFB1FB1F049008D0BCE /* ViewController.swift */,
+				BFB150001FB1F049008D0BCE /* Assets.xcassets */,
+				BFB150021FB1F049008D0BCE /* Main.storyboard */,
+				BFB150051FB1F049008D0BCE /* Info.plist */,
+				BFB150061FB1F049008D0BCE /* Pensiv.entitlements */,
+				BFB14FFD1FB1F049008D0BCE /* Pensiv.xcdatamodeld */,
+			);
+			path = Pensiv;
+			sourceTree = "<group>";
+		};
+		BFB1500E1FB1F04A008D0BCE /* PensivTests */ = {
+			isa = PBXGroup;
+			children = (
+				BFB1500F1FB1F04A008D0BCE /* PensivTests.swift */,
+				BFB150111FB1F04A008D0BCE /* Info.plist */,
+			);
+			path = PensivTests;
+			sourceTree = "<group>";
+		};
+		BFB150191FB1F04A008D0BCE /* PensivUITests */ = {
+			isa = PBXGroup;
+			children = (
+				BFB1501A1FB1F04A008D0BCE /* PensivUITests.swift */,
+				BFB1501C1FB1F04A008D0BCE /* Info.plist */,
+			);
+			path = PensivUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		BFB14FF51FB1F049008D0BCE /* Pensiv */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BFB1501F1FB1F04A008D0BCE /* Build configuration list for PBXNativeTarget "Pensiv" */;
+			buildPhases = (
+				BFB14FF21FB1F049008D0BCE /* Sources */,
+				BFB14FF31FB1F049008D0BCE /* Frameworks */,
+				BFB14FF41FB1F049008D0BCE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Pensiv;
+			productName = Pensiv;
+			productReference = BFB14FF61FB1F049008D0BCE /* Pensiv.app */;
+			productType = "com.apple.product-type.application";
+		};
+		BFB1500A1FB1F04A008D0BCE /* PensivTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BFB150221FB1F04A008D0BCE /* Build configuration list for PBXNativeTarget "PensivTests" */;
+			buildPhases = (
+				BFB150071FB1F04A008D0BCE /* Sources */,
+				BFB150081FB1F04A008D0BCE /* Frameworks */,
+				BFB150091FB1F04A008D0BCE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BFB1500D1FB1F04A008D0BCE /* PBXTargetDependency */,
+			);
+			name = PensivTests;
+			productName = PensivTests;
+			productReference = BFB1500B1FB1F04A008D0BCE /* PensivTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		BFB150151FB1F04A008D0BCE /* PensivUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BFB150251FB1F04A008D0BCE /* Build configuration list for PBXNativeTarget "PensivUITests" */;
+			buildPhases = (
+				BFB150121FB1F04A008D0BCE /* Sources */,
+				BFB150131FB1F04A008D0BCE /* Frameworks */,
+				BFB150141FB1F04A008D0BCE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BFB150181FB1F04A008D0BCE /* PBXTargetDependency */,
+			);
+			name = PensivUITests;
+			productName = PensivUITests;
+			productReference = BFB150161FB1F04A008D0BCE /* PensivUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BFB14FEE1FB1F049008D0BCE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0910;
+				LastUpgradeCheck = 0910;
+				ORGANIZATIONNAME = MyloiMellanc;
+				TargetAttributes = {
+					BFB14FF51FB1F049008D0BCE = {
+						CreatedOnToolsVersion = 9.1;
+						ProvisioningStyle = Automatic;
+					};
+					BFB1500A1FB1F04A008D0BCE = {
+						CreatedOnToolsVersion = 9.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = BFB14FF51FB1F049008D0BCE;
+					};
+					BFB150151FB1F04A008D0BCE = {
+						CreatedOnToolsVersion = 9.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = BFB14FF51FB1F049008D0BCE;
+					};
+				};
+			};
+			buildConfigurationList = BFB14FF11FB1F049008D0BCE /* Build configuration list for PBXProject "Pensiv" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = BFB14FED1FB1F049008D0BCE;
+			productRefGroup = BFB14FF71FB1F049008D0BCE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BFB14FF51FB1F049008D0BCE /* Pensiv */,
+				BFB1500A1FB1F04A008D0BCE /* PensivTests */,
+				BFB150151FB1F04A008D0BCE /* PensivUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BFB14FF41FB1F049008D0BCE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BFB150011FB1F049008D0BCE /* Assets.xcassets in Resources */,
+				BFB150041FB1F049008D0BCE /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BFB150091FB1F04A008D0BCE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BFB150141FB1F04A008D0BCE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BFB14FF21FB1F049008D0BCE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BFB14FFC1FB1F049008D0BCE /* ViewController.swift in Sources */,
+				BFB14FFA1FB1F049008D0BCE /* AppDelegate.swift in Sources */,
+				BFB14FFF1FB1F049008D0BCE /* Pensiv.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BFB150071FB1F04A008D0BCE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BFB150101FB1F04A008D0BCE /* PensivTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BFB150121FB1F04A008D0BCE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BFB1501B1FB1F04A008D0BCE /* PensivUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		BFB1500D1FB1F04A008D0BCE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BFB14FF51FB1F049008D0BCE /* Pensiv */;
+			targetProxy = BFB1500C1FB1F04A008D0BCE /* PBXContainerItemProxy */;
+		};
+		BFB150181FB1F04A008D0BCE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BFB14FF51FB1F049008D0BCE /* Pensiv */;
+			targetProxy = BFB150171FB1F04A008D0BCE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		BFB150021FB1F049008D0BCE /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BFB150031FB1F049008D0BCE /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		BFB1501D1FB1F04A008D0BCE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		BFB1501E1FB1F04A008D0BCE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+			};
+			name = Release;
+		};
+		BFB150201FB1F04A008D0BCE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Pensiv/Pensiv.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Pensiv/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = prototype.Pensiv;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Debug;
+		};
+		BFB150211FB1F04A008D0BCE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Pensiv/Pensiv.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Pensiv/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = prototype.Pensiv;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Release;
+		};
+		BFB150231FB1F04A008D0BCE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = PensivTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = prototype.PensivTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Pensiv.app/Contents/MacOS/Pensiv";
+			};
+			name = Debug;
+		};
+		BFB150241FB1F04A008D0BCE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = PensivTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = prototype.PensivTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Pensiv.app/Contents/MacOS/Pensiv";
+			};
+			name = Release;
+		};
+		BFB150261FB1F04A008D0BCE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = PensivUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = prototype.PensivUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TEST_TARGET_NAME = Pensiv;
+			};
+			name = Debug;
+		};
+		BFB150271FB1F04A008D0BCE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = PensivUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = prototype.PensivUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TEST_TARGET_NAME = Pensiv;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BFB14FF11FB1F049008D0BCE /* Build configuration list for PBXProject "Pensiv" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BFB1501D1FB1F04A008D0BCE /* Debug */,
+				BFB1501E1FB1F04A008D0BCE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BFB1501F1FB1F04A008D0BCE /* Build configuration list for PBXNativeTarget "Pensiv" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BFB150201FB1F04A008D0BCE /* Debug */,
+				BFB150211FB1F04A008D0BCE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BFB150221FB1F04A008D0BCE /* Build configuration list for PBXNativeTarget "PensivTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BFB150231FB1F04A008D0BCE /* Debug */,
+				BFB150241FB1F04A008D0BCE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BFB150251FB1F04A008D0BCE /* Build configuration list for PBXNativeTarget "PensivUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BFB150261FB1F04A008D0BCE /* Debug */,
+				BFB150271FB1F04A008D0BCE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		BFB14FFD1FB1F049008D0BCE /* Pensiv.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				BFB14FFE1FB1F049008D0BCE /* Pensiv.xcdatamodel */,
+			);
+			currentVersion = BFB14FFE1FB1F049008D0BCE /* Pensiv.xcdatamodel */;
+			path = Pensiv.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = BFB14FEE1FB1F049008D0BCE /* Project object */;
+}
