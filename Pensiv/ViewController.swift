@@ -6,47 +6,80 @@
 //  Copyright © 2017년 MyloiMellanc. All rights reserved.
 //
 
+import Foundation
 import Cocoa
+import CoreGraphics
 
-class ViewController: NSViewController {
-    @IBOutlet var main: NSView!
+
+/*
+ *  마인드 맵 데이터를 관리하는 클래스, 뷰 교체 및 선정 클래스, 터치 컨트롤러 클래스
+ *  해당 클래스들 3가지를 통합적으로 관리하는 클래스
+ *
+ *
+ *
+ *
+ */
+
+
+
+
+
+class ViewController: NSViewController
+{
     
-    var table = Set<NSTextField>()
+    @IBOutlet var scrollview: PCustomView!
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        main.layer?.backgroundColor = CGColor.white
-    
+        
+        //이 시점에서 윈도우 객체는 초기화되지 않았다...? nil값 반환함
         
         let x = NSScreen.main?.frame
-        NSLog("Screen resolution is (\(x?.width), \(x?.height))")
-        /*
-        let point = CGPoint(x : 250.0, y : 50.0)
-        let size = CGSize(width : 800.0, height : 600.0)
-        let origin = CGRect(origin: point, size: size)
+        NSLog("Screen resolution is (\(x!.width), \(x!.height))")
         
-        self.view.window?.setFrame(origin, display: true)*/
-        // Do any additional setup after loading the view.
+        scrollview.wantsLayer = true
+        scrollview.becomeFirstResponder()
+        scrollview.updateTrackingAreas()
     }
+    
+    override func viewWillAppear() {
+        //scrollview.documentView?.layer?.backgroundColor = CGColor.black
+    }
+    
+    
 
+    
     override var representedObject: Any? {
         didSet {
         // Update the view, if already loaded.
         }
     }
-
+    
+    
+    override func mouseMoved(with event: NSEvent) {
+        //scrollview.mouseMoved(with: event)
+        
+    }
+    
+    
+    
     override func mouseDown(with event: NSEvent) {
-        let lab = NSTextField(string: "demo label")
+        //let position = event.locationInWindow
         
-        let position = event.locationInWindow
-        lab.frame.origin = position
+        //let tf = NSTextField(string: "demo")
         
-        //self.view.addSubview(lab)     -- Same
-        main.addSubview(lab)
+        //let origin = CGRect(x: position.x, y: position.y, width: 100, height: 100)
         
-        table.insert(lab)
+        //let lab = NSTextView(frame: origin)
+        //lab.string = "demo"
         
+        //scrollview.addSubview(lab)
+        
+        //NSLog("\(event.clickCount)")
+        
+        //scrollview.mouseDown(with: event)
     }
 
 }

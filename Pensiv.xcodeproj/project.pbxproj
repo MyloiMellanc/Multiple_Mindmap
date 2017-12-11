@@ -20,6 +20,7 @@
 		BFB1502F1FB1F58B008D0BCE /* PTouchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB1502E1FB1F58B008D0BCE /* PTouchManager.swift */; };
 		BFB150311FB1F593008D0BCE /* PSideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB150301FB1F593008D0BCE /* PSideMenu.swift */; };
 		BFB150331FB1F68F008D0BCE /* PGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB150321FB1F68F008D0BCE /* PGroup.swift */; };
+		BFFF40E21FC09CCD00A83D59 /* PCustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFF40E11FC09CCD00A83D59 /* PCustomView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,7 @@
 		BFB1502E1FB1F58B008D0BCE /* PTouchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PTouchManager.swift; sourceTree = "<group>"; };
 		BFB150301FB1F593008D0BCE /* PSideMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSideMenu.swift; sourceTree = "<group>"; };
 		BFB150321FB1F68F008D0BCE /* PGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PGroup.swift; sourceTree = "<group>"; };
+		BFFF40E11FC09CCD00A83D59 /* PCustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCustomView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 			children = (
 				BFB14FF91FB1F049008D0BCE /* AppDelegate.swift */,
 				BFB14FFB1FB1F049008D0BCE /* ViewController.swift */,
+				BFFF40E11FC09CCD00A83D59 /* PCustomView.swift */,
 				BFB150281FB1F569008D0BCE /* PNode.swift */,
 				BFB150321FB1F68F008D0BCE /* PGroup.swift */,
 				BFB1502A1FB1F574008D0BCE /* PLine.swift */,
@@ -280,6 +283,7 @@
 			files = (
 				BFB150331FB1F68F008D0BCE /* PGroup.swift in Sources */,
 				BFB150291FB1F569008D0BCE /* PNode.swift in Sources */,
+				BFFF40E21FC09CCD00A83D59 /* PCustomView.swift in Sources */,
 				BFB1502B1FB1F574008D0BCE /* PLine.swift in Sources */,
 				BFB1502D1FB1F57C008D0BCE /* PAction.swift in Sources */,
 				BFB14FFC1FB1F049008D0BCE /* ViewController.swift in Sources */,

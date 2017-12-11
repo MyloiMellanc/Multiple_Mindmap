@@ -7,3 +7,10 @@
 //
 
 import Foundation
+import Cocoa
+
+
+class pLine
+{
+    
+}
