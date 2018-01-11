@@ -33,6 +33,7 @@ class PCustomView : NSScrollView
         //print(event.keyCode)
         
     }
+    
     /*
     override func updateTrackingAreas() {
         if (trackingarea != nil)
@@ -71,6 +72,40 @@ class PCustomView : NSScrollView
      }
     */
     
+    var selectednode : PNode?
+    
+    func setSelectedNode(target node : PNode)
+    {
+        if selectednode == nil
+        {
+            selectednode = node
+        }
+    }
+    
+    func resolveSelectedNode()
+    {
+        selectednode = nil
+    }
+
+    
+    func getSelectedNode() -> PNode?
+    {
+        return selectednode
+    }
+    
+    func isSelectedNode() -> Bool
+    {
+        return selectednode != nil ? true : false
+    }
+    
+    func pushNode(target node : PNode)
+    {
+        node.initNodeData()
+        nodetable.append(node)
+        self.documentView?.addSubview(node)
+        node.setMotherView(target: self)
+    }
+    
     override func mouseDown(with event: NSEvent) {
         //마우스가 정확히 같은 곳을 클릭했을 때, 이벤트의 클릭 카운트가 증가한다.
         
@@ -86,15 +121,10 @@ class PCustomView : NSScrollView
             let origin = CGRect(x: originposition.x, y: originposition.y, width: 100, height: 100)
             let pnode = PNode(frame: origin)
             
-            //pnode.target_view = self
-            
             pnode.frame.origin.x -= pnode.frame.width / 2
             pnode.frame.origin.y -= pnode.frame.height / 2
             
-            nodetable.append(pnode)
-            
-            self.documentView?.addSubview(pnode)
-            
+            pushNode(target: pnode)
         }
         
     }

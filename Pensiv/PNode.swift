@@ -19,13 +19,55 @@ class PNode : NSButton
     private var istouched = false
     private var ismoved = false
     
-    private var isactivated = false
+    private var motherview : PCustomView?
     
-    func initTextField()
+    
+    private var _isactivated = false
+    private var isactivated : Bool
+    {
+        get {
+            return _isactivated
+        }
+        set {
+            _isactivated = newValue
+            
+            if newValue == true {
+                
+                motherview?.setSelectedNode(target: self)
+            }
+            else if newValue == false {
+                if motherview?.getSelectedNode() == self
+                {
+                    motherview?.resolveSelectedNode()
+                }
+            }
+        }
+    }
+    /*
+    override init(frame : NSRect)
+    {
+        super.init(frame : frame)
+        isactivated = false
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    */
+    
+    func setMotherView(target view : PCustomView)
+    {
+        motherview = view
+    }
+    
+    func initNodeData()
     {
         text = NSTextField(frame: self.frame)
         text?.backgroundColor = NSColor.black
         self.addSubview(text!)
+        //self.superview 가 종속된 뷰를 가리킴 - 여기서는 PCustomView
+        
+        
     }
     
     //var target_view : PCustomView?
@@ -54,6 +96,7 @@ class PNode : NSButton
     
     var trackingarea : NSTrackingArea?
     */
+    
     
     override func mouseDown(with event: NSEvent) {
         istouched = true

@@ -35,6 +35,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             NSLog("Not")
         }
         
+        
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
