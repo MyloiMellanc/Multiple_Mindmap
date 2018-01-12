@@ -8,6 +8,7 @@
 
 import Foundation
 import Cocoa
+import CoreData
 
 class PCustomView : NSScrollView
 {
@@ -15,6 +16,16 @@ class PCustomView : NSScrollView
     
    // var trackingarea : NSTrackingArea?
     
+    
+    var dataManager : PDataManager?
+    
+    func initDataBase()
+    {
+        if let dele = NSApplication.shared.delegate as? AppDelegate
+        {
+            dataManager = PDataManager(mother : dele)
+        }
+    }
     
     /*
     override var acceptsFirstResponder: Bool
@@ -125,6 +136,8 @@ class PCustomView : NSScrollView
             pnode.frame.origin.y -= pnode.frame.height / 2
             
             pushNode(target: pnode)
+            
+            dataManager?.saveData(str: "ssss")
         }
         
     }

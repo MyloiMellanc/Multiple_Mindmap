@@ -9,7 +9,7 @@
 import Foundation
 import Cocoa
 import CoreGraphics
-
+import CoreData
 
 /*
  *  마인드 맵 데이터를 관리하는 클래스, 뷰 교체 및 선정 클래스, 터치 컨트롤러 클래스
@@ -30,7 +30,6 @@ class ViewController: NSViewController
     @IBOutlet var scrollview: PCustomView!
     
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,6 +41,7 @@ class ViewController: NSViewController
         scrollview.wantsLayer = true
         scrollview.becomeFirstResponder()
         scrollview.updateTrackingAreas()
+        scrollview.initDataBase()
     }
     
     override func viewWillAppear() {
