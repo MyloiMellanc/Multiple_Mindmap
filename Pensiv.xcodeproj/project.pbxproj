@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6D96A6D38CBD01936B15F1AA /* Pods_PensivUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DB0A5E8AD6C890F53B2F75F /* Pods_PensivUITests.framework */; };
+		75BFB02A3DD147ADA5D536A4 /* Pods_Pensiv.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1659FEF55C078500372B467C /* Pods_Pensiv.framework */; };
 		BFB14FFA1FB1F049008D0BCE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB14FF91FB1F049008D0BCE /* AppDelegate.swift */; };
 		BFB14FFC1FB1F049008D0BCE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB14FFB1FB1F049008D0BCE /* ViewController.swift */; };
 		BFB14FFF1FB1F049008D0BCE /* Pensiv.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BFB14FFD1FB1F049008D0BCE /* Pensiv.xcdatamodeld */; };
@@ -20,7 +22,11 @@
 		BFB1502F1FB1F58B008D0BCE /* PTouchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB1502E1FB1F58B008D0BCE /* PTouchManager.swift */; };
 		BFB150311FB1F593008D0BCE /* PSideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB150301FB1F593008D0BCE /* PSideMenu.swift */; };
 		BFB150331FB1F68F008D0BCE /* PGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB150321FB1F68F008D0BCE /* PGroup.swift */; };
+		BFD2B8092008F8920043509D /* PNodeEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2B8072008F8920043509D /* PNodeEntity+CoreDataClass.swift */; };
+		BFD2B80A2008F8920043509D /* PNodeEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2B8082008F8920043509D /* PNodeEntity+CoreDataProperties.swift */; };
+		BFD2B80C2008F9230043509D /* PDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2B80B2008F9230043509D /* PDataManager.swift */; };
 		BFFF40E21FC09CCD00A83D59 /* PCustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFF40E11FC09CCD00A83D59 /* PCustomView.swift */; };
+		D8C4004C1EC18549B362C055 /* Pods_PensivTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3101B677C23271C50C1C900 /* Pods_PensivTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +47,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0F925F66C094AA95B7625064 /* Pods-Pensiv.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pensiv.release.xcconfig"; path = "Pods/Target Support Files/Pods-Pensiv/Pods-Pensiv.release.xcconfig"; sourceTree = "<group>"; };
+		1659FEF55C078500372B467C /* Pods_Pensiv.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Pensiv.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2DB0A5E8AD6C890F53B2F75F /* Pods_PensivUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PensivUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F91D93FBF7FF743D86B7FC0 /* Pods-PensivTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PensivTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PensivTests/Pods-PensivTests.debug.xcconfig"; sourceTree = "<group>"; };
+		B3101B677C23271C50C1C900 /* Pods_PensivTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PensivTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFB14FF61FB1F049008D0BCE /* Pensiv.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pensiv.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFB14FF91FB1F049008D0BCE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BFB14FFB1FB1F049008D0BCE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -61,7 +72,14 @@
 		BFB1502E1FB1F58B008D0BCE /* PTouchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PTouchManager.swift; sourceTree = "<group>"; };
 		BFB150301FB1F593008D0BCE /* PSideMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSideMenu.swift; sourceTree = "<group>"; };
 		BFB150321FB1F68F008D0BCE /* PGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PGroup.swift; sourceTree = "<group>"; };
+		BFD2B8072008F8920043509D /* PNodeEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PNodeEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		BFD2B8082008F8920043509D /* PNodeEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PNodeEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		BFD2B80B2008F9230043509D /* PDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDataManager.swift; sourceTree = "<group>"; };
 		BFFF40E11FC09CCD00A83D59 /* PCustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCustomView.swift; sourceTree = "<group>"; };
+		D6C04BC82B1CB0440B8928BF /* Pods-Pensiv.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pensiv.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Pensiv/Pods-Pensiv.debug.xcconfig"; sourceTree = "<group>"; };
+		E1B64440433443826258EA44 /* Pods-PensivTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PensivTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PensivTests/Pods-PensivTests.release.xcconfig"; sourceTree = "<group>"; };
+		EBB027BC88739A6B87204E8E /* Pods-PensivUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PensivUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PensivUITests/Pods-PensivUITests.release.xcconfig"; sourceTree = "<group>"; };
+		F4AD94C9AE9C8BDEF1BF1F91 /* Pods-PensivUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PensivUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PensivUITests/Pods-PensivUITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +87,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75BFB02A3DD147ADA5D536A4 /* Pods_Pensiv.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,6 +95,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8C4004C1EC18549B362C055 /* Pods_PensivTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,19 +103,47 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6D96A6D38CBD01936B15F1AA /* Pods_PensivUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0FB9AA02CD389144C4A499B0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1659FEF55C078500372B467C /* Pods_Pensiv.framework */,
+				B3101B677C23271C50C1C900 /* Pods_PensivTests.framework */,
+				2DB0A5E8AD6C890F53B2F75F /* Pods_PensivUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		90BB9F39B8DD3C425C04BFB5 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D6C04BC82B1CB0440B8928BF /* Pods-Pensiv.debug.xcconfig */,
+				0F925F66C094AA95B7625064 /* Pods-Pensiv.release.xcconfig */,
+				4F91D93FBF7FF743D86B7FC0 /* Pods-PensivTests.debug.xcconfig */,
+				E1B64440433443826258EA44 /* Pods-PensivTests.release.xcconfig */,
+				F4AD94C9AE9C8BDEF1BF1F91 /* Pods-PensivUITests.debug.xcconfig */,
+				EBB027BC88739A6B87204E8E /* Pods-PensivUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		BFB14FED1FB1F049008D0BCE = {
 			isa = PBXGroup;
 			children = (
+				BFD2B8072008F8920043509D /* PNodeEntity+CoreDataClass.swift */,
+				BFD2B8082008F8920043509D /* PNodeEntity+CoreDataProperties.swift */,
 				BFB14FF81FB1F049008D0BCE /* Pensiv */,
 				BFB1500E1FB1F04A008D0BCE /* PensivTests */,
 				BFB150191FB1F04A008D0BCE /* PensivUITests */,
 				BFB14FF71FB1F049008D0BCE /* Products */,
+				90BB9F39B8DD3C425C04BFB5 /* Pods */,
+				0FB9AA02CD389144C4A499B0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -115,6 +163,7 @@
 				BFB14FF91FB1F049008D0BCE /* AppDelegate.swift */,
 				BFB14FFB1FB1F049008D0BCE /* ViewController.swift */,
 				BFFF40E11FC09CCD00A83D59 /* PCustomView.swift */,
+				BFD2B80B2008F9230043509D /* PDataManager.swift */,
 				BFB150281FB1F569008D0BCE /* PNode.swift */,
 				BFB150321FB1F68F008D0BCE /* PGroup.swift */,
 				BFB1502A1FB1F574008D0BCE /* PLine.swift */,
@@ -155,9 +204,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BFB1501F1FB1F04A008D0BCE /* Build configuration list for PBXNativeTarget "Pensiv" */;
 			buildPhases = (
+				FE8104F27436B882AF4A0551 /* [CP] Check Pods Manifest.lock */,
 				BFB14FF21FB1F049008D0BCE /* Sources */,
 				BFB14FF31FB1F049008D0BCE /* Frameworks */,
 				BFB14FF41FB1F049008D0BCE /* Resources */,
+				FE1FA593C00194CD276F2A35 /* [CP] Embed Pods Frameworks */,
+				1837B37C09C817222A00615F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -172,9 +224,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BFB150221FB1F04A008D0BCE /* Build configuration list for PBXNativeTarget "PensivTests" */;
 			buildPhases = (
+				1DBBF3534E6666F24B34B3C6 /* [CP] Check Pods Manifest.lock */,
 				BFB150071FB1F04A008D0BCE /* Sources */,
 				BFB150081FB1F04A008D0BCE /* Frameworks */,
 				BFB150091FB1F04A008D0BCE /* Resources */,
+				6699088BEA10B379302B6033 /* [CP] Embed Pods Frameworks */,
+				3BD5FF1CEC8D1D62E782FEB3 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -190,9 +245,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BFB150251FB1F04A008D0BCE /* Build configuration list for PBXNativeTarget "PensivUITests" */;
 			buildPhases = (
+				382D3C70AE0BD41CF8114B97 /* [CP] Check Pods Manifest.lock */,
 				BFB150121FB1F04A008D0BCE /* Sources */,
 				BFB150131FB1F04A008D0BCE /* Frameworks */,
 				BFB150141FB1F04A008D0BCE /* Resources */,
+				BEF5C493BCB1C417D01770C1 /* [CP] Embed Pods Frameworks */,
+				9408D2067DCFAA0B45989D08 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -276,13 +334,165 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		1837B37C09C817222A00615F /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Pensiv/Pods-Pensiv-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		1DBBF3534E6666F24B34B3C6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PensivTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		382D3C70AE0BD41CF8114B97 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PensivUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3BD5FF1CEC8D1D62E782FEB3 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PensivTests/Pods-PensivTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6699088BEA10B379302B6033 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PensivTests/Pods-PensivTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9408D2067DCFAA0B45989D08 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PensivUITests/Pods-PensivUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BEF5C493BCB1C417D01770C1 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PensivUITests/Pods-PensivUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FE1FA593C00194CD276F2A35 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Pensiv/Pods-Pensiv-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Kanna/Kanna.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kanna.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Pensiv/Pods-Pensiv-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FE8104F27436B882AF4A0551 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Pensiv-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		BFB14FF21FB1F049008D0BCE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				BFB150331FB1F68F008D0BCE /* PGroup.swift in Sources */,
+				BFD2B80A2008F8920043509D /* PNodeEntity+CoreDataProperties.swift in Sources */,
 				BFB150291FB1F569008D0BCE /* PNode.swift in Sources */,
+				BFD2B8092008F8920043509D /* PNodeEntity+CoreDataClass.swift in Sources */,
 				BFFF40E21FC09CCD00A83D59 /* PCustomView.swift in Sources */,
 				BFB1502B1FB1F574008D0BCE /* PLine.swift in Sources */,
 				BFB1502D1FB1F57C008D0BCE /* PAction.swift in Sources */,
@@ -290,6 +500,7 @@
 				BFB150311FB1F593008D0BCE /* PSideMenu.swift in Sources */,
 				BFB14FFA1FB1F049008D0BCE /* AppDelegate.swift in Sources */,
 				BFB1502F1FB1F58B008D0BCE /* PTouchManager.swift in Sources */,
+				BFD2B80C2008F9230043509D /* PDataManager.swift in Sources */,
 				BFB14FFF1FB1F049008D0BCE /* Pensiv.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -445,6 +656,7 @@
 		};
 		BFB150201FB1F04A008D0BCE /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D6C04BC82B1CB0440B8928BF /* Pods-Pensiv.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Pensiv/Pensiv.entitlements;
@@ -460,6 +672,7 @@
 		};
 		BFB150211FB1F04A008D0BCE /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0F925F66C094AA95B7625064 /* Pods-Pensiv.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Pensiv/Pensiv.entitlements;
@@ -475,6 +688,7 @@
 		};
 		BFB150231FB1F04A008D0BCE /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4F91D93FBF7FF743D86B7FC0 /* Pods-PensivTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -491,6 +705,7 @@
 		};
 		BFB150241FB1F04A008D0BCE /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E1B64440433443826258EA44 /* Pods-PensivTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -507,6 +722,7 @@
 		};
 		BFB150261FB1F04A008D0BCE /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F4AD94C9AE9C8BDEF1BF1F91 /* Pods-PensivUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -522,6 +738,7 @@
 		};
 		BFB150271FB1F04A008D0BCE /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EBB027BC88739A6B87204E8E /* Pods-PensivUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
