@@ -42,6 +42,10 @@ class ViewController: NSViewController
         scrollview.becomeFirstResponder()
         scrollview.updateTrackingAreas()
         scrollview.initDataBase()
+        
+        
+        let democrawl = DemoWordCrawler()
+        democrawl.demoCrawling(search: "pdf")
     }
     
     override func viewWillAppear() {
