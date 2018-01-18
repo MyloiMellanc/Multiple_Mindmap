@@ -23,11 +23,18 @@ import CoreData
 
 
 
-
 class ViewController: NSViewController
 {
     
     @IBOutlet var scrollview: PCustomView!
+    
+    
+    @objc func demoCrawling()
+    {
+        let democrawl = DemoWordCrawler()
+        democrawl.demoCrawling(search: "pdf")
+    }
+    
     
     
     override func viewDidLoad() {
@@ -44,8 +51,9 @@ class ViewController: NSViewController
         scrollview.initDataBase()
         
         
-        let democrawl = DemoWordCrawler()
-        democrawl.demoCrawling(search: "pdf")
+        let thread = Thread(target: self, selector: Selector("demoCrawling"), object: nil)
+        thread.start()
+        
     }
     
     override func viewWillAppear() {

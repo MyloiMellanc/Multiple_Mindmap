@@ -17,6 +17,30 @@ class DemoWordCrawler
         
     }
     
+    deinit
+    {
+        
+    }
+    
+    func makeRelatedWords(search word : String) -> [String]
+    {
+        let url_base = "https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query="
+        let url_str = (url_base + word).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        let url = URL(string: url_str!)
+        let doc = try! HTML(url : url!, encoding : .utf8)
+        
+        var related_list = [String]()
+        for link_1 in doc.css("a")
+        {
+            if link_1["data-area"] != nil
+            {
+                related_list.append(link_1.content!)
+            }
+        }
+        
+        return related_list
+    }
+    
     func demoRun()
     {
         
@@ -46,25 +70,17 @@ class DemoWordCrawler
     
     func demoCrawling(search word : String)
     {
-        let url_base = "https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query="
+        let list_1 = makeRelatedWords(search: word)
         
-        let url = url_base + word
-        
-        let url_data = URL(string: url)
-        
-        let doc = try! HTML(url : url_data!, encoding : .utf8)
-        
-        print(doc.title! + "\n\n")
-        
-        
-        for link_1 in doc.css("a")
+        for words in list_1
         {
-            if link_1["data-area"] != nil
+            print(words)
+            let list_2 = makeRelatedWords(search: words)
+            for words_2 in list_2
             {
-                print(link_1.content!)
+                print(":: \(words_2)")
             }
         }
-        
     }
     
 }

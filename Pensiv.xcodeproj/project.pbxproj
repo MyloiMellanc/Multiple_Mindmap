@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		6D96A6D38CBD01936B15F1AA /* Pods_PensivUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DB0A5E8AD6C890F53B2F75F /* Pods_PensivUITests.framework */; };
 		75BFB02A3DD147ADA5D536A4 /* Pods_Pensiv.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1659FEF55C078500372B467C /* Pods_Pensiv.framework */; };
+		BF4B28322010F61200FE943B /* PCrawlingNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4B28312010F61200FE943B /* PCrawlingNode.swift */; };
 		BF907E7E200D207D002257D3 /* WordCrawlingDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF907E7D200D207D002257D3 /* WordCrawlingDemo.swift */; };
 		BFB14FFA1FB1F049008D0BCE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB14FF91FB1F049008D0BCE /* AppDelegate.swift */; };
 		BFB14FFC1FB1F049008D0BCE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB14FFB1FB1F049008D0BCE /* ViewController.swift */; };
@@ -53,6 +54,7 @@
 		2DB0A5E8AD6C890F53B2F75F /* Pods_PensivUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PensivUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F91D93FBF7FF743D86B7FC0 /* Pods-PensivTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PensivTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PensivTests/Pods-PensivTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B3101B677C23271C50C1C900 /* Pods_PensivTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PensivTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BF4B28312010F61200FE943B /* PCrawlingNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCrawlingNode.swift; sourceTree = "<group>"; };
 		BF907E7D200D207D002257D3 /* WordCrawlingDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordCrawlingDemo.swift; sourceTree = "<group>"; };
 		BFB14FF61FB1F049008D0BCE /* Pensiv.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pensiv.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFB14FF91FB1F049008D0BCE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -167,6 +169,7 @@
 				BFFF40E11FC09CCD00A83D59 /* PCustomView.swift */,
 				BFD2B80B2008F9230043509D /* PDataManager.swift */,
 				BFB150281FB1F569008D0BCE /* PNode.swift */,
+				BF4B28312010F61200FE943B /* PCrawlingNode.swift */,
 				BFB150321FB1F68F008D0BCE /* PGroup.swift */,
 				BFB1502A1FB1F574008D0BCE /* PLine.swift */,
 				BFB1502C1FB1F57C008D0BCE /* PAction.swift */,
@@ -505,6 +508,7 @@
 				BFB14FFA1FB1F049008D0BCE /* AppDelegate.swift in Sources */,
 				BFB1502F1FB1F58B008D0BCE /* PTouchManager.swift in Sources */,
 				BFD2B80C2008F9230043509D /* PDataManager.swift in Sources */,
+				BF4B28322010F61200FE943B /* PCrawlingNode.swift in Sources */,
 				BFB14FFF1FB1F049008D0BCE /* Pensiv.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

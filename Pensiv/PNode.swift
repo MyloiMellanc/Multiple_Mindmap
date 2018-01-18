@@ -14,22 +14,29 @@ import CoreGraphics
 
 class PNode : NSButton
 {
-    private var text : NSTextField?
+    private var touched = false
+    func isTouched() -> Bool
+    {
+        return touched
+    }
     
-    private var istouched = false
-    private var ismoved = false
+    private var moved = false
+    func isMoved() -> Bool
+    {
+        return moved
+    }
     
     private var motherview : PCustomView?
     
     
-    private var _isactivated = false
-    private var isactivated : Bool
+    private var _activated = false
+    private var activated : Bool
     {
         get {
-            return _isactivated
+            return _activated
         }
         set {
-            _isactivated = newValue
+            _activated = newValue
             
             if newValue == true {
                 
@@ -43,17 +50,11 @@ class PNode : NSButton
             }
         }
     }
-    /*
-    override init(frame : NSRect)
+    func isActivated() -> Bool
     {
-        super.init(frame : frame)
-        isactivated = false
+        return _activated
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    */
     
     func setMotherView(target view : PCustomView)
     {
@@ -62,9 +63,7 @@ class PNode : NSButton
     
     func initNodeData()
     {
-        text = NSTextField(frame: self.frame)
-        text?.backgroundColor = NSColor.black
-        self.addSubview(text!)
+        
         //self.superview 가 종속된 뷰를 가리킴 - 여기서는 PCustomView
         
         
@@ -99,7 +98,7 @@ class PNode : NSButton
     
     
     override func mouseDown(with event: NSEvent) {
-        istouched = true
+        touched = true
         
         self.setNeedsDisplay()
     }
@@ -108,18 +107,18 @@ class PNode : NSButton
         self.frame.origin.x += event.deltaX
         self.frame.origin.y -= event.deltaY //어째서 Y 변화량의 축이 다르지?
         
-        ismoved = true
+        moved = true
         
         self.setNeedsDisplay()
     }
     
     override func mouseUp(with event: NSEvent) {
-        istouched = false
-        if(ismoved == false)
+        touched = false
+        if(moved == false)
         {
-            isactivated = !isactivated
+            activated = !activated
         }
-        ismoved = false
+        moved = false
         
         self.setNeedsDisplay()
     }
@@ -140,10 +139,35 @@ class PNode : NSButton
     }*/
     
     override func draw(_ dirtyRect: NSRect) {
+        
+    }
+    //ID
+    //Position
+    //Scale
+    //TextSize
+    //Alpha
+    //Color
+    //Zorder
+    //
+}
+
+
+
+class PTextNode : PNode
+{
+    var text : NSTextField?
+    
+    override func initNodeData() {
+        text = NSTextField(frame: self.frame)
+        text?.backgroundColor = NSColor.black
+        self.addSubview(text!)
+    }
+    
+    override func draw(_ dirtyRect: NSRect)
+    {
         let path = NSBezierPath(ovalIn: dirtyRect)
         
-        
-        if(isactivated == true)
+        if(self.isActivated() == true)
         {
             NSColor.red.setFill()
         }
@@ -165,18 +189,37 @@ class PNode : NSButton
         p.lineWidth = 5
         p.lineCapStyle = .roundLineCapStyle
         p.stroke()
+    }
+}
+
+
+
+
+class PFunctionNode : PNode
+{
+    override func initNodeData()
+    {
+        //text = NSTextField(frame: self.frame)
+        //text?.backgroundColor = NSColor.black
+        //self.addSubview(text!)
+        //self.superview 가 종속된 뷰를 가리킴 - 여기서는 PCustomView
         
         
     }
-    //ID
-    //Position
-    //Scale
-    //TextSize
-    //Alpha
-    //Color
-    //Zorder
-    //
+    
+    override func draw(_ dirtyRect: NSRect) {
+        let path = NSBezierPath(ovalIn: dirtyRect)
+        
+        path.fill()
+        
+        NSColor.black.setFill()
+        path.stroke()
+    }
 }
+
+
+
+
 
 
 

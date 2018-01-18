@@ -130,7 +130,7 @@ class PCustomView : NSScrollView
             let originposition = CGPoint(x: position.x + framerect.x, y: position.y + framerect.y)
             
             let origin = CGRect(x: originposition.x, y: originposition.y, width: 100, height: 100)
-            let pnode = PNode(frame: origin)
+            let pnode = PTextNode(frame: origin)
             
             pnode.frame.origin.x -= pnode.frame.width / 2
             pnode.frame.origin.y -= pnode.frame.height / 2
