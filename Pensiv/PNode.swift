@@ -14,51 +14,27 @@ import CoreGraphics
 
 class PNode : NSButton
 {
-    private var touched = false
-    func isTouched() -> Bool
+    var _isTouched = false
+    var _isMoved = false
+    var _isActivated = false
+    
+    init(dd d : Int)
     {
-        return touched
+        super.init(frame: NSRect())
+        
     }
     
-    private var moved = false
-    func isMoved() -> Bool
+    required init(coder aDecoder : NSCoder)
     {
-        return moved
+        fatalError("init(coder:) has not been implemented")
     }
     
-    private var motherview : PCustomView?
     
-    
-    private var _activated = false
-    private var activated : Bool
-    {
-        get {
-            return _activated
-        }
-        set {
-            _activated = newValue
-            
-            if newValue == true {
-                
-                motherview?.setSelectedNode(target: self)
-            }
-            else if newValue == false {
-                if motherview?.getSelectedNode() == self
-                {
-                    motherview?.resolveSelectedNode()
-                }
-            }
-        }
-    }
-    func isActivated() -> Bool
-    {
-        return _activated
-    }
-    
+    private var _motherView : PCustomView?
     
     func setMotherView(target view : PCustomView)
     {
-        motherview = view
+        _motherView = view
     }
     
     func initNodeData()
@@ -69,36 +45,24 @@ class PNode : NSButton
         
     }
     
-    //var target_view : PCustomView?
-    
-    /*
-    override func mouseDown(with event: NSEvent) {
-        istouched = true
-        target_view?.touchednode = self
-        self.setNeedsDisplay()
+    func activate()
+    {
+        if _isActivated == false
+        {
+            _isActivated = true
+            
+        }
     }
     
     
-    override func mouseMoved(with event: NSEvent) {
-        //super.mouseMoved(with: event)
-        self.frame.origin.x += event.deltaX
-        self.frame.origin.y += event.deltaY
+    func deactivate()
+    {
         
-        self.setNeedsDisplay()
     }
-    
-    override func mouseUp(with event: NSEvent) {
-        istouched = false
-        target_view?.touchednode = nil
-        self.setNeedsDisplay()
-    }
-    
-    var trackingarea : NSTrackingArea?
-    */
     
     
     override func mouseDown(with event: NSEvent) {
-        touched = true
+        _isTouched = true
         
         self.setNeedsDisplay()
     }
@@ -107,22 +71,24 @@ class PNode : NSButton
         self.frame.origin.x += event.deltaX
         self.frame.origin.y -= event.deltaY //어째서 Y 변화량의 축이 다르지?
         
-        moved = true
+        _isMoved = true
         
         self.setNeedsDisplay()
     }
     
     override func mouseUp(with event: NSEvent) {
-        touched = false
-        if(moved == false)
+        _isTouched = false
+        if(_isMoved == false)
         {
-            activated = !activated
+            _isActivated = !_isActivated
         }
-        moved = false
+        _isMoved = false
         
         self.setNeedsDisplay()
     }
     
+    
+    //var trackingarea : NSTrackingArea?
     
     /*
     override func updateTrackingAreas() {
@@ -167,7 +133,7 @@ class PTextNode : PNode
     {
         let path = NSBezierPath(ovalIn: dirtyRect)
         
-        if(self.isActivated() == true)
+        if(self._isActivate == true)
         {
             NSColor.red.setFill()
         }

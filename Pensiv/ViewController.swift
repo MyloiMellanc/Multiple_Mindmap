@@ -32,7 +32,8 @@ class ViewController: NSViewController
     @objc func demoCrawling()
     {
         let democrawl = DemoWordCrawler()
-        democrawl.demoCrawling(search: "pdf")
+        //democrawl.demoCrawling(search: "hyper")
+        democrawl.demoRun()
     }
     
     
@@ -51,15 +52,14 @@ class ViewController: NSViewController
         scrollview.initDataBase()
         
         
-        let thread = Thread(target: self, selector: Selector("demoCrawling"), object: nil)
-        thread.start()
+        //let thread = Thread(target: self, selector: Selector("demoCrawling"), object: nil)
+        //thread.start()
         
     }
     
     override func viewWillAppear() {
-        //scrollview.documentView?.layer?.backgroundColor = CGColor.black
-    }
     
+    }
     
 
     

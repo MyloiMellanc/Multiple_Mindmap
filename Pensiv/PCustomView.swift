@@ -27,11 +27,8 @@ class PCustomView : NSScrollView
         }
     }
     
-    /*
-    override var acceptsFirstResponder: Bool
-    {
-        return true
-    }*/
+    
+    
     
     override func viewWillDraw() {
         self.documentView?.layer?.backgroundColor = CGColor.white
@@ -118,6 +115,10 @@ class PCustomView : NSScrollView
     }
     
     override func mouseDown(with event: NSEvent) {
+        //selected node 가 존재한다면, 그냥 그걸 지운다
+        
+        
+        
         //마우스가 정확히 같은 곳을 클릭했을 때, 이벤트의 클릭 카운트가 증가한다.
         
         //노드가 생성된 뒤, 마우스를 움직이지 않으면 노드를 클릭해도 노드색깔이 바뀌지 않는다.
