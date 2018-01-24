@@ -47,8 +47,8 @@ class ViewController: NSViewController
         NSLog("Screen resolution is (\(x!.width), \(x!.height))")
         
         scrollview.wantsLayer = true
-        scrollview.becomeFirstResponder()
-        scrollview.updateTrackingAreas()
+        //scrollview.becomeFirstResponder()
+        //scrollview.updateTrackingAreas()
         scrollview.initDataBase()
         
         

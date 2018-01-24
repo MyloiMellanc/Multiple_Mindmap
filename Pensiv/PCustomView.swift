@@ -10,8 +10,33 @@ import Foundation
 import Cocoa
 import CoreData
 
+
+/*
+ *
+ *  빈곳을 클릭했을때 활성화 제거 -> 본 커스텀 뷰가 노드와 라인을 보유하여야 한다
+ *  커스텀 뷰의 터치 매서드는 빈곳을 클릭했을 때만 호출되므로, 해당 매서드에 활성화 제거 매서드를 넣는다
+ *
+ *  두 노드간의 관계형성도 동일한 방식으로 수행
+ *
+ *
+ */
+
+
+enum P_CLASS_TYPE
+{
+    case PNODE
+    case PLINE
+}
+
+
 class PCustomView : NSScrollView
 {
+    override var isFlipped: Bool{
+        get {
+            return false
+        }
+    }
+    
     var nodetable = [PNode]()
     
    // var trackingarea : NSTrackingArea?
@@ -25,6 +50,7 @@ class PCustomView : NSScrollView
         {
             dataManager = PDataManager(mother : dele)
         }
+        
     }
     
     
@@ -114,7 +140,11 @@ class PCustomView : NSScrollView
         node.setMotherView(target: self)
     }
     
+    
+    
     override func mouseDown(with event: NSEvent) {
+        //hit test 에 걸린 뷰가 존재한다면, 이 매서드는 호출되지 않는다.
+        
         //selected node 가 존재한다면, 그냥 그걸 지운다
         
         
@@ -124,23 +154,49 @@ class PCustomView : NSScrollView
         //노드가 생성된 뒤, 마우스를 움직이지 않으면 노드를 클릭해도 노드색깔이 바뀌지 않는다.
         
         if(event.clickCount == 2)
-        {
-            let position = event.locationInWindow
-            
-            let framerect = self.contentView.visibleRect.origin
-            let originposition = CGPoint(x: position.x + framerect.x, y: position.y + framerect.y)
+        {/*
+            let originposition = event.locationInWindow
+            //let y = NSApplication.shared.windows.first?.frame.height
+            //let framerect = self.contentView.visibleRect.origin
+            //let originposition = CGPoint(x: position.x + framerect.x, y: position.y + framerect.y)
             
             let origin = CGRect(x: originposition.x, y: originposition.y, width: 100, height: 100)
-            let pnode = PTextNode(frame: origin)
+            //let pnode = PTextNode(frame: origin)
+            let ppnode = PPNode(frame: origin)
             
-            pnode.frame.origin.x -= pnode.frame.width / 2
-            pnode.frame.origin.y -= pnode.frame.height / 2
+            //pnode.frame.origin.x -= pnode.frame.width / 2
+            //pnode.frame.origin.y -= pnode.frame.height / 2
             
-            pushNode(target: pnode)
+            self.documentView?.addSubview(ppnode)
+            //pushNode(target: pnode)
             
-            dataManager?.saveData(str: "ssss")
+            
+            
+            dataManager?.saveData(str: "ssss")*/
+            
+            let ppnode_1 = PPNode(frame : NSRect(x: 100, y: 100, width: 100, height: 100))
+            let ppnode_2 = PPNode(frame : NSRect(x: 400, y: 400, width: 100, height: 100))
+            
+            let pline = PLine(target_1: ppnode_1, target_2: ppnode_2)
+            
+            self.documentView?.addSubview(ppnode_1)
+            self.documentView?.addSubview(ppnode_2)
+            self.documentView?.addSubview(pline)
         }
         
+    }
+    
+    override func draw(_ dirtyRect: NSRect) {
+        super.draw(dirtyRect)
+        
+        let p = NSBezierPath()
+        let a = NSPoint(x: 100, y: 100)
+        let b = NSPoint(x: 300, y: 300)
+        p.move(to: a)
+        p.line(to: b)
+        p.lineWidth = 5
+        p.lineCapStyle = .roundLineCapStyle
+        p.stroke()
     }
     
     

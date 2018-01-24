@@ -14,10 +14,14 @@ import CoreGraphics
 
 class PNode : NSButton
 {
+    let _type = P_CLASS_TYPE.PNODE
+    
     var _isTouched = false
     var _isMoved = false
     var _isActivated = false
     
+    
+    /*
     init(dd d : Int)
     {
         super.init(frame: NSRect())
@@ -28,9 +32,9 @@ class PNode : NSButton
     {
         fatalError("init(coder:) has not been implemented")
     }
+    */
     
-    
-    private var _motherView : PCustomView?
+    var _motherView : PCustomView?
     
     func setMotherView(target view : PCustomView)
     {
@@ -119,21 +123,34 @@ class PNode : NSButton
 
 
 
-class PTextNode : PNode
+class PTextNode : PNode, NSTextFieldDelegate
 {
     var text : NSTextField?
     
     override func initNodeData() {
-        text = NSTextField(frame: self.frame)
-        text?.backgroundColor = NSColor.black
+        let fra = self.frame
+        let origin = CGRect(x: fra.origin.x, y: fra.origin.y, width: fra.width / 1.5, height: fra.height / 1.5)
+        
+        text = NSTextField(frame: origin)
+        
+    
         self.addSubview(text!)
     }
+    
+    override func mouseDown(with event: NSEvent) {
+        super.mouseDown(with: event)
+        text?.isEditable = true
+        text?.isSelectable = true
+        text?.becomeFirstResponder()
+    }
+    
+    
     
     override func draw(_ dirtyRect: NSRect)
     {
         let path = NSBezierPath(ovalIn: dirtyRect)
         
-        if(self._isActivate == true)
+        if(self._isActivated == true)
         {
             NSColor.red.setFill()
         }
@@ -155,6 +172,8 @@ class PTextNode : PNode
         p.lineWidth = 5
         p.lineCapStyle = .roundLineCapStyle
         p.stroke()
+        
+        text?.draw(dirtyRect)
     }
 }
 
