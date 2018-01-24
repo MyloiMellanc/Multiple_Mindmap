@@ -164,15 +164,6 @@ class PTextNode : PNode, NSTextFieldDelegate
         NSColor.black.setFill()
         path.stroke()
         
-        let p = NSBezierPath()
-        let a = NSPoint(x: 0, y: 0)
-        let b = NSPoint(x: 100, y: 300)
-        p.move(to: a)
-        p.line(to: b)
-        p.lineWidth = 5
-        p.lineCapStyle = .roundLineCapStyle
-        p.stroke()
-        
         text?.draw(dirtyRect)
     }
 }

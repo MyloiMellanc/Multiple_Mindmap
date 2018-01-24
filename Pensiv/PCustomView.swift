@@ -189,14 +189,6 @@ class PCustomView : NSScrollView
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
         
-        let p = NSBezierPath()
-        let a = NSPoint(x: 100, y: 100)
-        let b = NSPoint(x: 300, y: 300)
-        p.move(to: a)
-        p.line(to: b)
-        p.lineWidth = 5
-        p.lineCapStyle = .roundLineCapStyle
-        p.stroke()
     }
     
     

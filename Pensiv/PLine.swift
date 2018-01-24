@@ -42,9 +42,6 @@ class PLine : NSView
         let path = NSBezierPath()
         
         
-        NSColor.red.setFill()
-        path.fill()
-        
         NSColor.black.setFill()
         path.stroke()
         
