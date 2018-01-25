@@ -12,26 +12,35 @@ import CoreGraphics
 
 class PNode : NSView
 {
-    func dd()
-    {
-        
-    }
+    
 }
 
 class PTextNode : PNode
 {
     var text : NSTextField?
     
-    override func dd()
-    {
-        let origin = NSRect(x: 0, y: 0, width: 100, height: 100)
+    override init(frame frameRect: NSRect) {
+        super.init(frame : frameRect)
+        let origin = NSRect(x: 0, y: 0, width: 50, height: 50)
         text = NSTextField(frame : origin)
         self.addSubview(text!)
     }
     
-    override func draw(_ dirtyRect: NSRect) {
-        text?.draw(dirtyRect)
+    required init?(coder decoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
+    
+    override func draw(_ dirtyRect: NSRect) {
+        //text?.draw(dirtyRect)
+        
+        let a = NSBezierPath()
+        a.move(to: NSPoint(x: 0, y: 0))
+        a.line(to: NSPoint(x: 100, y: 100))
+        a.lineWidth = 2.0
+        NSColor.red.setFill()
+        a.stroke()
+    }
+    
     
 }
 

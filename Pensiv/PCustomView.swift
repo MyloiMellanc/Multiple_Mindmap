@@ -137,17 +137,26 @@ class PCustomView : NSView
         return selectednode != nil ? true : false
     }
     
-    
+    var text : PTextNode?
     
     override func mouseDown(with event: NSEvent) {
         //hit test 에 걸린 뷰가 존재한다면, 이 매서드는 호출되지 않는다.
         
         //selected node 가 존재한다면, 그냥 그걸 지운다
-        
+        /*
         let originposition = event.locationInWindow
         print("\(originposition.x) , \(originposition.y)")
         let convert = self.convert(originposition, to: self)
         print("\(convert.x) , \(convert.y)")
+        */
+        
+        if let x = subviews.first
+        {
+            if let y = x.subviews.first
+            {
+                print("\(y.frame.origin.x) \(y.frame.origin.y)")
+            }
+        }
         
         //마우스가 정확히 같은 곳을 클릭했을 때, 이벤트의 클릭 카운트가 증가한다.
         
@@ -162,13 +171,14 @@ class PCustomView : NSView
             
             let origin = CGRect(x: 50, y: 50, width: 200, height: 200)
             let pnode = PTextNode(frame: origin)
-            pnode.dd()
+            
             //let pnode = PTextNode(frame: origin)
             
             //pnode.frame.origin.x -= pnode.frame.width / 2
             //pnode.frame.origin.y -= pnode.frame.height / 2
             
             self.addSubview(pnode)
+            text = pnode
             
             //pushNode(target: pnode)
             
@@ -197,19 +207,28 @@ class PCustomView : NSView
         super.draw(dirtyRect)
         
     }*/
-    /*
+    
     override func hitTest(_ point: NSPoint) -> NSView? {
+        
         for subview in subviews
         {
-            let converted_point = subview.convert(point, from: self)
-            let hittestview = subview.hitTest(converted_point)
+            let converted_point = subview.convert(point, from: subview)
+            let hittestview : NSView? = subview.hitTest(converted_point)
             if (hittestview != nil)
             {
+                
+                if(hittestview == text?.subviews.first)
+                {
+                    print("same")
+                }
+                let x = hittestview?.frame.origin
+                //print("\(x?.x) \(x?.y)")
                 return hittestview
             }
         }
+        print("self")
         return self
-    }*/
+    }
  
 }
 
