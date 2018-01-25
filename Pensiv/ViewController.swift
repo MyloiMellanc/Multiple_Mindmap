@@ -29,6 +29,7 @@ class ViewController: NSViewController
     @IBOutlet var scrollview: PCustomView!
     
     
+    
     @objc func demoCrawling()
     {
         let democrawl = DemoWordCrawler()
@@ -49,7 +50,7 @@ class ViewController: NSViewController
         scrollview.wantsLayer = true
         //scrollview.becomeFirstResponder()
         //scrollview.updateTrackingAreas()
-        scrollview.initDataBase()
+        //scrollview.initDataBase()
         
         
         //let thread = Thread(target: self, selector: Selector("demoCrawling"), object: nil)

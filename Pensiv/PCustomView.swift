@@ -29,14 +29,15 @@ enum P_CLASS_TYPE
 }
 
 
-class PCustomView : NSScrollView
+class PCustomView : NSView
 {
+    /*
     override var isFlipped: Bool{
         get {
             return false
         }
-    }
-    
+    }*/
+   
     var nodetable = [PNode]()
     
    // var trackingarea : NSTrackingArea?
@@ -54,10 +55,14 @@ class PCustomView : NSScrollView
     }
     
     
-    
+    override func viewDidEndLiveResize() {
+        var frame = NSApplication.shared.windows.first?.frame
+        frame?.origin = CGPoint(x: 0, y: 0)
+        self.frame = frame!
+    }
     
     override func viewWillDraw() {
-        self.documentView?.layer?.backgroundColor = CGColor.white
+        self.layer?.backgroundColor = CGColor.white
     }
     override func performKeyEquivalent(with event: NSEvent) -> Bool {
         return true
@@ -132,14 +137,6 @@ class PCustomView : NSScrollView
         return selectednode != nil ? true : false
     }
     
-    func pushNode(target node : PNode)
-    {
-        node.initNodeData()
-        nodetable.append(node)
-        self.documentView?.addSubview(node)
-        node.setMotherView(target: self)
-    }
-    
     
     
     override func mouseDown(with event: NSEvent) {
@@ -147,33 +144,38 @@ class PCustomView : NSScrollView
         
         //selected node 가 존재한다면, 그냥 그걸 지운다
         
-        
+        let originposition = event.locationInWindow
+        print("\(originposition.x) , \(originposition.y)")
+        let convert = self.convert(originposition, to: self)
+        print("\(convert.x) , \(convert.y)")
         
         //마우스가 정확히 같은 곳을 클릭했을 때, 이벤트의 클릭 카운트가 증가한다.
         
         //노드가 생성된 뒤, 마우스를 움직이지 않으면 노드를 클릭해도 노드색깔이 바뀌지 않는다.
         
         if(event.clickCount == 2)
-        {/*
-            let originposition = event.locationInWindow
+        {
+            
             //let y = NSApplication.shared.windows.first?.frame.height
             //let framerect = self.contentView.visibleRect.origin
             //let originposition = CGPoint(x: position.x + framerect.x, y: position.y + framerect.y)
             
-            let origin = CGRect(x: originposition.x, y: originposition.y, width: 100, height: 100)
+            let origin = CGRect(x: 50, y: 50, width: 200, height: 200)
+            let pnode = PTextNode(frame: origin)
+            pnode.dd()
             //let pnode = PTextNode(frame: origin)
-            let ppnode = PPNode(frame: origin)
             
             //pnode.frame.origin.x -= pnode.frame.width / 2
             //pnode.frame.origin.y -= pnode.frame.height / 2
             
-            self.documentView?.addSubview(ppnode)
+            self.addSubview(pnode)
+            
             //pushNode(target: pnode)
             
             
-            
-            dataManager?.saveData(str: "ssss")*/
-            
+            print("xx")
+            //dataManager?.saveData(str: "ssss")
+            /*
             let ppnode_1 = PPNode(frame : NSRect(x: 100, y: 100, width: 100, height: 100))
             let ppnode_2 = PPNode(frame : NSRect(x: 400, y: 400, width: 100, height: 100))
             
@@ -182,16 +184,33 @@ class PCustomView : NSScrollView
             self.documentView?.addSubview(ppnode_1)
             self.documentView?.addSubview(ppnode_2)
             self.documentView?.addSubview(pline)
+ */
         }
         
     }
-    
+    /*
     override func draw(_ dirtyRect: NSRect) {
+        
+        //Line들이 먼저 그려져야하므로, 모든 라인 드로우를 여기에서 담당
+        
+        
         super.draw(dirtyRect)
         
-    }
-    
-    
+    }*/
+    /*
+    override func hitTest(_ point: NSPoint) -> NSView? {
+        for subview in subviews
+        {
+            let converted_point = subview.convert(point, from: self)
+            let hittestview = subview.hitTest(converted_point)
+            if (hittestview != nil)
+            {
+                return hittestview
+            }
+        }
+        return self
+    }*/
+ 
 }
 
 

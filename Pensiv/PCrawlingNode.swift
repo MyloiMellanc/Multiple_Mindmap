@@ -9,7 +9,7 @@
 import Foundation
 import Cocoa
 
-
+/*
 class PCrawlingNode : PFunctionNode
 {
     
@@ -24,3 +24,4 @@ class PCrawlingNode : PFunctionNode
         
     }
 }
+*/

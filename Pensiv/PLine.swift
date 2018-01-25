@@ -9,16 +9,16 @@
 import Foundation
 import Cocoa
 
-
+/*
 class PLine : NSView
 {
     let _type = P_CLASS_TYPE.PLINE
     
-    var node_1 : PPNode?
-    var node_2 : PPNode?
+    let node_1 : PPNode?
+    let node_2 : PPNode?
     
     init(target_1 : PPNode, target_2 : PPNode) {
-        super.init(frame: NSRect(x: 0, y: 0, width: 200, height: 200))
+        super.init(frame: NSRect(x: 0, y: 0, width: 800, height: 600))
         node_1 = target_1
         node_2 = target_2
     }
@@ -46,13 +46,12 @@ class PLine : NSView
         path.stroke()
         
         let p = NSBezierPath()
-        let a = NSPoint(x: 0, y: 0)
-        let b = NSPoint(x: 500, y: 300)
-        p.move(to: a)
-        p.line(to: b)
+        p.move(to: (node_1?.frame.origin)!)
+        p.line(to: (node_2?.frame.origin)!)
         p.lineWidth = 50
         p.lineCapStyle = .roundLineCapStyle
         p.stroke()
         
     }
 }
+*/

@@ -17,12 +17,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         NSLog("ApplicationDidFinishLaunching")
         // Insert code here to initialize your application
         
-        
+        /*
         
         if let x : NSWindow? = NSApplication.shared.windows.first
         {
             
-            let point = CGPoint(x : 250.0, y : 50.0)
+            let point = CGPoint(x : 250, y : 50.0)
             let size = CGSize(width : 800.0, height : 600.0)
             let origin = CGRect(origin: point, size: size)
             
@@ -34,7 +34,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         {
             NSLog("Not")
         }
-        
+        */
         
     }
 

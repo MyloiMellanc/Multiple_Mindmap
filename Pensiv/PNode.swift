@@ -10,7 +10,83 @@ import Foundation
 import Cocoa
 import CoreGraphics
 
+class PNode : NSView
+{
+    func dd()
+    {
+        
+    }
+}
 
+class PTextNode : PNode
+{
+    var text : NSTextField?
+    
+    override func dd()
+    {
+        let origin = NSRect(x: 0, y: 0, width: 100, height: 100)
+        text = NSTextField(frame : origin)
+        self.addSubview(text!)
+    }
+    
+    override func draw(_ dirtyRect: NSRect) {
+        text?.draw(dirtyRect)
+    }
+    
+}
+
+/*
+
+class PTextNode : NSTextField, NSTextFieldDelegate
+{
+    let nodeType = P_CLASS_TYPE.PNODE
+    
+    override init(frame frameRect: NSRect) {
+        super.init(frame: frameRect)
+        self.isEditable = true
+        self.isSelectable = true
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func mouseDown(with event: NSEvent) {
+        self.isEditable = true
+        self.isSelectable = true
+        self.becomeFirstResponder()
+    }
+    
+    
+    override func mouseDragged(with event: NSEvent) {
+        self.isEditable = false
+        self.isSelectable = false
+        
+        self.frame.origin.x += event.deltaX
+        self.frame.origin.y -= event.deltaY //어째서 Y 변화량의 축이 다르지?
+        
+        self.setNeedsDisplay()
+    }
+    
+    
+    
+    
+    
+    override func textShouldEndEditing(_ textObject: NSText) -> Bool {
+        //self.isEditable = false
+        self.isSelectable = false
+        self.resignFirstResponder()
+        return true
+    }
+    
+    
+    
+    override func draw(_ dirtyRect: NSRect) {
+        super.draw(dirtyRect)
+    }
+}
+*/
+/*
 
 class PNode : NSButton
 {
@@ -20,19 +96,9 @@ class PNode : NSButton
     var _isMoved = false
     var _isActivated = false
     
+    var field : NSTextField?
     
-    /*
-    init(dd d : Int)
-    {
-        super.init(frame: NSRect())
-        
-    }
     
-    required init(coder aDecoder : NSCoder)
-    {
-        fatalError("init(coder:) has not been implemented")
-    }
-    */
     
     var _motherView : PCustomView?
     
@@ -43,7 +109,8 @@ class PNode : NSButton
     
     func initNodeData()
     {
-        
+        field = NSTextField(frame : self.frame)
+        self.addSubview(field!)
         //self.superview 가 종속된 뷰를 가리킴 - 여기서는 PCustomView
         
         
@@ -90,7 +157,14 @@ class PNode : NSButton
         
         self.setNeedsDisplay()
     }
-    
+    override func draw(_ dirtyRect: NSRect) {
+        
+        for x in self.subviews
+        {
+            x.draw(dirtyRect)
+        }
+        super.draw(dirtyRect)
+    }
     
     //var trackingarea : NSTrackingArea?
     
@@ -108,9 +182,9 @@ class PNode : NSButton
         self.addTrackingArea(trackingarea!)
     }*/
     
-    override func draw(_ dirtyRect: NSRect) {
-        
-    }
+    
+    
+    
     //ID
     //Position
     //Scale
@@ -122,26 +196,19 @@ class PNode : NSButton
 }
 
 
-
+/*
 class PTextNode : PNode, NSTextFieldDelegate
 {
     var text : NSTextField?
     
     override func initNodeData() {
         let fra = self.frame
-        let origin = CGRect(x: fra.origin.x, y: fra.origin.y, width: fra.width / 1.5, height: fra.height / 1.5)
+        let origin = CGRect(x: fra.origin.x + 100, y: fra.origin.y, width: fra.width / 1.5, height: fra.height / 1.5)
         
         text = NSTextField(frame: origin)
-        
+        //text?.delegate = self
     
         self.addSubview(text!)
-    }
-    
-    override func mouseDown(with event: NSEvent) {
-        super.mouseDown(with: event)
-        text?.isEditable = true
-        text?.isSelectable = true
-        text?.becomeFirstResponder()
     }
     
     
@@ -164,12 +231,12 @@ class PTextNode : PNode, NSTextFieldDelegate
         NSColor.black.setFill()
         path.stroke()
         
-        text?.draw(dirtyRect)
+        //text?.draw(dirtyRect)
     }
 }
 
 
-
+*/
 
 class PFunctionNode : PNode
 {
@@ -194,8 +261,7 @@ class PFunctionNode : PNode
 }
 
 
-
-
+*/
 
 
 
