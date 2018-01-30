@@ -21,7 +21,9 @@ class PTextNode : PNode
     
     override init(frame frameRect: NSRect) {
         super.init(frame : frameRect)
-        let origin = NSRect(x: 0, y: 0, width: 50, height: 50)
+        
+        
+        let origin = NSRect(x: 0, y: 0, width: 150, height: 150)
         text = NSTextField(frame : origin)
         self.addSubview(text!)
     }
@@ -32,6 +34,7 @@ class PTextNode : PNode
     
     override func draw(_ dirtyRect: NSRect) {
         //text?.draw(dirtyRect)
+        
         
         let a = NSBezierPath()
         a.move(to: NSPoint(x: 0, y: 0))

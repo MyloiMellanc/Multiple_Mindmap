@@ -9,6 +9,8 @@
 import Foundation
 import Cocoa
 import CoreData
+import CoreGraphics
+
 
 
 /*
@@ -137,7 +139,7 @@ class PCustomView : NSView
         return selectednode != nil ? true : false
     }
     
-    var text : PTextNode?
+    
     
     override func mouseDown(with event: NSEvent) {
         //hit test 에 걸린 뷰가 존재한다면, 이 매서드는 호출되지 않는다.
@@ -169,21 +171,51 @@ class PCustomView : NSView
             //let framerect = self.contentView.visibleRect.origin
             //let originposition = CGPoint(x: position.x + framerect.x, y: position.y + framerect.y)
             
-            let origin = CGRect(x: 50, y: 50, width: 200, height: 200)
-            let pnode = PTextNode(frame: origin)
+            let origin = CGRect(x: 150, y: 150, width: 200, height: 200)
+            
+            let pnode = NSView(frame: origin)
+            
             
             //let pnode = PTextNode(frame: origin)
             
             //pnode.frame.origin.x -= pnode.frame.width / 2
             //pnode.frame.origin.y -= pnode.frame.height / 2
             
+            
+            pnode.layer = CALayer()
+            pnode.wantsLayer = true
+            print(pnode.layer?.frame.origin)
+            
+            pnode.layer?.anchorPoint = CGPoint(x : 0.5, y : 0.5)
+            pnode.layer?.backgroundColor = CGColor.black
+            
+            
+            
+            print(pnode.layer?.frame.origin)
+            
+            pnode.frame.origin = (pnode.layer?.frame.origin)!
+            
+            //pnode.layer?.cornerRadius = 40
+            
+            
             self.addSubview(pnode)
-            text = pnode
+            
+            
+            //pnode.layer?.shadow
+            
+            let ani = CASpringAnimation(keyPath: "transform.scale")
+            ani.fromValue = 0
+            ani.toValue = 1
+            
+            
+            pnode.layer?.add(ani, forKey: "simple")
+            
+            
             
             //pushNode(target: pnode)
             
             
-            print("xx")
+            
             //dataManager?.saveData(str: "ssss")
             /*
             let ppnode_1 = PPNode(frame : NSRect(x: 100, y: 100, width: 100, height: 100))
@@ -216,17 +248,16 @@ class PCustomView : NSView
             let hittestview : NSView? = subview.hitTest(converted_point)
             if (hittestview != nil)
             {
-                
+                /*
                 if(hittestview == text?.subviews.first)
                 {
                     print("same")
-                }
-                let x = hittestview?.frame.origin
-                //print("\(x?.x) \(x?.y)")
+                }*/
+                
                 return hittestview
             }
         }
-        print("self")
+        //print("self")
         return self
     }
  

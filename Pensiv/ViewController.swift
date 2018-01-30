@@ -35,6 +35,7 @@ class ViewController: NSViewController
         let democrawl = DemoWordCrawler()
         //democrawl.demoCrawling(search: "hyper")
         democrawl.demoRun()
+        
     }
     
     
