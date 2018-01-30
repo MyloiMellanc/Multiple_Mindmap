@@ -171,9 +171,9 @@ class PCustomView : NSView
             //let framerect = self.contentView.visibleRect.origin
             //let originposition = CGPoint(x: position.x + framerect.x, y: position.y + framerect.y)
             
-            let origin = CGRect(x: 150, y: 150, width: 200, height: 200)
+            let origin = CGRect(x: 0, y: 0, width: 200, height: 200)
             
-            let pnode = NSView(frame: origin)
+            let pnode = PTextNode(frame: origin)
             
             
             //let pnode = PTextNode(frame: origin)
@@ -182,18 +182,19 @@ class PCustomView : NSView
             //pnode.frame.origin.y -= pnode.frame.height / 2
             
             
-            pnode.layer = CALayer()
+            pnode.layer = CAShapeLayer()
             pnode.wantsLayer = true
-            print(pnode.layer?.frame.origin)
+            print(pnode.layer?.frame)
             
-            pnode.layer?.anchorPoint = CGPoint(x : 0.5, y : 0.5)
+            //pnode.layer?.anchorPoint = CGPoint(x : 0.5, y : 0.5)
+            //pnode.layer?.position = CGPoint(x: 100.0, y: 100.0)
             pnode.layer?.backgroundColor = CGColor.black
+            //pnode.layer?.transform = CATransform3DMakeScale(0.5, 0.5, 1)
             
             
+            print(pnode.layer?.frame)
             
-            print(pnode.layer?.frame.origin)
-            
-            pnode.frame.origin = (pnode.layer?.frame.origin)!
+            //pnode.frame.origin = (pnode.layer?.frame.origin)!
             
             //pnode.layer?.cornerRadius = 40
             
@@ -204,13 +205,18 @@ class PCustomView : NSView
             //pnode.layer?.shadow
             
             let ani = CASpringAnimation(keyPath: "transform.scale")
+            ani.duration = 0.6
             ani.fromValue = 0
             ani.toValue = 1
             
-            
             pnode.layer?.add(ani, forKey: "simple")
             
+            let ani2 = CASpringAnimation(keyPath: "position")
+            ani2.duration = 0.6
+            ani2.fromValue = CGPoint(x: 100, y: 100)
+            ani2.toValue = CGPoint(x: 0, y: 0)
             
+            pnode.layer?.add(ani2, forKey: "move")
             
             //pushNode(target: pnode)
             
