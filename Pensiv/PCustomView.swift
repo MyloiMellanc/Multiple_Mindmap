@@ -176,6 +176,7 @@ class PCustomView : NSView
             let pnode = PTextNode(frame: origin)
             
             
+            
             //let pnode = PTextNode(frame: origin)
             
             //pnode.frame.origin.x -= pnode.frame.width / 2
@@ -222,6 +223,7 @@ class PCustomView : NSView
             
             
             
+            
             //dataManager?.saveData(str: "ssss")
             /*
             let ppnode_1 = PPNode(frame : NSRect(x: 100, y: 100, width: 100, height: 100))
@@ -236,15 +238,16 @@ class PCustomView : NSView
         }
         
     }
-    /*
+    
     override func draw(_ dirtyRect: NSRect) {
         
         //Line들이 먼저 그려져야하므로, 모든 라인 드로우를 여기에서 담당
         
+        //서브 뷰의 드로잉은 여기서 처리하지 않고, 각자 알아서 하는 것 같다.
         
-        super.draw(dirtyRect)
+        //super.draw(dirtyRect)
         
-    }*/
+    }
     
     override func hitTest(_ point: NSPoint) -> NSView? {
         

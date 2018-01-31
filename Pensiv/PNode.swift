@@ -10,14 +10,45 @@ import Foundation
 import Cocoa
 import CoreGraphics
 
+
+
+
 class PNode : NSView
 {
+    static var baseWidth : CGFloat = 110.0
+    static var baseHeight : CGFloat = 110.0
     
+    //마인드맵의 모든 노드들의 기본 인터페이스
+    
+    //선택 활성화나, 서브메뉴 출력 관리
+    //정렬과 위치 관련 매서드를 나중에 추가할것.
+    override init(frame frameRect: NSRect)
+    {
+        super.init(frame: frameRect)
+    }
+    
+    init(position point : CGPoint)
+    {
+        let frameRect = NSRect(x: point.x, y: point.y, width: PNode.baseWidth, height: PNode.baseHeight)
+        super.init(frame : frameRect)
+    }
+    
+    required init?(coder decoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
+
+
+
 
 class PTextNode : PNode
 {
     var text : NSTextField?
+    
+    override init(position point : CGPoint)
+    {
+        super.init(position : point)
+    }
     
     override init(frame frameRect: NSRect) {
         super.init(frame : frameRect)

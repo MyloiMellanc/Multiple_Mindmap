@@ -10,7 +10,7 @@ import Foundation
 import Cocoa
 
 /*
-class PLine : NSView
+class PLink
 {
     let _type = P_CLASS_TYPE.PLINE
     
