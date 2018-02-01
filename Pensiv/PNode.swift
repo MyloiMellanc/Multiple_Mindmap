@@ -13,70 +13,182 @@ import CoreGraphics
 
 
 
-class PNode : NSView
+class PNode : NSView    //PNode를 상속하는 모든 노드가 기본 뷰를 가질 예정으로, 미리 상속받음
 {
-    static var baseWidth : CGFloat = 110.0
-    static var baseHeight : CGFloat = 110.0
+    var nodeNumber : Int = 1
+    
+    //차후 팩토리 객체화할것
+    static let baseWidth : CGFloat = 70.0
+    static let baseHeight : CGFloat = 40.0
+    
+    static let gap : CGFloat = 10.0
     
     //마인드맵의 모든 노드들의 기본 인터페이스
     
-    //선택 활성화나, 서브메뉴 출력 관리
+    var centerPoint : CGPoint?
+    
+    
+    
+    
+    //선택 활성화나, 서브메뉴 출력 관리(?)
     //정렬과 위치 관련 매서드를 나중에 추가할것.
     override init(frame frameRect: NSRect)
     {
         super.init(frame: frameRect)
     }
     
-    init(position point : CGPoint)
+    init(position touchPoint : CGPoint)
     {
-        let frameRect = NSRect(x: point.x, y: point.y, width: PNode.baseWidth, height: PNode.baseHeight)
+        centerPoint = touchPoint
+        
+        let framePoint = CGPoint(x: touchPoint.x - (PNode.baseWidth / 2 + PNode.gap), y: touchPoint.y - (PNode.baseHeight / 2 + PNode.gap) )
+        let frameRect = NSRect(x: framePoint.x, y: framePoint.y, width: PNode.baseWidth + (PNode.gap * 2), height: PNode.baseHeight + (PNode.gap * 2))
         super.init(frame : frameRect)
+        
+        
+        self.layer = CAShapeLayer()
+        self.wantsLayer = true
+        
+        self.layer?.backgroundColor = CGColor.black
+        
+        let scale_animation = CASpringAnimation(keyPath: "transform.scale")
+        scale_animation.duration = 0.6
+        scale_animation.fromValue = 0
+        scale_animation.toValue = 1
+        
+        let position_animation = CASpringAnimation(keyPath: "position")
+        position_animation.duration = 0.6
+        position_animation.fromValue = touchPoint
+        position_animation.toValue = framePoint
+        
+        self.layer?.add(scale_animation, forKey: "scale")
+        self.layer?.add(position_animation, forKey: "move")
     }
     
     required init?(coder decoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override func mouseDown(with event: NSEvent) {
+        print("pnode touch")
+        
+        superview?.PSelectNode(target: self)
+        
+    }
+    
+    override func mouseDragged(with event: NSEvent) {
+        self.frame.origin.x += event.deltaX
+        self.frame.origin.y -= event.deltaY //어째서 Y 변화량의 축이 다르지?
+        
+        
+        //self.setNeedsDisplay()
+    }
+    
+    override func mouseUp(with event: NSEvent) {
+        
+    }
+    
 }
 
 
-
+class PTextField : NSTextField
+{/*
+    override func keyDown(with event: NSEvent) {
+        if event.characters == "\n"
+        {
+            isSelectable = false
+            isEditable = false
+        }
+    }*/
+    override func mouseDown(with event: NSEvent) {
+        
+        if event.clickCount == 2
+        {
+            self.isEditable = true
+            self.becomeFirstResponder()
+        }
+        else
+        {
+            super.mouseDown(with: event)
+        }
+        //self.isEditable = true
+        //self.isSelectable = true
+        print("text touch")
+        //super.mouseDown(with: event)
+    }
+    
+    override func mouseDragged(with event: NSEvent) {
+        super.mouseDragged(with: event)
+    }
+    
+    override func mouseUp(with event: NSEvent) {
+        
+    }
+    
+    override func textShouldEndEditing(_ textObject: NSText) -> Bool {
+        self.isEditable = false
+        self.isSelectable = false
+        //self.resignFirstResponder()
+        
+        return true
+    }
+}
 
 class PTextNode : PNode
 {
-    var text : NSTextField?
+    var text : PTextField
     
-    override init(position point : CGPoint)
+    override init(position touchPoint : CGPoint)
     {
-        super.init(position : point)
+        let frameRect = NSRect(x: PNode.gap, y: PNode.gap, width: PNode.baseWidth, height: PNode.baseHeight)
+        
+        text = PTextField(frame : frameRect)
+        text.stringValue = "text"
+        //super.init 전에 내부 변수를 모두 초기화해야함
+        
+        text.isEditable = false
+        
+        super.init(position : touchPoint)
+        
+        self.addSubview(text)   //super.init 이후에 self 사용가능
     }
     
-    override init(frame frameRect: NSRect) {
-        super.init(frame : frameRect)
-        
-        
-        let origin = NSRect(x: 0, y: 0, width: 150, height: 150)
-        text = NSTextField(frame : origin)
-        self.addSubview(text!)
-    }
     
     required init?(coder decoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func draw(_ dirtyRect: NSRect) {
-        //text?.draw(dirtyRect)
+    override func mouseDown(with event: NSEvent) {
+        //text.isEditable=true
+        //text.mouseDown(with: event)
         
+        print("Pnode touch")
         
-        let a = NSBezierPath()
-        a.move(to: NSPoint(x: 0, y: 0))
-        a.line(to: NSPoint(x: 100, y: 100))
-        a.lineWidth = 2.0
-        NSColor.red.setFill()
-        a.stroke()
+        super.mouseDown(with: event)
+        
     }
     
+    override func mouseDragged(with event: NSEvent) {
+        super.mouseDragged(with: event)
+    }
     
 }
+
+
+/*
+ override func draw(_ dirtyRect: NSRect) {
+ //text?.draw(dirtyRect)
+ 
+ /*
+ let a = NSBezierPath()
+ a.move(to: NSPoint(x: 0, y: 0))
+ a.line(to: NSPoint(x: 100, y: 100))
+ a.lineWidth = 2.0
+ NSColor.red.setFill()
+ a.stroke()*/
+ }
+ */
+
 
 /*
 
@@ -238,75 +350,6 @@ class PNode : NSButton
     //
 }
 
-
-/*
-class PTextNode : PNode, NSTextFieldDelegate
-{
-    var text : NSTextField?
-    
-    override func initNodeData() {
-        let fra = self.frame
-        let origin = CGRect(x: fra.origin.x + 100, y: fra.origin.y, width: fra.width / 1.5, height: fra.height / 1.5)
-        
-        text = NSTextField(frame: origin)
-        //text?.delegate = self
-    
-        self.addSubview(text!)
-    }
-    
-    
-    
-    override func draw(_ dirtyRect: NSRect)
-    {
-        let path = NSBezierPath(ovalIn: dirtyRect)
-        
-        if(self._isActivated == true)
-        {
-            NSColor.red.setFill()
-        }
-        else
-        {
-            NSColor.green.setFill()
-        }
-        
-        path.fill()
-        
-        NSColor.black.setFill()
-        path.stroke()
-        
-        //text?.draw(dirtyRect)
-    }
-}
-
-
 */
-
-class PFunctionNode : PNode
-{
-    override func initNodeData()
-    {
-        //text = NSTextField(frame: self.frame)
-        //text?.backgroundColor = NSColor.black
-        //self.addSubview(text!)
-        //self.superview 가 종속된 뷰를 가리킴 - 여기서는 PCustomView
-        
-        
-    }
-    
-    override func draw(_ dirtyRect: NSRect) {
-        let path = NSBezierPath(ovalIn: dirtyRect)
-        
-        path.fill()
-        
-        NSColor.black.setFill()
-        path.stroke()
-    }
-}
-
-
-*/
-
-
-
 
 

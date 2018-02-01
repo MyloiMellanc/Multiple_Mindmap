@@ -23,16 +23,36 @@ import CoreGraphics
  *
  */
 
-
-enum P_CLASS_TYPE
-{
-    case PNODE
-    case PLINE
+enum P_NODE_TYPE {
+    case TEXT
+    case CRAWLING
 }
+
+
+
+
+extension NSView
+{
+    @objc func PSelectNode(target node : PNode) {
+        
+    }
+    
+    @objc func PFindEmptyPosition() {
+        
+    }
+    
+    @objc func PCreateNode(position touchPoint : CGPoint) {
+        
+    }
+}
+
 
 
 class PCustomView : NSView
 {
+    
+    var viewNumber : Int = 1
+    
     /*
     override var isFlipped: Bool{
         get {
@@ -113,52 +133,55 @@ class PCustomView : NSView
      }
     */
     
-    var selectednode : PNode?
+    var selectedNode : PNode? = nil
     
-    func setSelectedNode(target node : PNode)
-    {
-        if selectednode == nil
-        {
-            selectednode = node
+    
+    
+    override func PSelectNode(target node: PNode) {
+        if node == nil {
+            return
+        }
+        
+        //이미 활성화된 노드와 다르면
+            //스킵, 혹은 라인 생성?
+        //활성화 노드가 없다면,
+            //해당 노드를 활성화시킨다
+        if self.selectedNode == nil {
+            print("\(self.selectedNode?.nodeNumber) is activated")
+            self.selectedNode = node
+            self.selectedNode?.layer?.backgroundColor = CGColor(red: 255, green: 0, blue: 0, alpha: 1)
+        }
+        else if self.selectedNode == node { //활성화된 노드를 클릭했다면, 활성화를 중단한다.
+            print("\(self.selectedNode?.nodeNumber) is deactivated")
+            self.selectedNode?.layer?.backgroundColor = CGColor.black
+            self.selectedNode = nil
         }
     }
     
-    func resolveSelectedNode()
-    {
-        selectednode = nil
-    }
-
-    
-    func getSelectedNode() -> PNode?
-    {
-        return selectednode
+    override func PFindEmptyPosition() {
+        
     }
     
-    func isSelectedNode() -> Bool
+    override func PCreateNode(position touchPoint : CGPoint) {
+        
+    }
+    
+    func createNode()
     {
-        return selectednode != nil ? true : false
+        //생성 및 서브뷰 등록
+        //데이터베이스에 본 뷰넘버를 기반으로 저장
     }
     
     
     
     override func mouseDown(with event: NSEvent) {
         //hit test 에 걸린 뷰가 존재한다면, 이 매서드는 호출되지 않는다.
+        //따라서 이 매서드가 호출되었다면, 노드는 클릭되지 않은 것이다. 따라서 활성화 노드는 제거된다.
+        self.selectedNode = nil
         
-        //selected node 가 존재한다면, 그냥 그걸 지운다
-        /*
-        let originposition = event.locationInWindow
-        print("\(originposition.x) , \(originposition.y)")
-        let convert = self.convert(originposition, to: self)
-        print("\(convert.x) , \(convert.y)")
-        */
         
-        if let x = subviews.first
-        {
-            if let y = x.subviews.first
-            {
-                print("\(y.frame.origin.x) \(y.frame.origin.y)")
-            }
-        }
+        let eventOrigin = event.locationInWindow
+        
         
         //마우스가 정확히 같은 곳을 클릭했을 때, 이벤트의 클릭 카운트가 증가한다.
         
@@ -166,78 +189,33 @@ class PCustomView : NSView
         
         if(event.clickCount == 2)
         {
-            
-            //let y = NSApplication.shared.windows.first?.frame.height
-            //let framerect = self.contentView.visibleRect.origin
-            //let originposition = CGPoint(x: position.x + framerect.x, y: position.y + framerect.y)
-            
-            let origin = CGRect(x: 0, y: 0, width: 200, height: 200)
-            
-            let pnode = PTextNode(frame: origin)
-            
-            
-            
-            //let pnode = PTextNode(frame: origin)
-            
-            //pnode.frame.origin.x -= pnode.frame.width / 2
-            //pnode.frame.origin.y -= pnode.frame.height / 2
-            
-            
-            pnode.layer = CAShapeLayer()
-            pnode.wantsLayer = true
-            print(pnode.layer?.frame)
-            
-            //pnode.layer?.anchorPoint = CGPoint(x : 0.5, y : 0.5)
-            //pnode.layer?.position = CGPoint(x: 100.0, y: 100.0)
-            pnode.layer?.backgroundColor = CGColor.black
-            //pnode.layer?.transform = CATransform3DMakeScale(0.5, 0.5, 1)
-            
-            
-            print(pnode.layer?.frame)
-            
-            //pnode.frame.origin = (pnode.layer?.frame.origin)!
-            
-            //pnode.layer?.cornerRadius = 40
-            
-            
+            let pnode = PTextNode(position: eventOrigin)
             self.addSubview(pnode)
             
+            print("Create new PNode at (\(eventOrigin.x), \(eventOrigin.y))")
             
-            //pnode.layer?.shadow
-            
-            let ani = CASpringAnimation(keyPath: "transform.scale")
-            ani.duration = 0.6
-            ani.fromValue = 0
-            ani.toValue = 1
-            
-            pnode.layer?.add(ani, forKey: "simple")
-            
-            let ani2 = CASpringAnimation(keyPath: "position")
-            ani2.duration = 0.6
-            ani2.fromValue = CGPoint(x: 100, y: 100)
-            ani2.toValue = CGPoint(x: 0, y: 0)
-            
-            pnode.layer?.add(ani2, forKey: "move")
-            
-            //pushNode(target: pnode)
-            
-            
-            
-            
+            pnode.text.mouseDown(with: event)
             //dataManager?.saveData(str: "ssss")
-            /*
-            let ppnode_1 = PPNode(frame : NSRect(x: 100, y: 100, width: 100, height: 100))
-            let ppnode_2 = PPNode(frame : NSRect(x: 400, y: 400, width: 100, height: 100))
-            
-            let pline = PLine(target_1: ppnode_1, target_2: ppnode_2)
-            
-            self.documentView?.addSubview(ppnode_1)
-            self.documentView?.addSubview(ppnode_2)
-            self.documentView?.addSubview(pline)
- */
         }
         
     }
+    
+    
+    //드래그도 필연적으로 업다운 매서드를 호출시키게 된다.
+    //다운은 단순 다운 선언. 업이 되엇을때 해결
+    override func rightMouseDown(with event: NSEvent) {
+        print(11)
+    }
+    
+    override func rightMouseDragged(with event: NSEvent) {
+        print(22)
+    }
+    
+    override func rightMouseUp(with event: NSEvent) {
+        print(33)
+    }
+    
+    
     
     override func draw(_ dirtyRect: NSRect) {
         
