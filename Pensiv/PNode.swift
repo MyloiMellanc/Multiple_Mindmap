@@ -29,7 +29,6 @@ class PNode : NSView    //PNode를 상속하는 모든 노드가 기본 뷰를 �
     
     
     
-    
     //선택 활성화나, 서브메뉴 출력 관리(?)
     //정렬과 위치 관련 매서드를 나중에 추가할것.
     override init(frame frameRect: NSRect)
@@ -88,18 +87,16 @@ class PNode : NSView    //PNode를 상속하는 모든 노드가 기본 뷰를 �
         
     }
     
+    func test()
+    {
+        
+    }
+    
 }
 
 
 class PTextField : NSTextField
-{/*
-    override func keyDown(with event: NSEvent) {
-        if event.characters == "\n"
-        {
-            isSelectable = false
-            isEditable = false
-        }
-    }*/
+{
     override func mouseDown(with event: NSEvent) {
         
         if event.clickCount == 2
@@ -111,6 +108,7 @@ class PTextField : NSTextField
         {
             super.mouseDown(with: event)
         }
+        
         //self.isEditable = true
         //self.isSelectable = true
         print("text touch")
@@ -125,10 +123,10 @@ class PTextField : NSTextField
         
     }
     
+    //해당 매서드는 true시 자동으로 first responder를 반납한다
     override func textShouldEndEditing(_ textObject: NSText) -> Bool {
         self.isEditable = false
         self.isSelectable = false
-        //self.resignFirstResponder()
         
         return true
     }
@@ -137,6 +135,14 @@ class PTextField : NSTextField
 class PTextNode : PNode
 {
     var text : PTextField
+    
+    override func test()
+    {
+        print(1)
+        
+        window?.makeFirstResponder(nil)
+        
+    }
     
     override init(position touchPoint : CGPoint)
     {
@@ -147,11 +153,13 @@ class PTextNode : PNode
         //super.init 전에 내부 변수를 모두 초기화해야함
         
         text.isEditable = false
+        text.becomeFirstResponder()
         
         super.init(position : touchPoint)
         
         self.addSubview(text)   //super.init 이후에 self 사용가능
     }
+    
     
     
     required init?(coder decoder: NSCoder) {

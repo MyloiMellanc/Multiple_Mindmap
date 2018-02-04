@@ -37,8 +37,8 @@ extension NSView
         
     }
     
-    @objc func PFindEmptyPosition() {
-        
+    @objc func PFindEmptyPosition() -> CGPoint {
+        return CGPoint()
     }
     
     @objc func PCreateNode(position touchPoint : CGPoint) {
@@ -78,6 +78,8 @@ class PCustomView : NSView
     
     
     override func viewDidEndLiveResize() {
+        
+        //Struct is copy value
         var frame = NSApplication.shared.windows.first?.frame
         frame?.origin = CGPoint(x: 0, y: 0)
         self.frame = frame!
@@ -88,11 +90,6 @@ class PCustomView : NSView
     }
     override func performKeyEquivalent(with event: NSEvent) -> Bool {
         return true
-    }
-    
-    override func keyDown(with event: NSEvent) {
-        //print(event.keyCode)
-        
     }
     
     /*
@@ -109,32 +106,9 @@ class PCustomView : NSView
         self.addTrackingArea(trackingarea!)
         
     }
-    
-    var touchednode : PNode?
-    
-    override func mouseMoved(with event: NSEvent) {
-        if (touchednode != nil)
-        {
-            touchednode?.mouseMoved(with: event)
-        }
-    }
-    */
-    
-    /*
-    override func mouseMoved(with event: NSEvent) {
-        let position = event.locationInWindow
-        let framerect = self.contentView.visibleRect.origin
-        let originposition = CGPoint(x: position.x + framerect.x, y: position.y + framerect.y)
-        
-        for node in nodetable
-        {
-            node.touched(position: originposition)
-        }
-     }
     */
     
     var selectedNode : PNode? = nil
-    
     
     
     override func PSelectNode(target node: PNode) {
@@ -158,8 +132,8 @@ class PCustomView : NSView
         }
     }
     
-    override func PFindEmptyPosition() {
-        
+    override func PFindEmptyPosition() -> CGPoint {
+        return CGPoint()
     }
     
     override func PCreateNode(position touchPoint : CGPoint) {
@@ -177,7 +151,13 @@ class PCustomView : NSView
     override func mouseDown(with event: NSEvent) {
         //hit test 에 걸린 뷰가 존재한다면, 이 매서드는 호출되지 않는다.
         //따라서 이 매서드가 호출되었다면, 노드는 클릭되지 않은 것이다. 따라서 활성화 노드는 제거된다.
-        self.selectedNode = nil
+       
+        if selectedNode != nil
+        {
+            selectedNode?.test()
+        }
+        
+        //self.selectedNode = nil
         
         
         let eventOrigin = event.locationInWindow
@@ -193,6 +173,7 @@ class PCustomView : NSView
             self.addSubview(pnode)
             
             print("Create new PNode at (\(eventOrigin.x), \(eventOrigin.y))")
+            
             
             pnode.text.mouseDown(with: event)
             //dataManager?.saveData(str: "ssss")
@@ -235,16 +216,10 @@ class PCustomView : NSView
             let hittestview : NSView? = subview.hitTest(converted_point)
             if (hittestview != nil)
             {
-                /*
-                if(hittestview == text?.subviews.first)
-                {
-                    print("same")
-                }*/
-                
                 return hittestview
             }
         }
-        //print("self")
+        
         return self
     }
  
