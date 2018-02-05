@@ -180,7 +180,6 @@ class PTextNode : PNode
         fatalError("init(coder:) has not been implemented")
     }
     
-    
 }
 
 

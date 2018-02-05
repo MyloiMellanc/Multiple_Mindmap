@@ -171,8 +171,11 @@ class PCustomView : NSView
                 createLink(node_1: self.selectedNode!, node_2: pnode)
             }
             
-            pnode.text.mouseUp(with: event)
+            pnode.textfield.mouseUp(with: event)
             //dataManager?.saveData(str: "ssss")
+            
+            
+            
         }
         else
         {

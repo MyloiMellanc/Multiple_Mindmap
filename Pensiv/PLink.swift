@@ -10,8 +10,19 @@ import Foundation
 import Cocoa
 
 
-class PLink
+class PLink : Equatable, Hashable
 {
+    static func ==(lhs: PLink, rhs: PLink) -> Bool {
+        //return (lhs.superview == rhs.superview) && (lhs.node_1 == rhs.node_1) && (lhs.node_2 == lhs.node_2)
+        return true
+    }
+    
+    var hashValue: Int {
+        get {
+            return 1
+        }
+    }
+    
     let superview : NSView
     
     let node_1 : PNode
@@ -30,7 +41,7 @@ class PLink
     {
         superview.PDrawLink(pos_1: node_1.centerPoint, pos_2: node_2.centerPoint)
     }
-    
+
     
 }
 
