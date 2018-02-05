@@ -9,19 +9,5 @@
 import Foundation
 import Cocoa
 
-/*
-class PCrawlingNode : PFunctionNode
-{
-    
-    lazy private var _crawler = DemoWordCrawler()
-    
-    override func initNodeData() {
-        
-    }
-    
-    override func draw(_ dirtyRect : NSRect)
-    {
-        
-    }
-}
-*/
+
+

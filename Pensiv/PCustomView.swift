@@ -37,14 +37,18 @@ extension NSView
         
     }
     
-    @objc func PFindEmptyPosition() -> CGPoint {
-        return CGPoint()
-    }
-    
-    @objc func PCreateNode(position touchPoint : CGPoint) {
+    @objc func PDrawLink(pos_1 pos1 : CGPoint, pos_2 pos2 : CGPoint) {
         
     }
+    
+    @objc func PCreateNode(text str : String, position pos : CGPoint) {
+        
+    }
+    
 }
+
+
+
 
 
 
@@ -53,33 +57,17 @@ class PCustomView : NSView
     
     var viewNumber : Int = 1
     
-    /*
-    override var isFlipped: Bool{
-        get {
-            return false
-        }
-    }*/
-   
-    var nodetable = [PNode]()
-    
-   // var trackingarea : NSTrackingArea?
-    
-    
     var dataManager : PDataManager?
     
-    func initDataBase()
-    {
-        if let dele = NSApplication.shared.delegate as? AppDelegate
-        {
+    func initDataBase() {
+        if let dele = NSApplication.shared.delegate as? AppDelegate {
             dataManager = PDataManager(mother : dele)
         }
-        
     }
     
     
     override func viewDidEndLiveResize() {
-        
-        //Struct is copy value
+        //Struct is copy-based value
         var frame = NSApplication.shared.windows.first?.frame
         frame?.origin = CGPoint(x: 0, y: 0)
         self.frame = frame!
@@ -92,91 +80,104 @@ class PCustomView : NSView
         return true
     }
     
-    /*
-    override func updateTrackingAreas() {
-        if (trackingarea != nil)
-        {
-            self.removeTrackingArea(trackingarea!)
-        }
-        
-        let options : NSTrackingArea.Options = [.activeWhenFirstResponder, .mouseMoved]
-        
-        trackingarea = NSTrackingArea(rect: self.bounds, options: options, owner: self, userInfo: nil)
-        
-        self.addTrackingArea(trackingarea!)
-        
-    }
-    */
+    
+    
     
     var selectedNode : PNode? = nil
     
-    
-    override func PSelectNode(target node: PNode) {
-        if node == nil {
-            return
+    func clearSelectedNode() {
+        if self.selectedNode != nil {
+            self.selectedNode?.layer?.backgroundColor = CGColor.black
         }
+        
+        self.selectedNode = nil
+    }
+    
+    func activateNode(target node : PNode) {
+        if self.selectedNode == nil {
+            self.selectedNode = node
+            self.selectedNode?.layer?.backgroundColor = CGColor(red: 255, green: 0, blue: 0, alpha: 1)
+        }
+    }
+    
+    
+    
+    
+    var linkTable = [PLink]()
+    
+    func createLink(node_1 node1 : PNode, node_2 node2 : PNode)
+    {
+        let link = PLink(view : self, node_1 : node1, node_2 : node2)
+        self.linkTable.append(link)
+        self.needsDisplay = true
+    }
+    
+    //노드가 없으면 활성화하고, 이미 있으면 둘 사이를 링크로 연결한다.
+    override func PSelectNode(target node: PNode) {
         
         //이미 활성화된 노드와 다르면
             //스킵, 혹은 라인 생성?
         //활성화 노드가 없다면,
             //해당 노드를 활성화시킨다
         if self.selectedNode == nil {
-            print("\(self.selectedNode?.nodeNumber) is activated")
-            self.selectedNode = node
-            self.selectedNode?.layer?.backgroundColor = CGColor(red: 255, green: 0, blue: 0, alpha: 1)
+            self.activateNode(target: node)
+            
         }
-        else if self.selectedNode == node { //활성화된 노드를 클릭했다면, 활성화를 중단한다.
-            print("\(self.selectedNode?.nodeNumber) is deactivated")
-            self.selectedNode?.layer?.backgroundColor = CGColor.black
-            self.selectedNode = nil
+        else {
+            //활성화된 노드를 클릭했다면, 활성화를 중단한다.
+            //두개가 다르면 링크 연결
+            if self.selectedNode != node {
+                createLink(node_1: self.selectedNode!, node_2: node)
+            }
+            else {
+                self.clearSelectedNode()
+            }
         }
     }
     
-    override func PFindEmptyPosition() -> CGPoint {
-        return CGPoint()
-    }
     
-    override func PCreateNode(position touchPoint : CGPoint) {
-        
-    }
     
-    func createNode()
-    {
-        //생성 및 서브뷰 등록
-        //데이터베이스에 본 뷰넘버를 기반으로 저장
+    
+    override func PDrawLink(pos_1 pos1: CGPoint, pos_2 pos2: CGPoint) {
+        let a = NSBezierPath()
+        a.move(to: pos1)
+        a.line(to: pos2)
+        a.lineWidth = 2.0
+        a.stroke()
     }
     
     
     
-    override func mouseDown(with event: NSEvent) {
+    var nodetable = [PNode]()
+    
+    
+    override func mouseUp(with event: NSEvent) {
         //hit test 에 걸린 뷰가 존재한다면, 이 매서드는 호출되지 않는다.
-        //따라서 이 매서드가 호출되었다면, 노드는 클릭되지 않은 것이다. 따라서 활성화 노드는 제거된다.
-       
-        if selectedNode != nil
-        {
-            selectedNode?.test()
-        }
-        
-        //self.selectedNode = nil
-        
-        
-        let eventOrigin = event.locationInWindow
+        //따라서 이 매서드가 호출되었다면, 노드는 클릭되지 않은 것이다. 따라서 활성화 노드를 제거한다.
         
         
         //마우스가 정확히 같은 곳을 클릭했을 때, 이벤트의 클릭 카운트가 증가한다.
-        
         //노드가 생성된 뒤, 마우스를 움직이지 않으면 노드를 클릭해도 노드색깔이 바뀌지 않는다.
+        let eventOrigin = event.locationInWindow
         
-        if(event.clickCount == 2)
-        {
+        if event.clickCount == 2 {
             let pnode = PTextNode(position: eventOrigin)
+            self.nodetable.append(pnode)
             self.addSubview(pnode)
             
             print("Create new PNode at (\(eventOrigin.x), \(eventOrigin.y))")
             
+            if self.selectedNode != nil {
+                createLink(node_1: self.selectedNode!, node_2: pnode)
+            }
             
-            pnode.text.mouseDown(with: event)
+            pnode.text.mouseUp(with: event)
             //dataManager?.saveData(str: "ssss")
+        }
+        else
+        {
+            //clearSelectedNode()
+            window?.makeFirstResponder(nil)
         }
         
     }
@@ -201,6 +202,12 @@ class PCustomView : NSView
     override func draw(_ dirtyRect: NSRect) {
         
         //Line들이 먼저 그려져야하므로, 모든 라인 드로우를 여기에서 담당
+        
+        for link in linkTable {
+            link.draw()
+        }
+        
+        
         
         //서브 뷰의 드로잉은 여기서 처리하지 않고, 각자 알아서 하는 것 같다.
         
@@ -228,10 +235,33 @@ class PCustomView : NSView
 
 
 
+/*
+ override var isFlipped: Bool{
+ get {
+ return false
+ }
+ }*/
 
 
 
 
+
+
+/*
+ override func updateTrackingAreas() {
+ if (trackingarea != nil)
+ {
+ self.removeTrackingArea(trackingarea!)
+ }
+ 
+ let options : NSTrackingArea.Options = [.activeWhenFirstResponder, .mouseMoved]
+ 
+ trackingarea = NSTrackingArea(rect: self.bounds, options: options, owner: self, userInfo: nil)
+ 
+ self.addTrackingArea(trackingarea!)
+ 
+ }
+ */
 
 
 

@@ -12,30 +12,25 @@ import CoreGraphics
 
 
 
-
 class PNode : NSView    //PNode를 상속하는 모든 노드가 기본 뷰를 가질 예정으로, 미리 상속받음
 {
     var nodeNumber : Int = 1
     
     //차후 팩토리 객체화할것
-    static let baseWidth : CGFloat = 70.0
-    static let baseHeight : CGFloat = 40.0
+    static let baseWidth : CGFloat = 60.0
+    static let baseHeight : CGFloat = 30.0
     
-    static let gap : CGFloat = 10.0
+    static let gap : CGFloat = 5.0
     
-    //마인드맵의 모든 노드들의 기본 인터페이스
     
-    var centerPoint : CGPoint?
+    
+    
+    var centerPoint : CGPoint
     
     
     
     //선택 활성화나, 서브메뉴 출력 관리(?)
     //정렬과 위치 관련 매서드를 나중에 추가할것.
-    override init(frame frameRect: NSRect)
-    {
-        super.init(frame: frameRect)
-    }
-    
     init(position touchPoint : CGPoint)
     {
         centerPoint = touchPoint
@@ -68,266 +63,128 @@ class PNode : NSView    //PNode를 상속하는 모든 노드가 기본 뷰를 �
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func mouseDown(with event: NSEvent) {
-        print("pnode touch")
-        
-        superview?.PSelectNode(target: self)
-        
-    }
+    
+    
+    var moved : Bool = false
     
     override func mouseDragged(with event: NSEvent) {
+        
         self.frame.origin.x += event.deltaX
         self.frame.origin.y -= event.deltaY //어째서 Y 변화량의 축이 다르지?
         
+        self.centerPoint.x += event.deltaX
+        self.centerPoint.y -= event.deltaY  //어째서 Y 변화량의 축이 다르지?
         
-        //self.setNeedsDisplay()
+        //y축이 인버트되어있음
+        //print("\(event.deltaX), \(event.deltaY)")
+        
+        superview?.needsDisplay = true
+        
+        self.moved = true
     }
     
     override func mouseUp(with event: NSEvent) {
+        if self.moved == false {
+            superview?.PSelectNode(target: self)
+        }
         
-    }
-    
-    func test()
-    {
-        
+        self.moved = false
     }
     
 }
+
+
+
+
+
 
 
 class PTextField : NSTextField
 {
-    override func mouseDown(with event: NSEvent) {
-        
-        if event.clickCount == 2
-        {
-            self.isEditable = true
-            self.becomeFirstResponder()
-        }
-        else
-        {
-            super.mouseDown(with: event)
-        }
-        
-        //self.isEditable = true
-        //self.isSelectable = true
-        print("text touch")
-        //super.mouseDown(with: event)
-    }
     
-    override func mouseDragged(with event: NSEvent) {
-        super.mouseDragged(with: event)
-    }
-    
-    override func mouseUp(with event: NSEvent) {
-        
-    }
-    
-    //해당 매서드는 true시 자동으로 first responder를 반납한다
-    override func textShouldEndEditing(_ textObject: NSText) -> Bool {
-        self.isEditable = false
-        self.isSelectable = false
-        
-        return true
-    }
-}
-
-class PTextNode : PNode
-{
-    var text : PTextField
-    
-    override func test()
+    init(frame frameRect : NSRect, text str : String)
     {
-        print(1)
-        
-        window?.makeFirstResponder(nil)
-        
-    }
-    
-    override init(position touchPoint : CGPoint)
-    {
-        let frameRect = NSRect(x: PNode.gap, y: PNode.gap, width: PNode.baseWidth, height: PNode.baseHeight)
-        
-        text = PTextField(frame : frameRect)
-        text.stringValue = "text"
-        //super.init 전에 내부 변수를 모두 초기화해야함
-        
-        text.isEditable = false
-        text.becomeFirstResponder()
-        
-        super.init(position : touchPoint)
-        
-        self.addSubview(text)   //super.init 이후에 self 사용가능
-    }
-    
-    
-    
-    required init?(coder decoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func mouseDown(with event: NSEvent) {
-        //text.isEditable=true
-        //text.mouseDown(with: event)
-        
-        print("Pnode touch")
-        
-        super.mouseDown(with: event)
-        
-    }
-    
-    override func mouseDragged(with event: NSEvent) {
-        super.mouseDragged(with: event)
-    }
-    
-}
-
-
-/*
- override func draw(_ dirtyRect: NSRect) {
- //text?.draw(dirtyRect)
- 
- /*
- let a = NSBezierPath()
- a.move(to: NSPoint(x: 0, y: 0))
- a.line(to: NSPoint(x: 100, y: 100))
- a.lineWidth = 2.0
- NSColor.red.setFill()
- a.stroke()*/
- }
- */
-
-
-/*
-
-class PTextNode : NSTextField, NSTextFieldDelegate
-{
-    let nodeType = P_CLASS_TYPE.PNODE
-    
-    override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
-        self.isEditable = true
-        self.isSelectable = true
+        self.stringValue = str
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func mouseDown(with event: NSEvent) {
-        self.isEditable = true
-        self.isSelectable = true
-        self.becomeFirstResponder()
+    
+    
+    override func mouseUp(with event: NSEvent) {
+        if event.clickCount == 2 {
+            self.isEditable = true
+            self.becomeFirstResponder()
+        } else {
+            super.mouseUp(with: event)
+        }
     }
     
-    
-    override func mouseDragged(with event: NSEvent) {
+    //해당 매서드는 true시 자동으로 return시에 first responder를 반납한다
+    override func textShouldEndEditing(_ textObject: NSText) -> Bool {
         self.isEditable = false
         self.isSelectable = false
         
-        self.frame.origin.x += event.deltaX
-        self.frame.origin.y -= event.deltaY //어째서 Y 변화량의 축이 다르지?
-        
-        self.setNeedsDisplay()
-    }
-    
-    
-    
-    
-    
-    override func textShouldEndEditing(_ textObject: NSText) -> Bool {
-        //self.isEditable = false
-        self.isSelectable = false
-        self.resignFirstResponder()
         return true
     }
-    
-    
-    
-    override func draw(_ dirtyRect: NSRect) {
-        super.draw(dirtyRect)
-    }
 }
-*/
-/*
 
-class PNode : NSButton
+
+
+
+
+
+
+
+
+class PTextNode : PNode
 {
-    let _type = P_CLASS_TYPE.PNODE
+    let textfield : PTextField
     
-    var _isTouched = false
-    var _isMoved = false
-    var _isActivated = false
-    
-    var field : NSTextField?
-    
-    
-    
-    var _motherView : PCustomView?
-    
-    func setMotherView(target view : PCustomView)
+    override init(position touchPoint : CGPoint)
     {
-        _motherView = view
+        let frameRect = NSRect(x: PNode.gap, y: PNode.gap, width: PNode.baseWidth, height: PNode.baseHeight)
+        
+        textfield = PTextField(frame : frameRect, text : "Text")
+        //super.init 전에 내부 변수를 모두 초기화해야함
+        
+        textfield.isEditable = false
+
+        
+        
+        super.init(position : touchPoint)
+        
+        self.addSubview(textfield)   //super.init 이후에 self 사용가능
     }
     
-    func initNodeData()
+    init(position touchPoint : CGPoint, text str : String)
     {
-        field = NSTextField(frame : self.frame)
-        self.addSubview(field!)
-        //self.superview 가 종속된 뷰를 가리킴 - 여기서는 PCustomView
+        let frameRect = NSRect(x: PNode.gap, y: PNode.gap, width: PNode.baseWidth, height: PNode.baseHeight)
+        
+        textfield = PTextField(frame : frameRect, text : str)
+        //super.init 전에 내부 변수를 모두 초기화해야함
+        
+        textfield.isEditable = false
         
         
+        
+        super.init(position : touchPoint)
+        
+        self.addSubview(textfield)   //super.init 이후에 self 사용가능
     }
     
-    func activate()
-    {
-        if _isActivated == false
-        {
-            _isActivated = true
-            
-        }
-    }
-    
-    
-    func deactivate()
-    {
-        
+    required init?(coder decoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     
-    override func mouseDown(with event: NSEvent) {
-        _isTouched = true
-        
-        self.setNeedsDisplay()
-    }
-    
-    override func mouseDragged(with event: NSEvent) {
-        self.frame.origin.x += event.deltaX
-        self.frame.origin.y -= event.deltaY //어째서 Y 변화량의 축이 다르지?
-        
-        _isMoved = true
-        
-        self.setNeedsDisplay()
-    }
-    
-    override func mouseUp(with event: NSEvent) {
-        _isTouched = false
-        if(_isMoved == false)
-        {
-            _isActivated = !_isActivated
-        }
-        _isMoved = false
-        
-        self.setNeedsDisplay()
-    }
-    override func draw(_ dirtyRect: NSRect) {
-        
-        for x in self.subviews
-        {
-            x.draw(dirtyRect)
-        }
-        super.draw(dirtyRect)
-    }
+}
+
+
+/*
     
     //var trackingarea : NSTrackingArea?
     

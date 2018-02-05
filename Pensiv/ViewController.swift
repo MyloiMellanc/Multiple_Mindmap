@@ -49,8 +49,10 @@ class ViewController: NSViewController
         NSLog("Screen resolution is (\(x!.width), \(x!.height))")
         
         scrollview.wantsLayer = true
-        //scrollview.becomeFirstResponder()
-        //scrollview.updateTrackingAreas()
+        
+        
+        
+        
         //scrollview.initDataBase()
         
         
@@ -73,27 +75,13 @@ class ViewController: NSViewController
     
     
     override func mouseMoved(with event: NSEvent) {
-        //scrollview.mouseMoved(with: event)
         
     }
     
     
     
     override func mouseDown(with event: NSEvent) {
-        //let position = event.locationInWindow
         
-        //let tf = NSTextField(string: "demo")
-        
-        //let origin = CGRect(x: position.x, y: position.y, width: 100, height: 100)
-        
-        //let lab = NSTextView(frame: origin)
-        //lab.string = "demo"
-        
-        //scrollview.addSubview(lab)
-        
-        //NSLog("\(event.clickCount)")
-        
-        //scrollview.mouseDown(with: event)
     }
 
 }

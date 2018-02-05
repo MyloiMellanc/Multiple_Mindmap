@@ -20,10 +20,7 @@
 		BFB1501B1FB1F04A008D0BCE /* PensivUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB1501A1FB1F04A008D0BCE /* PensivUITests.swift */; };
 		BFB150291FB1F569008D0BCE /* PNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB150281FB1F569008D0BCE /* PNode.swift */; };
 		BFB1502B1FB1F574008D0BCE /* PLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB1502A1FB1F574008D0BCE /* PLink.swift */; };
-		BFB1502D1FB1F57C008D0BCE /* PAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB1502C1FB1F57C008D0BCE /* PAction.swift */; };
-		BFB1502F1FB1F58B008D0BCE /* PTouchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB1502E1FB1F58B008D0BCE /* PTouchManager.swift */; };
 		BFB150311FB1F593008D0BCE /* PSideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB150301FB1F593008D0BCE /* PSideMenu.swift */; };
-		BFB150331FB1F68F008D0BCE /* PGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB150321FB1F68F008D0BCE /* PGroup.swift */; };
 		BFD2B8092008F8920043509D /* PNodeEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2B8072008F8920043509D /* PNodeEntity+CoreDataClass.swift */; };
 		BFD2B80A2008F8920043509D /* PNodeEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2B8082008F8920043509D /* PNodeEntity+CoreDataProperties.swift */; };
 		BFD2B80C2008F9230043509D /* PDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2B80B2008F9230043509D /* PDataManager.swift */; };
@@ -72,10 +69,7 @@
 		BFB1501C1FB1F04A008D0BCE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BFB150281FB1F569008D0BCE /* PNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PNode.swift; sourceTree = "<group>"; };
 		BFB1502A1FB1F574008D0BCE /* PLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLink.swift; sourceTree = "<group>"; };
-		BFB1502C1FB1F57C008D0BCE /* PAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PAction.swift; sourceTree = "<group>"; };
-		BFB1502E1FB1F58B008D0BCE /* PTouchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PTouchManager.swift; sourceTree = "<group>"; };
 		BFB150301FB1F593008D0BCE /* PSideMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSideMenu.swift; sourceTree = "<group>"; };
-		BFB150321FB1F68F008D0BCE /* PGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PGroup.swift; sourceTree = "<group>"; };
 		BFD2B8072008F8920043509D /* PNodeEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PNodeEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		BFD2B8082008F8920043509D /* PNodeEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PNodeEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		BFD2B80B2008F9230043509D /* PDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDataManager.swift; sourceTree = "<group>"; };
@@ -170,10 +164,7 @@
 				BFD2B80B2008F9230043509D /* PDataManager.swift */,
 				BFB150281FB1F569008D0BCE /* PNode.swift */,
 				BF4B28312010F61200FE943B /* PCrawlingNode.swift */,
-				BFB150321FB1F68F008D0BCE /* PGroup.swift */,
 				BFB1502A1FB1F574008D0BCE /* PLink.swift */,
-				BFB1502C1FB1F57C008D0BCE /* PAction.swift */,
-				BFB1502E1FB1F58B008D0BCE /* PTouchManager.swift */,
 				BFB150301FB1F593008D0BCE /* PSideMenu.swift */,
 				BFB150001FB1F049008D0BCE /* Assets.xcassets */,
 				BFB150021FB1F049008D0BCE /* Main.storyboard */,
@@ -495,18 +486,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BFB150331FB1F68F008D0BCE /* PGroup.swift in Sources */,
 				BF907E7E200D207D002257D3 /* WordCrawlingDemo.swift in Sources */,
 				BFD2B80A2008F8920043509D /* PNodeEntity+CoreDataProperties.swift in Sources */,
 				BFB150291FB1F569008D0BCE /* PNode.swift in Sources */,
 				BFD2B8092008F8920043509D /* PNodeEntity+CoreDataClass.swift in Sources */,
 				BFFF40E21FC09CCD00A83D59 /* PCustomView.swift in Sources */,
 				BFB1502B1FB1F574008D0BCE /* PLink.swift in Sources */,
-				BFB1502D1FB1F57C008D0BCE /* PAction.swift in Sources */,
 				BFB14FFC1FB1F049008D0BCE /* ViewController.swift in Sources */,
 				BFB150311FB1F593008D0BCE /* PSideMenu.swift in Sources */,
 				BFB14FFA1FB1F049008D0BCE /* AppDelegate.swift in Sources */,
-				BFB1502F1FB1F58B008D0BCE /* PTouchManager.swift in Sources */,
 				BFD2B80C2008F9230043509D /* PDataManager.swift in Sources */,
 				BF4B28322010F61200FE943B /* PCrawlingNode.swift in Sources */,
 				BFB14FFF1FB1F049008D0BCE /* Pensiv.xcdatamodeld in Sources */,
