@@ -51,7 +51,6 @@ class ViewController: NSViewController
         scrollview.wantsLayer = true
         
         
-        
         var list = Set<PLink>()
         
         let view = NSView()

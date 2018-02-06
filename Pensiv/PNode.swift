@@ -130,6 +130,12 @@ class PTextField : NSTextField
         
         return true
     }
+    
+    override func keyUp(with event: NSEvent) {
+        //이 매서드가 없다면, 이벤트는 리스폰더 체인을 거쳐 PCustomView로 넘어간다.
+        //리스폰더 체인은 오버라이딩된 매서드의 여부로 도달을 확인하는 것 같다.
+        super.keyUp(with : event) //이 매서드는 이벤트를 다시 체인으로 넘긴다.
+    }
 }
 
 

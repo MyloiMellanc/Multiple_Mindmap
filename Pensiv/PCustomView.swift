@@ -10,6 +10,7 @@ import Foundation
 import Cocoa
 import CoreData
 import CoreGraphics
+import QuartzCore
 
 
 
@@ -80,6 +81,11 @@ class PCustomView : NSView
         return true
     }
     
+    
+    
+    override func keyUp(with event: NSEvent) {
+        print(event.characters!)
+    }
     
     
     
@@ -186,18 +192,46 @@ class PCustomView : NSView
     }
     
     
+    
+    var startPoint : CGPoint!
+    var shapeLayer : CAShapeLayer!
+    
     //드래그도 필연적으로 업다운 매서드를 호출시키게 된다.
     //다운은 단순 다운 선언. 업이 되엇을때 해결
     override func rightMouseDown(with event: NSEvent) {
-        print(11)
+        self.startPoint = self.convert(event.locationInWindow, from: nil)
+        
+        shapeLayer = CAShapeLayer()
+        shapeLayer.lineWidth = 1.0
+        shapeLayer.fillColor = NSColor.clear.cgColor
+        shapeLayer.strokeColor = NSColor.black.cgColor
+        shapeLayer.lineDashPattern = [10, 5]
+        self.layer?.addSublayer(shapeLayer)
+        
+        var dashAnimation = CABasicAnimation()
+        dashAnimation = CABasicAnimation(keyPath: "lineDashPhase")
+        dashAnimation.duration = 0.75
+        dashAnimation.fromValue = 0.0
+        dashAnimation.toValue = 15.0
+        dashAnimation.repeatCount = .infinity
+        shapeLayer.add(dashAnimation, forKey: "linePhase")
     }
     
     override func rightMouseDragged(with event: NSEvent) {
-        print(22)
+        let point : NSPoint = self.convert(event.locationInWindow, from: nil)
+        let path = CGMutablePath()
+        
+        path.move(to: self.startPoint)
+        path.addLine(to: NSPoint(x : self.startPoint.x, y : point.y))
+        path.addLine(to: point)
+        path.addLine(to: NSPoint(x: point.x, y: self.startPoint.y))
+        path.closeSubpath()
+        self.shapeLayer.path = path
     }
     
     override func rightMouseUp(with event: NSEvent) {
-        print(33)
+        self.shapeLayer.removeFromSuperlayer()
+        self.shapeLayer = nil
     }
     
     
