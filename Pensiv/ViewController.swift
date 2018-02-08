@@ -71,7 +71,7 @@ class ViewController: NSViewController
         list.insert(t)
         print(list.count)
         
-        //scrollview.initDataBase()
+        scrollview.initDataBase()
         
         
         //let thread = Thread(target: self, selector: Selector("demoCrawling"), object: nil)

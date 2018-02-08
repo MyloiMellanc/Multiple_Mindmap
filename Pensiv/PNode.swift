@@ -96,10 +96,23 @@ class PNode : NSView    //PNode를 상속하는 모든 노드가 기본 뷰를 �
     
     override func mouseUp(with event: NSEvent) {
         if self.moved == false {
-            superview?.PSelectNode(target: self)
+            superview?.PSelectNode(target: self, key : event)
         }
         
         self.moved = false
+    }
+    
+    
+    override var acceptsFirstResponder: Bool {
+        return true
+        
+    }
+    
+    override func keyUp(with event: NSEvent) {
+        print(1)
+        //이 매서드가 없다면, 이벤트는 리스폰더 체인을 거쳐 PCustomView로 넘어간다.
+        //리스폰더 체인은 오버라이딩된 매서드의 여부로 도달을 확인하는 것 같다.
+        super.keyUp(with : event) //이 매서드는 이벤트를 다시 체인으로 넘긴다.
     }
     
 }
@@ -124,7 +137,6 @@ class PTextField : NSTextField
     }
     
     
-    
     override func mouseUp(with event: NSEvent) {
         if event.clickCount == 2 {
             self.isEditable = true
@@ -134,6 +146,7 @@ class PTextField : NSTextField
         }
     }
     
+    
     //해당 매서드는 true시 자동으로 return시에 first responder를 반납한다
     override func textShouldEndEditing(_ textObject: NSText) -> Bool {
         self.isEditable = false
@@ -142,11 +155,19 @@ class PTextField : NSTextField
         return true
     }
     
+    
+    override var acceptsFirstResponder: Bool {
+        return true
+        
+    }
+    
     override func keyUp(with event: NSEvent) {
+        print(3)
         //이 매서드가 없다면, 이벤트는 리스폰더 체인을 거쳐 PCustomView로 넘어간다.
         //리스폰더 체인은 오버라이딩된 매서드의 여부로 도달을 확인하는 것 같다.
         super.keyUp(with : event) //이 매서드는 이벤트를 다시 체인으로 넘긴다.
     }
+    
 }
 
 
@@ -197,6 +218,22 @@ class PTextNode : PNode
         fatalError("init(coder:) has not been implemented")
     }
     
+    
+    override var acceptsFirstResponder: Bool {
+        return true
+    }
+    
+    override func keyUp(with event: NSEvent) {
+        print(2)
+        if textfield.isEditable == true {
+            
+        } else {
+        
+        //이 매서드가 없다면, 이벤트는 리스폰더 체인을 거쳐 PCustomView로 넘어간다.
+        //리스폰더 체인은 오버라이딩된 매서드의 여부로 도달을 확인하는 것 같다.
+        super.keyUp(with : event) //이 매서드는 이벤트를 다시 체인으로 넘긴다.
+        }
+    }
 }
 
 
