@@ -24,13 +24,6 @@ import QuartzCore
  *
  */
 
-enum P_NODE_TYPE {
-    case TEXT
-    case CRAWLING
-}
-
-
-
 
 extension NSView
 {
@@ -77,15 +70,7 @@ class PCustomView : NSView
     override func viewWillDraw() {
         self.layer?.backgroundColor = CGColor.white
     }
-    override func performKeyEquivalent(with event: NSEvent) -> Bool {
-        return true
-    }
     
-    
-    
-    override func keyUp(with event: NSEvent) {
-        print(event.characters!)
-    }
     
     
     
@@ -154,13 +139,94 @@ class PCustomView : NSView
     
     
     
+    override func draw(_ dirtyRect: NSRect) {
+        
+        //Line들이 먼저 그려져야하므로, 모든 라인 드로우를 여기에서 담당
+        
+        for link in linkTable {
+            link.draw()
+        }
+        
+        
+        
+        //서브 뷰의 드로잉은 여기서 처리하지 않고, 각자 알아서 하는 것 같다.
+        
+        //super.draw(dirtyRect)
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    override func hitTest(_ point: NSPoint) -> NSView? {
+        
+        for subview in subviews
+        {
+            let converted_point = subview.convert(point, from: subview)
+            let hittestview : NSView? = subview.hitTest(converted_point)
+            if (hittestview != nil)
+            {
+                return hittestview
+            }
+        }
+        
+        return self
+    }
+    
+    
+    
+    
+    
     var nodetable = [PNode]()
+    
+    
+    
+    
+    
+    /* 해당 이벤트를 여기서 사용한다 라는 의미
+     하지만 그냥 true를 리턴하면 모든 키 이벤트를 여기로 보내므로, 종료 단축키와 같은 것도 안됨
+     override func performKeyEquivalent(with event: NSEvent) -> Bool {
+     return true
+     }
+     */
+    
+    override var acceptsFirstResponder: Bool {
+        return true
+    }
+    
+    
+    override func keyDown(with event: NSEvent) {
+        switch (event.keyCode)
+        {
+        case 53:
+            print("esc")
+        default:
+            print(event.characters!)
+        }
+        
+        
+        
+        if 1 > 2
+        {
+            
+        }
+        else //이 뷰에서 사용하지 않는 키는 밑으로 보낸다
+        {
+            super.keyDown(with : event)
+        }
+    }
     
     
     override func mouseUp(with event: NSEvent) {
         //hit test 에 걸린 뷰가 존재한다면, 이 매서드는 호출되지 않는다.
         //따라서 이 매서드가 호출되었다면, 노드는 클릭되지 않은 것이다. 따라서 활성화 노드를 제거한다.
-        
         
         //마우스가 정확히 같은 곳을 클릭했을 때, 이벤트의 클릭 카운트가 증가한다.
         //노드가 생성된 뒤, 마우스를 움직이지 않으면 노드를 클릭해도 노드색깔이 바뀌지 않는다.
@@ -186,7 +252,8 @@ class PCustomView : NSView
         else
         {
             //clearSelectedNode()
-            window?.makeFirstResponder(nil)
+            //이 뷰를 다시 첫 리스폰더로 지정
+            window?.makeFirstResponder(self)
         }
         
     }
@@ -235,39 +302,15 @@ class PCustomView : NSView
     }
     
     
-    
-    override func draw(_ dirtyRect: NSRect) {
-        
-        //Line들이 먼저 그려져야하므로, 모든 라인 드로우를 여기에서 담당
-        
-        for link in linkTable {
-            link.draw()
-        }
-        
-        
-        
-        //서브 뷰의 드로잉은 여기서 처리하지 않고, 각자 알아서 하는 것 같다.
-        
-        //super.draw(dirtyRect)
-        
-    }
-    
-    override func hitTest(_ point: NSPoint) -> NSView? {
-        
-        for subview in subviews
-        {
-            let converted_point = subview.convert(point, from: subview)
-            let hittestview : NSView? = subview.hitTest(converted_point)
-            if (hittestview != nil)
-            {
-                return hittestview
-            }
-        }
-        
-        return self
-    }
  
 }
+
+
+
+
+
+
+
 
 
 
@@ -278,9 +321,6 @@ class PCustomView : NSView
  return false
  }
  }*/
-
-
-
 
 
 

@@ -49,7 +49,9 @@ class ViewController: NSViewController
         NSLog("Screen resolution is (\(x!.width), \(x!.height))")
         
         scrollview.wantsLayer = true
-        
+        //scrollview.becomeFirstResponder()
+        self.nextResponder = scrollview
+
         
         var list = Set<PLink>()
         
@@ -89,17 +91,6 @@ class ViewController: NSViewController
         }
     }
     
-    
-    override func mouseMoved(with event: NSEvent) {
-        
-    }
-    
-    
-    
-    override func mouseDown(with event: NSEvent) {
-        
-    }
-
 }
 
 
