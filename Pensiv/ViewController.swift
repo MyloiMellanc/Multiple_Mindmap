@@ -53,24 +53,6 @@ class ViewController: NSViewController
         self.nextResponder = scrollview
 
         
-        var list = Set<PLink>()
-        
-        let view = NSView()
-        let node = PTextNode(position: CGPoint(), text: "ss")
-        let node2 = PTextNode(position: CGPoint(), text: "sd")
-        
-        let z = PLink(view: view, node_1: node, node_2: node)
-        let y = PLink(view: view, node_1: node, node_2: node)
-        let t = PLink(view: view, node_1: node, node_2: node2)
-        
-        print(list.count)
-        list.insert(z)
-        print(list.count)
-        list.insert(y)
-        print(list.count)
-        list.insert(t)
-        print(list.count)
-        
         scrollview.initDataBase()
         
         

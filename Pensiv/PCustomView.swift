@@ -38,31 +38,28 @@ extension NSView
     @objc func PCreateNode(text str : String, position pos : CGPoint) {
         
     }
-    
-    @objc func PDeleteNode(target node : PNode) {
-        
-    }
 }
 
 
 
 
-
+//나중에 view controller 설정할 때, 노드처럼 넘버 만들것
 
 class PCustomView : NSView
 {
     
     var viewNumber : Int = 1
+    //static var viewCount : Int = 0
     
     var dataManager : PDataManager?
     
+    
     func initDataBase() {
-        PCustomView.SS = self
         if let dele = NSApplication.shared.delegate as? AppDelegate {
             dataManager = PDataManager(mother : dele)
         }
     }
-    static var SS : PCustomView?
+    
     
     override func viewDidEndLiveResize() {
         //Struct is copy-based value
@@ -102,20 +99,53 @@ class PCustomView : NSView
     }
     
     
-    /*
-    var linkList = [PLink]()
+    
+    func deleteNode(target node : PNode) {
+        for link in node.linkList {
+            self.deleteLink(link: link)
+        }
+        
+        node.removeFromSuperview()
+        self.nodeList.remove(node)
+    }
+    
+    
+    
+    
+    var linkList = Set<PLink>()
     
     func createLink(node_1 node1 : PNode, node_2 node2 : PNode)
     {
-        let link = PLink(view : self, node_1 : node1, node_2 : node2)
-        self.linkTable.append(link)
-        self.needsDisplay = true
+        let link = PFreeLink(view : self, node1 : node1, node2 : node2)
+        self.linkList.insert(link)
+        node1.addLink(link: link)
+        node2.addLink(link: link)
+        
     }
-    */
+    
+    func searchLink(node_1 node1 : PNode, node_2 node2 : PNode) -> PLink? {
+        for link in self.linkList {
+            if (link.superview == self) && (link.node_1 == node1) && (link.node_2 == node2) {
+                return link
+            }
+            else if (link.superview == self) && (link.node_2 == node1) && (link.node_1 == node2) {
+                return link
+            }
+        }
+        
+        return nil
+    }
+    
+    func deleteLink(link : PLink) {
+        link.node_1.detachLink(link: link)
+        link.node_2.detachLink(link: link)
+        self.linkList.remove(link)
+    }
     
     
     override func PSelectNode(target node: PNode, key event : NSEvent) {
         //이미 활성화 되어있는지 여부, 특정 키 눌려있는지 여부, 그리고 둘다 눌려있다면?
+        //둘다 눌려있다면 걍 시프트가 먼저 적용됨
         if event.modifierFlags.contains(.shift) == true {
             if self.activatedNodeList.contains(node) == true {
                 self.toggleNode(target: node, onoff: false)
@@ -126,7 +156,28 @@ class PCustomView : NSView
             
         }
         else if event.modifierFlags.contains(.control) == true {
-            print("Create Link")
+            if self.activatedNodeList.contains(node) {
+                return
+            }
+            
+            var create_count = 0
+            for act_node in self.activatedNodeList {
+                let link : PLink? = self.searchLink(node_1: act_node, node_2: node)
+                if link == nil {
+                    createLink(node_1: act_node, node_2: node)
+                    create_count += 1
+                }
+                
+            }
+            
+            if create_count == 0 {
+                for act_node in self.activatedNodeList {
+                    let link = self.searchLink(node_1: act_node, node_2: node)
+                    self.deleteLink(link: link!)
+                }
+            }
+            
+            self.needsDisplay = true
         }
         else {
             self.clearActivatedNode()
@@ -152,11 +203,10 @@ class PCustomView : NSView
     override func draw(_ dirtyRect: NSRect) {
         
         //Line들이 먼저 그려져야하므로, 모든 라인 드로우를 여기에서 담당
-        /*
-        for link in linkTable {
+        for link in linkList {
             link.draw()
         }
-        */
+        
         
         
         //서브 뷰의 드로잉은 여기서 처리하지 않고, 각자 알아서 하는 것 같다.
@@ -190,20 +240,19 @@ class PCustomView : NSView
     
     
     
+    
     var nodeList = Set<PNode>()
-    
-    
-    
+
     
     
     // 해당 이벤트를 여기서 사용한다 라는 의미
     // 하지만 그냥 true를 리턴하면 모든 키 이벤트를 여기로 보내므로, 종료 단축키와 같은 것도 안됨
-     /*override func performKeyEquivalent(with event: NSEvent) -> Bool {
+     override func performKeyEquivalent(with event: NSEvent) -> Bool {
      return true
      
-     필요한 키들만 true를 리턴하게 만든다
+     //필요한 키들만 true를 리턴하게 만든다
      }
- */
+ 
     
     override var acceptsFirstResponder: Bool {
         return true
@@ -211,30 +260,25 @@ class PCustomView : NSView
     
     
     override func keyUp(with event: NSEvent) {
-        
-        switch (event.keyCode)
-        {
-        case 53:
-            print("esc")
-            self.clearActivatedNode()
-        default:
-            print(event.characters!)
-        }
-        
-        
         //
         // 무조건 이 뷰가 first responder가 되어야 이 매서드를 사용할 수 있다.
         //
-        
-        /*
-        if 1 > 2
-        {
-            
+        if event.keyCode == 51 {    //DELETE
+            for node in self.activatedNodeList {
+                self.deleteNode(target: node)
+            }
         }
-        else //이 뷰에서 사용하지 않는 키는 밑으로 보낸다
-        {
-            super.keyDown(with : event)
-        }*/
+        else if event.keyCode == 36 {   //ENTER
+            if self.activatedNodeList.count == 1 {
+                self.activatedNodeList.first?.focus()
+            }
+        }
+        else {
+            //이 뷰에서 사용하지 않는 키는 밑으로 보낸다
+            super.keyUp(with: event)
+        }
+        
+        self.needsDisplay = true
     }
     
     
@@ -242,31 +286,29 @@ class PCustomView : NSView
         //hit test 에 걸린 뷰가 존재한다면, 이 매서드는 호출되지 않는다.
         //따라서 이 매서드가 호출되었다면, 노드는 클릭되지 않은 것이다. 따라서 활성화 노드를 제거한다.
         
-        
         //마우스가 정확히 같은 곳을 클릭했을 때, 이벤트의 클릭 카운트가 증가한다.
         //노드가 생성된 뒤, 마우스를 움직이지 않으면 노드를 클릭해도 노드색깔이 바뀌지 않는다.
-        let eventOrigin = event.locationInWindow
+        let eventOrigin = self.convert(event.locationInWindow, to: nil)
         
-        if event.clickCount == 2 {
+        
+        if (event.clickCount == 1) && (event.modifierFlags.contains(.control)) {
+            
+        }
+        else if (event.clickCount == 2) && (event.modifierFlags.contains(.option)) {
             let pnode = PTextNode(position: eventOrigin)
             self.nodeList.insert(pnode)
             self.addSubview(pnode)
             
+            
             print("Create new PNode at (\(eventOrigin.x), \(eventOrigin.y))")
             
-            
-            pnode.textfield.mouseUp(with: event)
-            //dataManager?.saveData(str: "ssss")
-            
-            
-            
+            pnode.focus()
         }
-        else
-        {
-            //clearSelectedNode()
+        else {
             //이 뷰를 다시 첫 리스폰더로 지정
             window?.makeFirstResponder(self)
             
+            //활성화 초기화
             self.clearActivatedNode()
             print("Activated Count : \(self.activatedNodeList.count)")
         }

@@ -10,40 +10,71 @@ import Foundation
 import Cocoa
 
 
-class PLink : Equatable, Hashable
+class PLink : Hashable, Equatable
 {
-    static func ==(lhs: PLink, rhs: PLink) -> Bool {
-        //return (lhs.superview == rhs.superview) && (lhs.node_1 == rhs.node_1) && (lhs.node_2 == lhs.node_2)
-        return true
-    }
-    
     var hashValue: Int {
         get {
-            return 1
+            return superview.viewNumber.hashValue << 15 + node_1.nodeNumber.hashValue + node_2.nodeNumber.hashValue
         }
     }
     
-    let superview : NSView
+    static func ==(lhs: PLink, rhs: PLink) -> Bool {
+        return (lhs.superview == rhs.superview) && (lhs.node_1 == rhs.node_1) && (lhs.node_2 == rhs.node_2)
+    }
+    
+    
+    
+    let superview : PCustomView
     
     let node_1 : PNode
     let node_2 : PNode
     
-    
-    init(view v : NSView, node_1 n1 : PNode, node_2 n2 : PNode)
-    {
-        superview = v
-        node_1 = n1
-        node_2 = n2
+    init(view v : PCustomView, node1 n1 : PNode, node2 n2 : PNode) {
+        self.superview = v
         
+        var node1 = n1
+        var node2 = n2
+        
+        if n2.nodeNumber < n1.nodeNumber {
+            node1 = n2
+            node2 = n1
+        }
+        else if n1.nodeNumber == n2.nodeNumber {
+            print("Link Creation Error")
+            exit(0)
+        }
+        
+        self.node_1 = node1
+        self.node_2 = node2
     }
     
-    func draw()
-    {
-        superview.PDrawLink(pos_1: node_1.centerPoint, pos_2: node_2.centerPoint)
+    func getOppositeNode(node n : PNode) -> PNode {
+        var node = self.node_2
+        
+        if n == self.node_2 {
+            node = self.node_1
+        }
+        
+        return node
     }
-
+    
+    
+    func draw() {
+        self.superview.PDrawLink(pos_1: self.node_1.centerPoint, pos_2: self.node_2.centerPoint)
+    }
     
 }
+
+
+class PFreeLink : PLink
+{
+    override init(view v: PCustomView, node1 n1: PNode, node2 n2: PNode) {
+        super.init(view: v, node1: n1, node2: n2)
+    }
+    
+    
+}
+
 
 
 
