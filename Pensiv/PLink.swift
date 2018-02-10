@@ -10,6 +10,13 @@ import Foundation
 import Cocoa
 
 
+
+enum P_LINK_TYPE {
+    case FREE
+    case ARROW
+}
+
+
 class PLink : Hashable, Equatable
 {
     var hashValue: Int {
@@ -21,8 +28,6 @@ class PLink : Hashable, Equatable
     static func ==(lhs: PLink, rhs: PLink) -> Bool {
         return (lhs.superview == rhs.superview) && (lhs.node_1 == rhs.node_1) && (lhs.node_2 == rhs.node_2)
     }
-    
-    
     
     let superview : PCustomView
     

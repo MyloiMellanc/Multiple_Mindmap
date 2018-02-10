@@ -21,14 +21,17 @@ enum P_NODE_TYPE {
 
 
 
-
-
 class PNode : NSView    //PNode를 상속하는 모든 노드가 기본 뷰를 가질 예정으로, 미리 상속받음
 {
+    
+    //노드 고유 인식 번호 부여 관련
     static var nodeCount : Int = 0
     
     var nodeNumber : Int
     
+    ////////////////////////////////////////////////////////////////
+    
+    //노드 생성시 그래픽 기본값 관련
     //차후 팩토리 객체화할것
     static let baseWidth : CGFloat = 60.0
     static let baseHeight : CGFloat = 30.0
@@ -36,14 +39,20 @@ class PNode : NSView    //PNode를 상속하는 모든 노드가 기본 뷰를 �
     static let gap : CGFloat = 5.0
     
     
+    ////////////////////////////////////////////////////////////////
+    
+    //노드의 Frame은 NSView에서 관리됨.
+    //터치와 링크 드로잉에 중간값이 필요
+    //차후에 문제가 생기면 다시 하드코딩으로 부여하는 것으로 변경
+    var centerPoint : CGPoint {
+        get {
+            return CGPoint(x: self.frame.origin.x + self.frame.size.width / 2, y: self.frame.origin.y + self.frame.size.height / 2)
+        }
+    }
     
     
-    var centerPoint : CGPoint
+    ////////////////////////////////////////////////////////////////
     
-    
-    
-    //선택 활성화나, 서브메뉴 출력 관리(?)
-    //정렬과 위치 관련 매서드를 나중에 추가할것.
     init(position touchPoint : CGPoint)
     {
         //Init Node Number 
@@ -51,8 +60,6 @@ class PNode : NSView    //PNode를 상속하는 모든 노드가 기본 뷰를 �
         self.nodeNumber = PNode.nodeCount
         
         
-        
-        centerPoint = touchPoint
         
         let framePoint = CGPoint(x: touchPoint.x - (PNode.baseWidth / 2 + PNode.gap), y: touchPoint.y - (PNode.baseHeight / 2 + PNode.gap) )
         let frameRect = NSRect(x: framePoint.x, y: framePoint.y, width: PNode.baseWidth + (PNode.gap * 2), height: PNode.baseHeight + (PNode.gap * 2))
@@ -83,6 +90,10 @@ class PNode : NSView    //PNode를 상속하는 모든 노드가 기본 뷰를 �
     }
     
     
+    ////////////////////////////////////////////////////////////////
+    
+    //노드의 링크 관리
+    //순서가 필요 없으므로 집합 자료구조를 사용
     var linkList = Set<PLink>()
     
     func addLink(link : PLink) {
@@ -93,15 +104,15 @@ class PNode : NSView    //PNode를 상속하는 모든 노드가 기본 뷰를 �
         self.linkList.remove(link)
     }
     
+    ////////////////////////////////////////////////////////////////
+    
+    //마우스 터치 관련 매서드
+    //노드를 드래그한 이후에도 mouseUp을 호출하지 않도록 토큰 사용
     var moved : Bool = false
     
     override func mouseDragged(with event: NSEvent) {
-        
         self.frame.origin.x += event.deltaX
         self.frame.origin.y -= event.deltaY //어째서 Y 변화량의 축이 다르지?
-        
-        self.centerPoint.x += event.deltaX
-        self.centerPoint.y -= event.deltaY  //어째서 Y 변화량의 축이 다르지?
         
         //y축이 인버트되어있음
         //print("\(event.deltaX), \(event.deltaY)")
@@ -111,6 +122,8 @@ class PNode : NSView    //PNode를 상속하는 모든 노드가 기본 뷰를 �
         self.moved = true
     }
     
+    
+    //드래그가 아니라면, 해당 노드를 활성화하도록 CustomView에게 호출
     override func mouseUp(with event: NSEvent) {
         if self.moved == false {
             superview?.PSelectNode(target: self, key : event)
@@ -119,9 +132,12 @@ class PNode : NSView    //PNode를 상속하는 모든 노드가 기본 뷰를 �
         self.moved = false
     }
     
+    ////////////////////////////////////////////////////////////////
     
     
     
+    
+    //오버라이드 전용 노드 편집 매서드
     func focus() {
         
     }
@@ -136,6 +152,7 @@ class PNode : NSView    //PNode를 상속하는 모든 노드가 기본 뷰를 �
 class PTextField : NSTextField
 {
     
+    ////////////////////////////////////////////////////////////////
     init(frame frameRect : NSRect, text str : String)
     {
         super.init(frame: frameRect)
@@ -147,10 +164,17 @@ class PTextField : NSTextField
     }
     
     
+    ////////////////////////////////////////////////////////////////
+    
     override func mouseUp(with event: NSEvent) {
         super.mouseUp(with: event)
     }
     
+    
+    
+    
+    
+    ////////////////////////////////////////////////////////////////
     
     //해당 매서드는 true시 자동으로 return시에 first responder를 반납한다
     override func textShouldEndEditing(_ textObject: NSText) -> Bool {
@@ -159,6 +183,11 @@ class PTextField : NSTextField
         
         return true
     }
+    
+    ////////////////////////////////////////////////////////////////
+    
+    
+    
     
     /*
     override var acceptsFirstResponder: Bool {
@@ -184,7 +213,12 @@ class PTextField : NSTextField
 
 class PTextNode : PNode
 {
+    
+    //추가적으로 텍스트필드를 갖고있다. 본 뷰의 서브뷰로 지정됨
     let textfield : PTextField
+    
+    
+    ////////////////////////////////////////////////////////////////
     
     override init(position touchPoint : CGPoint)
     {
@@ -223,7 +257,12 @@ class PTextNode : PNode
     }
     
     
+    ////////////////////////////////////////////////////////////////
     
+    
+    
+    //편집 매서드 오버라이드
+    //텍스트 필드의 편집을 활성화한다
     override func focus() {
         textfield.isEditable = true
         textfield.becomeFirstResponder()

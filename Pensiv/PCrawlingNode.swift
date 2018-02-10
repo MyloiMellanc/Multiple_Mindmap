@@ -11,3 +11,10 @@ import Cocoa
 
 
 
+
+class PCrawlingNode : PNode
+{
+    
+    
+    
+}

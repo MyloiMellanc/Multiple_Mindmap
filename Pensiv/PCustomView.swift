@@ -25,6 +25,9 @@ import QuartzCore
  */
 
 
+
+//노드들이 superview를 통해서 메인 뷰에 요청하는 매서드들
+//superview가 NSView로 레퍼런스되어있어, 부득이하게 Extension으로 인터페이스를 생성해서 사용
 extension NSView
 {
     @objc func PSelectNode(target node : PNode, key event : NSEvent) {
@@ -43,16 +46,19 @@ extension NSView
 
 
 
-//나중에 view controller 설정할 때, 노드처럼 넘버 만들것
-
+//나중에 view controller 설정할 때, 노드처럼 넘버를 부여할 것
 class PCustomView : NSView
 {
     
     var viewNumber : Int = 1
     //static var viewCount : Int = 0
     
-    var dataManager : PDataManager?
     
+    ////////////////////////////////////////////////////////////////
+    
+    //데이터베이스 관련
+    //차후에 ViewController로 담당을 전부 넘겨야한다.
+    var dataManager : PDataManager?
     
     func initDataBase() {
         if let dele = NSApplication.shared.delegate as? AppDelegate {
@@ -61,6 +67,10 @@ class PCustomView : NSView
     }
     
     
+    ////////////////////////////////////////////////////////////////
+    
+    
+    //윈도우 창이 변경되었을 떄 호출
     override func viewDidEndLiveResize() {
         //Struct is copy-based value
         var frame = NSApplication.shared.windows.first?.frame
@@ -73,8 +83,38 @@ class PCustomView : NSView
     }
     
     
+    ////////////////////////////////////////////////////////////////
     
     
+    
+    // 해당 이벤트를 여기서 사용한다 라는 의미
+    // 하지만 그냥 true를 리턴하면 모든 키 이벤트를 여기로 보내므로, 종료 단축키와 같은 것도 안됨
+    override func performKeyEquivalent(with event: NSEvent) -> Bool {
+        return true
+        
+        //필요한 키들만 true를 리턴하게 만든다
+    }
+    
+    
+    override var acceptsFirstResponder: Bool {
+        return true
+    }
+    
+    
+    ////////////////////////////////////////////////////////////////
+    
+    
+    //갖고있는 노드들을 관리, 순서 상관없으므로 집합으로 관리
+    //모든 노드들은 본 리스트 컬렉션과 서브뷰 컬렉션에서 참조된다.
+    var nodeList = Set<PNode>()
+    
+    
+    
+    ////////////////////////////////////////////////////////////////
+    
+    
+    //맵 편집을 위한 활성화 노드 관리는 전부 본 뷰에서 담당한다
+    //순서가 필요없으므로 집합으로 관리한다.
     var activatedNodeList = Set<PNode>()
     
     func clearActivatedNode() {
@@ -99,7 +139,6 @@ class PCustomView : NSView
     }
     
     
-    
     func deleteNode(target node : PNode) {
         for link in node.linkList {
             self.deleteLink(link: link)
@@ -111,7 +150,10 @@ class PCustomView : NSView
     
     
     
+    ////////////////////////////////////////////////////////////////
     
+    
+    //노드간의 링크를 나타내는 객체는 생성될때 본 메인 뷰, 각 두 노드, 총 3곳에서 참조된다.
     var linkList = Set<PLink>()
     
     func createLink(node_1 node1 : PNode, node_2 node2 : PNode)
@@ -143,9 +185,14 @@ class PCustomView : NSView
     }
     
     
+    
+    ////////////////////////////////////////////////////////////////
+    
+    
+    //노드가 마우스 이벤트를 받았을 떄, 메인 뷰로 다시 호출하는 매서드
+    //활성화와 링크 생성에 관련됨
     override func PSelectNode(target node: PNode, key event : NSEvent) {
-        //이미 활성화 되어있는지 여부, 특정 키 눌려있는지 여부, 그리고 둘다 눌려있다면?
-        //둘다 눌려있다면 걍 시프트가 먼저 적용됨
+        //이미 활성화 되어있는지 여부, 특정 키 눌려있는지 여부, 그리고 둘다 눌려있다면 시프트가 적용됨
         if event.modifierFlags.contains(.shift) == true {
             if self.activatedNodeList.contains(node) == true {
                 self.toggleNode(target: node, onoff: false)
@@ -188,8 +235,12 @@ class PCustomView : NSView
     }
     
     
+    ////////////////////////////////////////////////////////////////
     
     
+    //렌더링 관련 매서드들
+    //본 메인 뷰 드로잉 매서드가 먼저 호출된 뒤에 노드들의 드로잉 매서드가 호출되므로
+    //노드 뒤에 가려지게 그려질 링크는 노드들보다 먼저 그려져야하므로, 본 메인 뷰에서 링크 드로잉을 담당한다.
     override func PDrawLink(pos_1 pos1: CGPoint, pos_2 pos2: CGPoint) {
         let a = NSBezierPath()
         a.move(to: pos1)
@@ -199,7 +250,6 @@ class PCustomView : NSView
     }
     
     
-    
     override func draw(_ dirtyRect: NSRect) {
         
         //Line들이 먼저 그려져야하므로, 모든 라인 드로우를 여기에서 담당
@@ -207,17 +257,13 @@ class PCustomView : NSView
             link.draw()
         }
         
-        
-        
-        //서브 뷰의 드로잉은 여기서 처리하지 않고, 각자 알아서 하는 것 같다.
-        
-        //super.draw(dirtyRect)
-        
+        //서브 뷰의 드로잉은 여기서 처리하지 않고, 각자의 드로잉 매서드에서 처리된다
     }
     
     
     
     
+    ////////////////////////////////////////////////////////////////
     
     
     
@@ -239,25 +285,10 @@ class PCustomView : NSView
     
     
     
+    ////////////////////////////////////////////////////////////////
     
     
-    var nodeList = Set<PNode>()
-
-    
-    
-    // 해당 이벤트를 여기서 사용한다 라는 의미
-    // 하지만 그냥 true를 리턴하면 모든 키 이벤트를 여기로 보내므로, 종료 단축키와 같은 것도 안됨
-     override func performKeyEquivalent(with event: NSEvent) -> Bool {
-     return true
-     
-     //필요한 키들만 true를 리턴하게 만든다
-     }
- 
-    
-    override var acceptsFirstResponder: Bool {
-        return true
-    }
-    
+    //메인 뷰의 인풋 이벤트 관련 매서드
     
     override func keyUp(with event: NSEvent) {
         //
@@ -310,12 +341,20 @@ class PCustomView : NSView
             
             //활성화 초기화
             self.clearActivatedNode()
-            print("Activated Count : \(self.activatedNodeList.count)")
+            print("Activated Clear")
         }
         
     }
     
     
+    
+    
+    
+    
+    
+    ////////////////////////////////////////////////////////////////
+    
+    //우클릭 박스생성 관련 매서드
     
     var startPoint : CGPoint!
     var shapeLayer : CAShapeLayer!
