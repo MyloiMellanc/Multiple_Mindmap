@@ -11,6 +11,7 @@
 		75BFB02A3DD147ADA5D536A4 /* Pods_Pensiv.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1659FEF55C078500372B467C /* Pods_Pensiv.framework */; };
 		BF4B28322010F61200FE943B /* PCrawlingNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4B28312010F61200FE943B /* PCrawlingNode.swift */; };
 		BF907E7E200D207D002257D3 /* WordCrawlingDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF907E7D200D207D002257D3 /* WordCrawlingDemo.swift */; };
+		BF9BE8672032059A00F2B269 /* PTextNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9BE8662032059A00F2B269 /* PTextNode.swift */; };
 		BFB14FFA1FB1F049008D0BCE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB14FF91FB1F049008D0BCE /* AppDelegate.swift */; };
 		BFB14FFC1FB1F049008D0BCE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB14FFB1FB1F049008D0BCE /* ViewController.swift */; };
 		BFB14FFF1FB1F049008D0BCE /* Pensiv.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BFB14FFD1FB1F049008D0BCE /* Pensiv.xcdatamodeld */; };
@@ -53,6 +54,7 @@
 		B3101B677C23271C50C1C900 /* Pods_PensivTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PensivTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF4B28312010F61200FE943B /* PCrawlingNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCrawlingNode.swift; sourceTree = "<group>"; };
 		BF907E7D200D207D002257D3 /* WordCrawlingDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordCrawlingDemo.swift; sourceTree = "<group>"; };
+		BF9BE8662032059A00F2B269 /* PTextNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PTextNode.swift; sourceTree = "<group>"; };
 		BFB14FF61FB1F049008D0BCE /* Pensiv.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pensiv.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFB14FF91FB1F049008D0BCE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BFB14FFB1FB1F049008D0BCE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 				BFFF40E11FC09CCD00A83D59 /* PCustomView.swift */,
 				BFD2B80B2008F9230043509D /* PDataManager.swift */,
 				BFB150281FB1F569008D0BCE /* PNode.swift */,
+				BF9BE8662032059A00F2B269 /* PTextNode.swift */,
 				BF4B28312010F61200FE943B /* PCrawlingNode.swift */,
 				BFB1502A1FB1F574008D0BCE /* PLink.swift */,
 				BFB150301FB1F593008D0BCE /* PSideMenu.swift */,
@@ -486,6 +489,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF9BE8672032059A00F2B269 /* PTextNode.swift in Sources */,
 				BF907E7E200D207D002257D3 /* WordCrawlingDemo.swift in Sources */,
 				BFD2B80A2008F8920043509D /* PNodeEntity+CoreDataProperties.swift in Sources */,
 				BFB150291FB1F569008D0BCE /* PNode.swift in Sources */,

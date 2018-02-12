@@ -17,25 +17,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         NSLog("ApplicationDidFinishLaunching")
         // Insert code here to initialize your application
         
-        /*
+        
         
         if let x : NSWindow? = NSApplication.shared.windows.first
         {
+            let macResolution = NSScreen.main
+
+            x?.setFrame((macResolution?.visibleFrame)!, display: true)
             
-            let point = CGPoint(x : 250, y : 50.0)
-            let size = CGSize(width : 800.0, height : 600.0)
-            let origin = CGRect(origin: point, size: size)
-            
-            x?.setFrame(origin, display: true)
-            
-            x?.acceptsMouseMovedEvents = true
+            x?.contentView?.viewDidEndLiveResize()
         }
-        else
-        {
-            NSLog("Not")
-        }
-        */
-        
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {

@@ -38,7 +38,11 @@ extension NSView
         
     }
     
-    @objc func PCreateNode(text str : String, position pos : CGPoint) {
+    @objc func PCreateNode(target node : PNode, position pos : CGPoint) {
+        //차후 크롤링 노드가 재귀적으로 새로운 노드를 생성할 때, 이 매서드를 통해 중앙 뷰에 전달한다
+    }
+    
+    @objc func PCreateLink(node_1 node1 : PNode, node_2 node2 : PNode) {
         
     }
 }
@@ -52,19 +56,6 @@ class PCustomView : NSView
     
     var viewNumber : Int = 1
     //static var viewCount : Int = 0
-    
-    
-    ////////////////////////////////////////////////////////////////
-    
-    //데이터베이스 관련
-    //차후에 ViewController로 담당을 전부 넘겨야한다.
-    var dataManager : PDataManager?
-    
-    func initDataBase() {
-        if let dele = NSApplication.shared.delegate as? AppDelegate {
-            dataManager = PDataManager(mother : dele)
-        }
-    }
     
     
     ////////////////////////////////////////////////////////////////
@@ -343,6 +334,7 @@ class PCustomView : NSView
             self.clearActivatedNode()
             print("Activated Clear")
         }
+        
         
     }
     

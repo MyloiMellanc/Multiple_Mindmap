@@ -28,6 +28,21 @@ class ViewController: NSViewController
     @IBOutlet var scrollview: PCustomView!
     
     
+    ////////////////////////////////////////////////////////////////
+    
+    //데이터베이스 관련
+    var dataManager : PDataManager?
+    
+    func initDataBase() {
+        if let dele = NSApplication.shared.delegate as? AppDelegate {
+            dataManager = PDataManager(mother : dele)
+        }
+    }
+    
+    
+    
+    
+    
     
     @objc func demoCrawling()
     {
@@ -52,7 +67,6 @@ class ViewController: NSViewController
         self.nextResponder = scrollview
 
         
-        scrollview.initDataBase()
         
         
         //let thread = Thread(target: self, selector: Selector("demoCrawling"), object: nil)
