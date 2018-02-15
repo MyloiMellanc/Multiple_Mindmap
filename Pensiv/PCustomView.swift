@@ -51,7 +51,7 @@ extension NSView
 
 
 //나중에 view controller 설정할 때, 노드처럼 넘버를 부여할 것
-class PCustomView : NSView
+class PCustomView : NSScrollView
 {
     
     var viewNumber : Int = 1
@@ -98,6 +98,12 @@ class PCustomView : NSView
     //갖고있는 노드들을 관리, 순서 상관없으므로 집합으로 관리
     //모든 노드들은 본 리스트 컬렉션과 서브뷰 컬렉션에서 참조된다.
     var nodeList = Set<PNode>()
+    
+    
+    
+    func createTextNode(/*여러가지 패러미터들*/) {
+        //범용적인 노드생성 매서드를 만든 뒤, 만든 노드에 본 뷰를 참조시킬것 - motherview  부활시키기
+    }
     
     
     
@@ -259,8 +265,7 @@ class PCustomView : NSView
     
     
     override func hitTest(_ point: NSPoint) -> NSView? {
-        
-        for subview in subviews
+        for subview in (self.documentView?.subviews)!
         {
             let converted_point = subview.convert(point, from: subview)
             let hittestview : NSView? = subview.hitTest(converted_point)
@@ -310,19 +315,20 @@ class PCustomView : NSView
         
         //마우스가 정확히 같은 곳을 클릭했을 때, 이벤트의 클릭 카운트가 증가한다.
         //노드가 생성된 뒤, 마우스를 움직이지 않으면 노드를 클릭해도 노드색깔이 바뀌지 않는다.
-        let eventOrigin = self.convert(event.locationInWindow, to: nil)
+        let eventOrigin = event.locationInWindow
         
+        let pos = CGPoint(x: eventOrigin.x + self.contentView.bounds.origin.x, y: eventOrigin.y + self.contentView.bounds.origin.y)
         
         if (event.clickCount == 1) && (event.modifierFlags.contains(.control)) {
             
         }
         else if (event.clickCount == 2) && (event.modifierFlags.contains(.option)) {
-            let pnode = PTextNode(position: eventOrigin)
+            let pnode = PTextNode(position: pos)
             self.nodeList.insert(pnode)
-            self.addSubview(pnode)
+            self.documentView?.addSubview(pnode)
             
             
-            print("Create new PNode at (\(eventOrigin.x), \(eventOrigin.y))")
+            //print("Create new PNode at (\(eventOrigin.x), \(eventOrigin.y))")
             
             pnode.focus()
         }
@@ -337,7 +343,6 @@ class PCustomView : NSView
         
         
     }
-    
     
     
     

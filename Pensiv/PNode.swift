@@ -126,7 +126,8 @@ class PNode : NSView    //PNode를 상속하는 모든 노드가 기본 뷰를 �
     //드래그가 아니라면, 해당 노드를 활성화하도록 CustomView에게 호출
     override func mouseUp(with event: NSEvent) {
         if self.moved == false {
-            superview?.PSelectNode(target: self, key : event)
+            //superview?.PSelectNode(target: self, key : event)
+            superview?.superview?.PSelectNode(target: self, key: event)
         }
         
         self.moved = false

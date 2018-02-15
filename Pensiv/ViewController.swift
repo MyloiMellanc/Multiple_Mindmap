@@ -25,6 +25,7 @@ import Cocoa
 class ViewController: NSViewController
 {
     
+    
     @IBOutlet var scrollview: PCustomView!
     
     
@@ -61,6 +62,8 @@ class ViewController: NSViewController
         
         let x = NSScreen.main?.frame
         NSLog("Screen resolution is (\(x!.width), \(x!.height))")
+        
+        scrollview.documentView?.frame = NSRect(x: 0, y: 0, width: 2000, height: 2000)
         
         scrollview.wantsLayer = true
         //scrollview.becomeFirstResponder()

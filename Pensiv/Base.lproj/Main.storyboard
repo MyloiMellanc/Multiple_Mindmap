@@ -707,12 +707,30 @@
         <scene sceneID="P3V-4O-bRJ">
             <objects>
                 <viewController id="1cK-yV-hmG" customClass="ViewController" customModule="Pensiv" customModuleProvider="target" sceneMemberID="viewController">
-                    <customView key="view" id="LV7-Ho-07l" customClass="PCustomView" customModule="Pensiv" customModuleProvider="target">
+                    <scrollView key="view" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="CLG-l8-5V1" customClass="PCustomView" customModule="Pensiv" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    </customView>
+                        <clipView key="contentView" id="9fn-iY-SXk">
+                            <rect key="frame" x="1" y="1" width="448" height="298"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <view fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="w9H-Nn-MsV">
+                                    <rect key="frame" x="0.0" y="0.0" width="433" height="283"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                            </subviews>
+                        </clipView>
+                        <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="ZkO-U2-l5i">
+                            <rect key="frame" x="1" y="283" width="448" height="16"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                        <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="Hry-TT-A3m">
+                            <rect key="frame" x="433" y="1" width="16" height="298"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                    </scrollView>
                     <connections>
-                        <outlet property="scrollview" destination="LV7-Ho-07l" id="lLs-9g-5ho"/>
+                        <outlet property="scrollview" destination="CLG-l8-5V1" id="0bE-DQ-WMG"/>
                     </connections>
                 </viewController>
                 <customObject id="jfJ-Ia-eVB" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
