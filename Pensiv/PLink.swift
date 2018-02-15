@@ -21,7 +21,7 @@ class PLink : Hashable, Equatable
 {
     var hashValue: Int {
         get {
-            return superview.viewNumber.hashValue << 15 + node_1.nodeNumber.hashValue + node_2.nodeNumber.hashValue
+            return /*superview.viewNumber.hashValue << 15 + */node_1.nodeNumber.hashValue + node_2.nodeNumber.hashValue
         }
     }
     
@@ -29,12 +29,12 @@ class PLink : Hashable, Equatable
         return (lhs.superview == rhs.superview) && (lhs.node_1 == rhs.node_1) && (lhs.node_2 == rhs.node_2)
     }
     
-    let superview : PCustomView
+    let superview : NSView
     
     let node_1 : PNode
     let node_2 : PNode
     
-    init(view v : PCustomView, node1 n1 : PNode, node2 n2 : PNode) {
+    init(view v : NSView, node1 n1 : PNode, node2 n2 : PNode) {
         self.superview = v
         
         var node1 = n1
@@ -73,7 +73,7 @@ class PLink : Hashable, Equatable
 
 class PFreeLink : PLink
 {
-    override init(view v: PCustomView, node1 n1: PNode, node2 n2: PNode) {
+    override init(view v: NSView, node1 n1: PNode, node2 n2: PNode) {
         super.init(view: v, node1: n1, node2: n2)
     }
     

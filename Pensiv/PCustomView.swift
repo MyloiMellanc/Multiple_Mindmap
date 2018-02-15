@@ -50,47 +50,8 @@ extension NSView
 
 
 
-//나중에 view controller 설정할 때, 노드처럼 넘버를 부여할 것
-class PCustomView : NSScrollView
+class PCustomDocumentView : NSView
 {
-    
-    var viewNumber : Int = 1
-    //static var viewCount : Int = 0
-    
-    
-    ////////////////////////////////////////////////////////////////
-    
-    
-    //윈도우 창이 변경되었을 떄 호출
-    override func viewDidEndLiveResize() {
-        //Struct is copy-based value
-        var frame = NSApplication.shared.windows.first?.frame
-        frame?.origin = CGPoint(x: 0, y: 0)
-        self.frame = frame!
-    }
-    
-    override func viewWillDraw() {
-        self.layer?.backgroundColor = CGColor.white
-    }
-    
-    
-    ////////////////////////////////////////////////////////////////
-    
-    
-    
-    // 해당 이벤트를 여기서 사용한다 라는 의미
-    // 하지만 그냥 true를 리턴하면 모든 키 이벤트를 여기로 보내므로, 종료 단축키와 같은 것도 안됨
-    override func performKeyEquivalent(with event: NSEvent) -> Bool {
-        return true
-        
-        //필요한 키들만 true를 리턴하게 만든다
-    }
-    
-    
-    override var acceptsFirstResponder: Bool {
-        return true
-    }
-    
     
     ////////////////////////////////////////////////////////////////
     
@@ -101,8 +62,13 @@ class PCustomView : NSScrollView
     
     
     
-    func createTextNode(/*여러가지 패러미터들*/) {
-        //범용적인 노드생성 매서드를 만든 뒤, 만든 노드에 본 뷰를 참조시킬것 - motherview  부활시키기
+    func createTextNode(position : CGPoint, text : String) -> PTextNode {
+        let textnode = PTextNode(position: position, text: text)
+        
+        self.nodeList.insert(textnode)
+        self.addSubview(textnode)
+        
+        return textnode
     }
     
     
@@ -159,7 +125,6 @@ class PCustomView : NSScrollView
         self.linkList.insert(link)
         node1.addLink(link: link)
         node2.addLink(link: link)
-        
     }
     
     func searchLink(node_1 node1 : PNode, node_2 node2 : PNode) -> PLink? {
@@ -221,6 +186,7 @@ class PCustomView : NSScrollView
                 }
             }
             
+            
             self.needsDisplay = true
         }
         else {
@@ -254,6 +220,7 @@ class PCustomView : NSScrollView
             link.draw()
         }
         
+        
         //서브 뷰의 드로잉은 여기서 처리하지 않고, 각자의 드로잉 매서드에서 처리된다
     }
     
@@ -262,24 +229,28 @@ class PCustomView : NSScrollView
     
     ////////////////////////////////////////////////////////////////
     
-    
-    
-    override func hitTest(_ point: NSPoint) -> NSView? {
-        for subview in (self.documentView?.subviews)!
-        {
-            let converted_point = subview.convert(point, from: subview)
-            let hittestview : NSView? = subview.hitTest(converted_point)
-            if (hittestview != nil)
-            {
-                return hittestview
-            }
-        }
-        
-        return self
-    }
-    
-    
-    
+    /*
+     
+     
+     //해당 히트 테스트는 스크롤 뷰로 바꾼 뒤 정상적으로 작동하지 않음, 위치에 대한 조정이 필요
+     //이 매서드 오버라이드를 없애면 정상적으로 작동
+     
+     override func hitTest(_ point: NSPoint) -> NSView? {
+     for subview in (self.documentView?.subviews)!
+     {
+     let converted_point = subview.convert(point, from: subview)
+     let hittestview : NSView? = subview.hitTest(converted_point)
+     if (hittestview != nil)
+     {
+     return hittestview
+     }
+     }
+     
+     return self
+     }
+     
+     
+     */
     
     ////////////////////////////////////////////////////////////////
     
@@ -315,22 +286,15 @@ class PCustomView : NSScrollView
         
         //마우스가 정확히 같은 곳을 클릭했을 때, 이벤트의 클릭 카운트가 증가한다.
         //노드가 생성된 뒤, 마우스를 움직이지 않으면 노드를 클릭해도 노드색깔이 바뀌지 않는다.
-        let eventOrigin = event.locationInWindow
         
-        let pos = CGPoint(x: eventOrigin.x + self.contentView.bounds.origin.x, y: eventOrigin.y + self.contentView.bounds.origin.y)
+        let pos = self.convert(event.locationInWindow, from: nil)
         
         if (event.clickCount == 1) && (event.modifierFlags.contains(.control)) {
             
         }
         else if (event.clickCount == 2) && (event.modifierFlags.contains(.option)) {
-            let pnode = PTextNode(position: pos)
-            self.nodeList.insert(pnode)
-            self.documentView?.addSubview(pnode)
-            
-            
-            //print("Create new PNode at (\(eventOrigin.x), \(eventOrigin.y))")
-            
-            pnode.focus()
+            let textnode = self.createTextNode(position: pos, text: "Text")
+            textnode.focus()
         }
         else {
             //이 뷰를 다시 첫 리스폰더로 지정
@@ -340,7 +304,6 @@ class PCustomView : NSScrollView
             self.clearActivatedNode()
             print("Activated Clear")
         }
-        
         
     }
     
@@ -393,9 +356,54 @@ class PCustomView : NSScrollView
         self.shapeLayer.removeFromSuperlayer()
         self.shapeLayer = nil
     }
+
+}
+
+
+
+//나중에 view controller 설정할 때, 노드처럼 넘버를 부여할 것
+class PCustomView : NSScrollView
+{
+    
+    var viewNumber : Int = 1
+    //static var viewCount : Int = 0
     
     
- 
+    ////////////////////////////////////////////////////////////////
+    
+    
+    //윈도우 창이 변경되었을 떄 호출
+    override func viewDidEndLiveResize() {
+        //Struct is copy-based value
+        var frame = NSApplication.shared.windows.first?.frame
+        frame?.origin = CGPoint(x: 0, y: 0)
+        self.frame = frame!
+    }
+    
+    override func viewWillDraw() {
+        self.layer?.backgroundColor = CGColor.white
+    }
+    
+    
+    ////////////////////////////////////////////////////////////////
+    
+    
+    
+    // 해당 이벤트를 여기서 사용한다 라는 의미
+    // 하지만 그냥 true를 리턴하면 모든 키 이벤트를 여기로 보내므로, 종료 단축키와 같은 것도 안됨
+    override func performKeyEquivalent(with event: NSEvent) -> Bool {
+        return true
+        
+        //필요한 키들만 true를 리턴하게 만든다
+    }
+    
+    
+    override var acceptsFirstResponder: Bool {
+        return true
+    }
+    
+    
+    
 }
 
 

@@ -29,6 +29,8 @@ class PNode : NSView    //PNode를 상속하는 모든 노드가 기본 뷰를 �
     
     var nodeNumber : Int
     
+    
+    
     ////////////////////////////////////////////////////////////////
     
     //노드 생성시 그래픽 기본값 관련
@@ -117,7 +119,7 @@ class PNode : NSView    //PNode를 상속하는 모든 노드가 기본 뷰를 �
         //y축이 인버트되어있음
         //print("\(event.deltaX), \(event.deltaY)")
         
-        superview?.needsDisplay = true
+        self.superview?.needsDisplay = true
         
         self.moved = true
     }
@@ -126,8 +128,7 @@ class PNode : NSView    //PNode를 상속하는 모든 노드가 기본 뷰를 �
     //드래그가 아니라면, 해당 노드를 활성화하도록 CustomView에게 호출
     override func mouseUp(with event: NSEvent) {
         if self.moved == false {
-            //superview?.PSelectNode(target: self, key : event)
-            superview?.superview?.PSelectNode(target: self, key: event)
+            self.superview?.PSelectNode(target: self, key: event)
         }
         
         self.moved = false

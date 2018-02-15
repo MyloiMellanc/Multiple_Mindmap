@@ -63,7 +63,8 @@ class ViewController: NSViewController
         let x = NSScreen.main?.frame
         NSLog("Screen resolution is (\(x!.width), \(x!.height))")
         
-        scrollview.documentView?.frame = NSRect(x: 0, y: 0, width: 2000, height: 2000)
+        
+        scrollview.documentView = PCustomDocumentView(frame : NSRect(x: 0, y: 0, width: 2000, height: 2000))
         
         scrollview.wantsLayer = true
         //scrollview.becomeFirstResponder()
@@ -88,6 +89,7 @@ class ViewController: NSViewController
         // Update the view, if already loaded.
         }
     }
+    
     
 }
 
