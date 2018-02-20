@@ -34,7 +34,11 @@ extension NSView
         
     }
     
-    @objc func PDrawLink(pos_1 pos1 : CGPoint, pos_2 pos2 : CGPoint) {
+    @objc func PDrawFreeLink(pos_1 pos1 : CGPoint, pos_2 pos2 : CGPoint) {
+        
+    }
+    
+    @objc func PDrawArrowLink(pos_1 pos1 : CGPoint, pos_2 pos2 : CGPoint) {
         
     }
     
@@ -61,6 +65,18 @@ class PCustomDocumentView : NSView
     var nodeList = Set<PNode>()
     
     
+    func createTextNode(position : CGPoint) -> PTextNode {
+        let textnode = PTextNode(position: position)
+        let id = textnode.getID()
+        
+        textnode.setText(str: String(id))
+        
+        self.nodeList.insert(textnode)
+        self.addSubview(textnode)
+        
+        return textnode
+
+    }
     
     func createTextNode(position : CGPoint, text : String) -> PTextNode {
         let textnode = PTextNode(position: position, text: text)
@@ -121,7 +137,7 @@ class PCustomDocumentView : NSView
     
     func createLink(node_1 node1 : PNode, node_2 node2 : PNode)
     {
-        let link = PFreeLink(view : self, node1 : node1, node2 : node2)
+        let link = PArrowLink(view : self, parent : node1, child : node2)
         self.linkList.insert(link)
         node1.addLink(link: link)
         node2.addLink(link: link)
@@ -129,10 +145,7 @@ class PCustomDocumentView : NSView
     
     func searchLink(node_1 node1 : PNode, node_2 node2 : PNode) -> PLink? {
         for link in self.linkList {
-            if (link.superview == self) && (link.node_1 == node1) && (link.node_2 == node2) {
-                return link
-            }
-            else if (link.superview == self) && (link.node_2 == node1) && (link.node_1 == node2) {
+            if link.itContains(view: self, node1: node1, node2: node2) == true {
                 return link
             }
         }
@@ -141,8 +154,7 @@ class PCustomDocumentView : NSView
     }
     
     func deleteLink(link : PLink) {
-        link.node_1.detachLink(link: link)
-        link.node_2.detachLink(link: link)
+        link.detachNode()
         self.linkList.remove(link)
     }
     
@@ -204,14 +216,44 @@ class PCustomDocumentView : NSView
     //렌더링 관련 매서드들
     //본 메인 뷰 드로잉 매서드가 먼저 호출된 뒤에 노드들의 드로잉 매서드가 호출되므로
     //노드 뒤에 가려지게 그려질 링크는 노드들보다 먼저 그려져야하므로, 본 메인 뷰에서 링크 드로잉을 담당한다.
-    override func PDrawLink(pos_1 pos1: CGPoint, pos_2 pos2: CGPoint) {
-        let a = NSBezierPath()
-        a.move(to: pos1)
-        a.line(to: pos2)
-        a.lineWidth = 2.0
-        a.stroke()
+    override func PDrawFreeLink(pos_1 pos1: CGPoint, pos_2 pos2: CGPoint) {
+        let line = NSBezierPath()
+        line.move(to: pos1)
+        line.line(to: pos2)
+        line.lineWidth = 2.0
+        line.stroke()
     }
     
+    
+    override func PDrawArrowLink(pos_1 pos1: CGPoint, pos_2 pos2: CGPoint) {
+        func rotatePoint(target: CGPoint, aroundOrigin origin: CGPoint, byDegrees: CGFloat) -> CGPoint {
+            let dx = target.x - origin.x
+            let dy = target.y - origin.y
+            let radius = sqrt(dx * dx + dy * dy)
+            let azimuth = atan2(dy, dx) // in radians
+            let newAzimuth = azimuth + byDegrees * CGFloat(Float.pi / 180.0) // convert it to radians
+            let x = origin.x + radius * cos(newAzimuth)
+            let y = origin.y + radius * sin(newAzimuth)
+            return CGPoint(x: x, y: y)
+        }
+        
+        let line = NSBezierPath()
+        line.move(to: pos1)
+        line.line(to: pos2)
+        line.lineWidth = 2.0
+        line.stroke()
+        
+        let sidePoint1 = CGPoint(x: pos1.x + (pos2.x - pos1.x) * 0.45 , y: pos1.y + (pos2.y - pos1.y) * 0.45)
+        let sidePoint2 = CGPoint(x: pos1.x + (pos2.x - pos1.x) * 0.55 , y: pos1.y + (pos2.y - pos1.y) * 0.55)
+        
+        line.move(to: sidePoint2)
+        line.line(to: rotatePoint(target: sidePoint1, aroundOrigin: sidePoint2, byDegrees: 20.0))
+        line.stroke()
+        
+        line.move(to: sidePoint2)
+        line.line(to: rotatePoint(target: sidePoint1, aroundOrigin: sidePoint2, byDegrees: -20.0))
+        line.stroke()
+    }
     
     override func draw(_ dirtyRect: NSRect) {
         
@@ -293,8 +335,8 @@ class PCustomDocumentView : NSView
             
         }
         else if (event.clickCount == 2) && (event.modifierFlags.contains(.option)) {
-            let textnode = self.createTextNode(position: pos, text: "Text")
-            textnode.focus()
+            let textnode = self.createTextNode(position: pos)
+            //textnode.focus()
         }
         else {
             //이 뷰를 다시 첫 리스폰더로 지정
@@ -364,11 +406,7 @@ class PCustomDocumentView : NSView
 //나중에 view controller 설정할 때, 노드처럼 넘버를 부여할 것
 class PCustomView : NSScrollView
 {
-    
-    var viewNumber : Int = 1
-    //static var viewCount : Int = 0
-    
-    
+        
     ////////////////////////////////////////////////////////////////
     
     

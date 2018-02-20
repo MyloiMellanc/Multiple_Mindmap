@@ -27,8 +27,11 @@ class PNode : NSView    //PNode를 상속하는 모든 노드가 기본 뷰를 �
     //노드 고유 인식 번호 부여 관련
     static var nodeCount : Int = 0
     
-    var nodeNumber : Int
+    let nodeID : Int
     
+    func getID() -> Int {
+        return self.nodeID
+    }
     
     
     ////////////////////////////////////////////////////////////////
@@ -38,7 +41,7 @@ class PNode : NSView    //PNode를 상속하는 모든 노드가 기본 뷰를 �
     static let baseWidth : CGFloat = 60.0
     static let baseHeight : CGFloat = 30.0
     
-    static let gap : CGFloat = 5.0
+    static let gap : CGFloat = 2.0
     
     
     ////////////////////////////////////////////////////////////////
@@ -59,9 +62,9 @@ class PNode : NSView    //PNode를 상속하는 모든 노드가 기본 뷰를 �
     {
         //Init Node Number 
         PNode.nodeCount = PNode.nodeCount + 1
-        self.nodeNumber = PNode.nodeCount
+        self.nodeID = PNode.nodeCount
         
-        
+    
         
         let framePoint = CGPoint(x: touchPoint.x - (PNode.baseWidth / 2 + PNode.gap), y: touchPoint.y - (PNode.baseHeight / 2 + PNode.gap) )
         let frameRect = NSRect(x: framePoint.x, y: framePoint.y, width: PNode.baseWidth + (PNode.gap * 2), height: PNode.baseHeight + (PNode.gap * 2))
@@ -102,6 +105,8 @@ class PNode : NSView    //PNode를 상속하는 모든 노드가 기본 뷰를 �
         self.linkList.insert(link)
     }
     
+    
+    //used only by PLink
     func detachLink(link : PLink) {
         self.linkList.remove(link)
     }

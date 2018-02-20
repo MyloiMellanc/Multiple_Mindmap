@@ -21,51 +21,55 @@ class PLink : Hashable, Equatable
 {
     var hashValue: Int {
         get {
-            return /*superview.viewNumber.hashValue << 15 + */node_1.nodeNumber.hashValue + node_2.nodeNumber.hashValue
+            return self.superview.hashValue + self.linkID.hashValue
         }
     }
+    
     
     static func ==(lhs: PLink, rhs: PLink) -> Bool {
-        return (lhs.superview == rhs.superview) && (lhs.node_1 == rhs.node_1) && (lhs.node_2 == rhs.node_2)
+        return (lhs.getID() == rhs.getID())
     }
     
+    
+    
+    
+    static var linkCount : Int = 0
+    
+    let linkID : Int
     let superview : NSView
     
-    let node_1 : PNode
-    let node_2 : PNode
+    let type : P_LINK_TYPE
     
-    init(view v : NSView, node1 n1 : PNode, node2 n2 : PNode) {
-        self.superview = v
-        
-        var node1 = n1
-        var node2 = n2
-        
-        if n2.nodeNumber < n1.nodeNumber {
-            node1 = n2
-            node2 = n1
-        }
-        else if n1.nodeNumber == n2.nodeNumber {
-            print("Link Creation Error")
-            exit(0)
-        }
-        
-        self.node_1 = node1
-        self.node_2 = node2
+    func getID() -> Int {
+        return self.linkID
     }
     
-    func getOppositeNode(node n : PNode) -> PNode {
-        var node = self.node_2
-        
-        if n == self.node_2 {
-            node = self.node_1
-        }
-        
-        return node
+    func getType() -> P_LINK_TYPE {
+        return self.type
     }
+    
+    init(view : NSView, type : P_LINK_TYPE) {
+        PLink.linkCount = PLink.linkCount + 1
+        self.linkID = PLink.linkCount
+        
+        
+        self.superview = view
+        self.type = type
+    }
+    
     
     
     func draw() {
-        self.superview.PDrawLink(pos_1: self.node_1.centerPoint, pos_2: self.node_2.centerPoint)
+        
+    }
+    
+    
+    func detachNode() {
+        
+    }
+    
+    func itContains(view : NSView, node1 : PNode, node2 : PNode) -> Bool {
+        return false
     }
     
 }
@@ -73,14 +77,87 @@ class PLink : Hashable, Equatable
 
 class PFreeLink : PLink
 {
-    override init(view v: NSView, node1 n1: PNode, node2 n2: PNode) {
-        super.init(view: v, node1: n1, node2: n2)
+    let node_1 : PNode
+    let node_2 : PNode
+    
+
+    init(view : NSView, node1 : PNode, node2 : PNode) {
+        var n1 = node1
+        var n2 = node2
+        
+        if node1.getID() > node2.getID() {
+            n1 = node2
+            n2 = node1
+            
+        }
+        else if node1.getID() == node2.getID() {
+            print("Link Creation Error")
+            exit(0)
+        }
+        
+        self.node_1 = n1
+        self.node_2 = n2
+        
+        
+        super.init(view: view, type : .FREE)
     }
     
+    override func draw() {
+        self.superview.PDrawFreeLink(pos_1: self.node_1.centerPoint, pos_2: self.node_2.centerPoint)
+    }
+    
+    override func detachNode() {
+        self.node_1.detachLink(link: self)
+        self.node_2.detachLink(link: self)
+    }
+    
+    override func itContains(view: NSView, node1: PNode, node2: PNode) -> Bool {
+        if (self.superview == view) && (self.node_1 == node1) && (self.node_2 == node2) {
+            return true
+        }
+        else if (self.superview == view) && (self.node_1 == node2) && (self.node_2 == node1) {
+            return true
+        }
+        
+        return false
+    }
     
 }
 
 
+class PArrowLink : PLink
+{
+    let parentNode : PNode
+    let childNode : PNode
+    
+    
+    init(view : NSView, parent : PNode, child : PNode) {
+        self.parentNode = parent
+        self.childNode = child
+        
+        super.init(view: view, type : .ARROW)
+    }
+    
+    override func draw() {
+        self.superview.PDrawArrowLink(pos_1: self.parentNode.centerPoint, pos_2: self.childNode.centerPoint)
+    }
+    
+    override func detachNode() {
+        self.parentNode.detachLink(link: self)
+        self.childNode.detachLink(link: self)
+    }
+    
+    override func itContains(view: NSView, node1: PNode, node2: PNode) -> Bool {
+        if (self.superview == view) && (self.parentNode == node1) && (self.childNode == node2) {
+            return true
+        }
+        else if (self.superview == view) && (self.parentNode == node2) && (self.childNode == node1) {
+            return true
+        }
+        
+        return false
+    }
+}
 
 
 

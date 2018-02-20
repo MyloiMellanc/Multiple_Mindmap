@@ -16,6 +16,11 @@ import CoreGraphics
 class PTextField : NSTextField
 {
     
+    
+    func setText(str : String) {
+        self.stringValue = str
+    }
+    
     ////////////////////////////////////////////////////////////////
     init(frame frameRect : NSRect, text str : String)
     {
@@ -81,6 +86,10 @@ class PTextNode : PNode
     //추가적으로 텍스트필드를 갖고있다. 본 뷰의 서브뷰로 지정됨
     let textfield : PTextField
     
+    func setText(str : String) {
+        self.textfield.setText(str: str)
+    }
+    
     
     ////////////////////////////////////////////////////////////////
     
@@ -88,7 +97,7 @@ class PTextNode : PNode
     {
         let frameRect = NSRect(x: PNode.gap, y: PNode.gap, width: PNode.baseWidth, height: PNode.baseHeight)
         
-        textfield = PTextField(frame : frameRect, text : "Text")
+        textfield = PTextField(frame : frameRect, text : " ")
         //super.init 전에 내부 변수를 모두 초기화해야함
         
         textfield.isEditable = false
