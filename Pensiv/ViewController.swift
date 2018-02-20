@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreData
 import Cocoa
 
 
@@ -36,8 +37,9 @@ class ViewController: NSViewController
     
     func initDataBase() {
         if let dele = NSApplication.shared.delegate as? AppDelegate {
-            dataManager = PDataManager(mother : dele)
+            self.dataManager = PDataManager(mother : dele)
         }
+        
     }
     
     

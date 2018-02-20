@@ -22,8 +22,6 @@
 		BFB150291FB1F569008D0BCE /* PNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB150281FB1F569008D0BCE /* PNode.swift */; };
 		BFB1502B1FB1F574008D0BCE /* PLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB1502A1FB1F574008D0BCE /* PLink.swift */; };
 		BFB150311FB1F593008D0BCE /* PSideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB150301FB1F593008D0BCE /* PSideMenu.swift */; };
-		BFD2B8092008F8920043509D /* PNodeEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2B8072008F8920043509D /* PNodeEntity+CoreDataClass.swift */; };
-		BFD2B80A2008F8920043509D /* PNodeEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2B8082008F8920043509D /* PNodeEntity+CoreDataProperties.swift */; };
 		BFD2B80C2008F9230043509D /* PDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2B80B2008F9230043509D /* PDataManager.swift */; };
 		BFFF40E21FC09CCD00A83D59 /* PCustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFF40E11FC09CCD00A83D59 /* PCustomView.swift */; };
 		D8C4004C1EC18549B362C055 /* Pods_PensivTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3101B677C23271C50C1C900 /* Pods_PensivTests.framework */; };
@@ -72,8 +70,6 @@
 		BFB150281FB1F569008D0BCE /* PNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PNode.swift; sourceTree = "<group>"; };
 		BFB1502A1FB1F574008D0BCE /* PLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLink.swift; sourceTree = "<group>"; };
 		BFB150301FB1F593008D0BCE /* PSideMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSideMenu.swift; sourceTree = "<group>"; };
-		BFD2B8072008F8920043509D /* PNodeEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PNodeEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
-		BFD2B8082008F8920043509D /* PNodeEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PNodeEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		BFD2B80B2008F9230043509D /* PDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDataManager.swift; sourceTree = "<group>"; };
 		BFFF40E11FC09CCD00A83D59 /* PCustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCustomView.swift; sourceTree = "<group>"; };
 		D6C04BC82B1CB0440B8928BF /* Pods-Pensiv.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pensiv.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Pensiv/Pods-Pensiv.debug.xcconfig"; sourceTree = "<group>"; };
@@ -136,8 +132,6 @@
 		BFB14FED1FB1F049008D0BCE = {
 			isa = PBXGroup;
 			children = (
-				BFD2B8072008F8920043509D /* PNodeEntity+CoreDataClass.swift */,
-				BFD2B8082008F8920043509D /* PNodeEntity+CoreDataProperties.swift */,
 				BFB14FF81FB1F049008D0BCE /* Pensiv */,
 				BFB1500E1FB1F04A008D0BCE /* PensivTests */,
 				BFB150191FB1F04A008D0BCE /* PensivUITests */,
@@ -491,9 +485,7 @@
 			files = (
 				BF9BE8672032059A00F2B269 /* PTextNode.swift in Sources */,
 				BF907E7E200D207D002257D3 /* WordCrawlingDemo.swift in Sources */,
-				BFD2B80A2008F8920043509D /* PNodeEntity+CoreDataProperties.swift in Sources */,
 				BFB150291FB1F569008D0BCE /* PNode.swift in Sources */,
-				BFD2B8092008F8920043509D /* PNodeEntity+CoreDataClass.swift in Sources */,
 				BFFF40E21FC09CCD00A83D59 /* PCustomView.swift in Sources */,
 				BFB1502B1FB1F574008D0BCE /* PLink.swift in Sources */,
 				BFB14FFC1FB1F049008D0BCE /* ViewController.swift in Sources */,

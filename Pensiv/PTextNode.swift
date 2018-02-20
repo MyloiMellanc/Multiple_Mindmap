@@ -93,7 +93,7 @@ class PTextNode : PNode
     
     ////////////////////////////////////////////////////////////////
     
-    override init(position touchPoint : CGPoint)
+    init(position touchPoint : CGPoint)
     {
         let frameRect = NSRect(x: PNode.gap, y: PNode.gap, width: PNode.baseWidth, height: PNode.baseHeight)
         
@@ -104,7 +104,7 @@ class PTextNode : PNode
         
         
         
-        super.init(position : touchPoint)
+        super.init(position : touchPoint, type : .TEXT)
         
         self.addSubview(textfield)   //super.init 이후에 self 사용가능
     }
@@ -120,7 +120,7 @@ class PTextNode : PNode
         
         
         
-        super.init(position : touchPoint)
+        super.init(position : touchPoint, type : .TEXT)
         
         self.addSubview(textfield)   //super.init 이후에 self 사용가능
     }

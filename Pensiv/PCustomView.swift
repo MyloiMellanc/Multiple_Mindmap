@@ -25,7 +25,6 @@ import QuartzCore
  */
 
 
-
 //노드들이 superview를 통해서 메인 뷰에 요청하는 매서드들
 //superview가 NSView로 레퍼런스되어있어, 부득이하게 Extension으로 인터페이스를 생성해서 사용
 extension NSView

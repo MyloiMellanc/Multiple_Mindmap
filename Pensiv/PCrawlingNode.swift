@@ -20,10 +20,10 @@ class PCrawlingNode : PNode
     
     
     
-    override init(position touchPoint: CGPoint) {
+    init(position touchPoint: CGPoint) {
         
         
-        super.init(position: touchPoint)
+        super.init(position: touchPoint, type : .CRAWLING)
     }
     
     

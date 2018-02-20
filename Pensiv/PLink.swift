@@ -11,9 +11,9 @@ import Cocoa
 
 
 
-enum P_LINK_TYPE {
-    case FREE
-    case ARROW
+enum P_LINK_TYPE : Int {
+    case FREE = 0
+    case ARROW = 1
 }
 
 
@@ -72,6 +72,9 @@ class PLink : Hashable, Equatable
         return false
     }
     
+    func getNodes() -> (PNode, PNode) {
+        return (PNode(position: CGPoint(), type: .ERROR), PNode(position: CGPoint(), type: .ERROR))
+    }
 }
 
 
@@ -122,6 +125,9 @@ class PFreeLink : PLink
         return false
     }
     
+    override func getNodes() -> (PNode, PNode) {
+        return (self.node_1, self.node_2)
+    }
 }
 
 
@@ -156,6 +162,10 @@ class PArrowLink : PLink
         }
         
         return false
+    }
+    
+    override func getNodes() -> (PNode, PNode) {
+        return (self.parentNode, self.childNode)
     }
 }
 

@@ -13,9 +13,10 @@ import CoreGraphics
 
 
 
-enum P_NODE_TYPE {
-    case TEXT
-    case CRAWLING
+enum P_NODE_TYPE : Int {
+    case ERROR = 0
+    case TEXT = 1
+    case CRAWLING = 2
 }
 
 
@@ -26,6 +27,8 @@ class PNode : NSView    //PNode를 상속하는 모든 노드가 기본 뷰를 �
     
     //노드 고유 인식 번호 부여 관련
     static var nodeCount : Int = 0
+    
+    let type : P_NODE_TYPE
     
     let nodeID : Int
     
@@ -58,12 +61,13 @@ class PNode : NSView    //PNode를 상속하는 모든 노드가 기본 뷰를 �
     
     ////////////////////////////////////////////////////////////////
     
-    init(position touchPoint : CGPoint)
+    init(position touchPoint : CGPoint, type : P_NODE_TYPE)
     {
         //Init Node Number 
         PNode.nodeCount = PNode.nodeCount + 1
         self.nodeID = PNode.nodeCount
         
+        self.type = type
     
         
         let framePoint = CGPoint(x: touchPoint.x - (PNode.baseWidth / 2 + PNode.gap), y: touchPoint.y - (PNode.baseHeight / 2 + PNode.gap) )

@@ -1,9 +1,8 @@
 //
 //  PNodeEntity+CoreDataProperties.swift
-//  Pensiv
+//  
 //
-//  Created by Myloi Mellanc on 2018. 1. 12..
-//  Copyright © 2018년 MyloiMellanc. All rights reserved.
+//  Created by Myloi Mellanc on 2018. 2. 21..
 //
 //
 
@@ -17,10 +16,12 @@ extension PNodeEntity {
         return NSFetchRequest<PNodeEntity>(entityName: "PNodeEntity")
     }
 
-    @NSManaged public var str: String?
+    @NSManaged public var id: Int32
+    @NSManaged public var text: String?
     @NSManaged public var x: Float
     @NSManaged public var y: Float
-    @NSManaged public var id: Int64
-    @NSManaged public var mother_id: Int64
+    @NSManaged public var width: Float
+    @NSManaged public var height: Float
+    @NSManaged public var type: Int32
 
 }

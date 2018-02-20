@@ -16,7 +16,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         NSLog("ApplicationDidFinishLaunching")
         // Insert code here to initialize your application
-        
+    
         
         /*
         if let x : NSWindow? = NSApplication.shared.windows.first
