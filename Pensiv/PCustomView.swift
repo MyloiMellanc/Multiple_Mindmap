@@ -8,7 +8,6 @@
 
 import Foundation
 import Cocoa
-import CoreData
 import CoreGraphics
 import QuartzCore
 
@@ -29,10 +28,13 @@ import QuartzCore
 //superview가 NSView로 레퍼런스되어있어, 부득이하게 Extension으로 인터페이스를 생성해서 사용
 extension NSView
 {
+    //Announce superview that subview is touched
     @objc func PSelectNode(target node : PNode, key event : NSEvent) {
         
     }
     
+    
+    //Rendering Request by Link Instance
     @objc func PDrawFreeLink(pos_1 pos1 : CGPoint, pos_2 pos2 : CGPoint) {
         
     }
@@ -41,13 +43,6 @@ extension NSView
         
     }
     
-    @objc func PCreateNode(target node : PNode, position pos : CGPoint) {
-        //차후 크롤링 노드가 재귀적으로 새로운 노드를 생성할 때, 이 매서드를 통해 중앙 뷰에 전달한다
-    }
-    
-    @objc func PCreateLink(node_1 node1 : PNode, node_2 node2 : PNode) {
-        
-    }
 }
 
 
@@ -56,6 +51,7 @@ extension NSView
 class PCustomDocumentView : NSView
 {
     
+    
     ////////////////////////////////////////////////////////////////
     
     
@@ -63,6 +59,9 @@ class PCustomDocumentView : NSView
     //모든 노드들은 본 리스트 컬렉션과 서브뷰 컬렉션에서 참조된다.
     var nodeList = Set<PNode>()
     
+    
+    
+    //CREATION OF NEW NODE
     
     func createTextNode(position : CGPoint) -> PTextNode {
         let textnode = PTextNode(position: position)
@@ -86,53 +85,14 @@ class PCustomDocumentView : NSView
         return textnode
     }
     
-    
-    
-    ////////////////////////////////////////////////////////////////
-    
-    
-    //맵 편집을 위한 활성화 노드 관리는 전부 본 뷰에서 담당한다
-    //순서가 필요없으므로 집합으로 관리한다.
-    var activatedNodeList = Set<PNode>()
-    
-    func clearActivatedNode() {
-        for node in activatedNodeList {
-            node.layer?.backgroundColor = NSColor.black.cgColor
-        }
-        
-        activatedNodeList.removeAll()
-    }
-    
-    func toggleNode(target node : PNode, onoff : Bool) {
-        if onoff == true {
-            self.activatedNodeList.insert(node)
-            node.layer?.backgroundColor = CGColor(red: 255.0, green: 0.0, blue: 0.0, alpha: 1.0)
-        }
-        else {
-            self.activatedNodeList.remove(node)
-            node.layer?.backgroundColor = NSColor.black.cgColor
-        }
-        
-        print("Activated Count : \(self.activatedNodeList.count)")
-    }
-    
-    
-    func deleteNode(target node : PNode) {
-        for link in node.linkList {
-            self.deleteLink(link: link)
-        }
-        
-        node.removeFromSuperview()
-        self.nodeList.remove(node)
-    }
-    
-    
-    
     ////////////////////////////////////////////////////////////////
     
     
     //노드간의 링크를 나타내는 객체는 생성될때 본 메인 뷰, 각 두 노드, 총 3곳에서 참조된다.
     var linkList = Set<PLink>()
+    
+    
+    //CREATION OF NEW LINK
     
     func createLink(node_1 node1 : PNode, node_2 node2 : PNode)
     {
@@ -156,6 +116,49 @@ class PCustomDocumentView : NSView
         link.detachNode()
         self.linkList.remove(link)
     }
+    
+    
+    
+    
+    ////////////////////////////////////////////////////////////////
+    
+    //MANAGE ACTIVATION STATE OF NODE
+    
+    //맵 편집을 위한 활성화 노드 관리는 전부 본 뷰에서 담당한다
+    //순서가 필요없으므로 집합으로 관리한다.
+    var activatedNodeList = Set<PNode>()
+    
+    func clearActivatedNode() {
+        for node in activatedNodeList {
+            node.untoggle()
+        }
+        
+        activatedNodeList.removeAll()
+    }
+    
+    func toggleNode(target node : PNode, onoff : Bool) {
+        if onoff == true {
+            self.activatedNodeList.insert(node)
+            node.toggle()
+        }
+        else {
+            self.activatedNodeList.remove(node)
+            node.untoggle()
+        }
+        
+        print("Activated Count : \(self.activatedNodeList.count)")
+    }
+    
+    
+    func deleteNode(target node : PNode) {
+        for link in node.linkList {
+            self.deleteLink(link: link)
+        }
+        
+        node.removeFromSuperview()
+        self.nodeList.remove(node)
+    }
+    
     
     
     
@@ -254,6 +257,10 @@ class PCustomDocumentView : NSView
         line.stroke()
     }
     
+    
+    
+    
+    
     override func draw(_ dirtyRect: NSRect) {
         
         //Line들이 먼저 그려져야하므로, 모든 라인 드로우를 여기에서 담당
@@ -296,6 +303,8 @@ class PCustomDocumentView : NSView
     ////////////////////////////////////////////////////////////////
     
     
+    //INPUT EVENT
+    
     //메인 뷰의 인풋 이벤트 관련 매서드
     
     override func keyUp(with event: NSEvent) {
@@ -330,8 +339,9 @@ class PCustomDocumentView : NSView
         
         let pos = self.convert(event.locationInWindow, from: nil)
         
-        if (event.clickCount == 1) && (event.modifierFlags.contains(.control)) {
-            
+        if (event.clickCount == 2) && (event.modifierFlags.contains(.control)) {
+            let crawlingNode = PCrawlingNode(position: pos)
+            self.addSubview(crawlingNode)
         }
         else if (event.clickCount == 2) && (event.modifierFlags.contains(.option)) {
             let textnode = self.createTextNode(position: pos)
@@ -442,41 +452,6 @@ class PCustomView : NSScrollView
     
     
 }
-
-
-
-
-
-
-
-
-
-
-
-/*
- override var isFlipped: Bool{
- get {
- return false
- }
- }*/
-
-
-
-/*
- override func updateTrackingAreas() {
- if (trackingarea != nil)
- {
- self.removeTrackingArea(trackingarea!)
- }
- 
- let options : NSTrackingArea.Options = [.activeWhenFirstResponder, .mouseMoved]
- 
- trackingarea = NSTrackingArea(rect: self.bounds, options: options, owner: self, userInfo: nil)
- 
- self.addTrackingArea(trackingarea!)
- 
- }
- */
 
 
 

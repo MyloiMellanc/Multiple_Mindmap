@@ -7,18 +7,7 @@
 //
 
 import Foundation
-import CoreData
 import Cocoa
-
-
-/*
- *  마인드 맵 데이터를 관리하는 클래스, 뷰 교체 및 선정 클래스, 터치 컨트롤러 클래스
- *  해당 클래스들 3가지를 통합적으로 관리하는 클래스
- *
- *
- *
- *
- */
 
 
 
@@ -28,32 +17,6 @@ class ViewController: NSViewController
     
     
     @IBOutlet var scrollview: PCustomView!
-    
-    
-    ////////////////////////////////////////////////////////////////
-    
-    //데이터베이스 관련
-    var dataManager : PDataManager?
-    
-    func initDataBase() {
-        if let dele = NSApplication.shared.delegate as? AppDelegate {
-            self.dataManager = PDataManager(mother : dele)
-        }
-        
-    }
-    
-    
-    
-    
-    
-    
-    @objc func demoCrawling()
-    {
-        let democrawl = DemoWordCrawler()
-        //democrawl.demoCrawling(search: "hyper")
-        democrawl.demoRun()
-        
-    }
     
     
     
@@ -66,17 +29,15 @@ class ViewController: NSViewController
         NSLog("Screen resolution is (\(x!.width), \(x!.height))")
         
         
-        scrollview.documentView = PCustomDocumentView(frame : NSRect(x: 0, y: 0, width: 800, height: 600))
+        scrollview.documentView = PCustomDocumentView(frame : NSRect(x: 0, y: 0, width: 4000, height: 3000))
         
         scrollview.wantsLayer = true
-        //scrollview.becomeFirstResponder()
+        
         self.nextResponder = scrollview
 
         
         
         
-        //let thread = Thread(target: self, selector: Selector("demoCrawling"), object: nil)
-        //thread.start()
         
     }
     

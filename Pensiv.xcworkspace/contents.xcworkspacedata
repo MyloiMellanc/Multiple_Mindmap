@@ -2,18 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:PNodeEntity+CoreDataClass.swift">
-   </FileRef>
-   <FileRef
-      location = "group:PNodeEntity+CoreDataProperties.swift">
-   </FileRef>
-   <FileRef
-      location = "group:PLinkEntity+CoreDataClass.swift">
-   </FileRef>
-   <FileRef
-      location = "group:PLinkEntity+CoreDataProperties.swift">
-   </FileRef>
-   <FileRef
       location = "group:Pensiv.xcodeproj">
    </FileRef>
    <FileRef

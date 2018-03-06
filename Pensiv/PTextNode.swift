@@ -95,12 +95,14 @@ class PTextNode : PNode
     
     init(position touchPoint : CGPoint)
     {
-        let frameRect = NSRect(x: PNode.gap, y: PNode.gap, width: PNode.baseWidth, height: PNode.baseHeight)
+        let nodeSize = PNode.getNodeSize(type: .TEXT)
         
-        textfield = PTextField(frame : frameRect, text : " ")
+        let frameRect = NSRect(x: PNode.gap, y: PNode.gap, width: nodeSize.0, height: nodeSize.1)
+        
+        self.textfield = PTextField(frame : frameRect, text : " ")
         //super.init 전에 내부 변수를 모두 초기화해야함
         
-        textfield.isEditable = false
+        self.textfield.isEditable = false
         
         
         
@@ -111,12 +113,15 @@ class PTextNode : PNode
     
     init(position touchPoint : CGPoint, text str : String)
     {
-        let frameRect = NSRect(x: PNode.gap, y: PNode.gap, width: PNode.baseWidth, height: PNode.baseHeight)
+        let nodeSize = PNode.getNodeSize(type: .TEXT)
         
-        textfield = PTextField(frame : frameRect, text : str)
+        let frameRect = NSRect(x: PNode.gap, y: PNode.gap, width: nodeSize.0, height: nodeSize.1)
+        
+        
+        self.textfield = PTextField(frame : frameRect, text : str)
         //super.init 전에 내부 변수를 모두 초기화해야함
         
-        textfield.isEditable = false
+        self.textfield.isEditable = false
         
         
         
@@ -133,12 +138,11 @@ class PTextNode : PNode
     ////////////////////////////////////////////////////////////////
     
     
-    
     //편집 매서드 오버라이드
     //텍스트 필드의 편집을 활성화한다
     override func focus() {
-        textfield.isEditable = true
-        textfield.becomeFirstResponder()
+        self.textfield.isEditable = true
+        self.textfield.becomeFirstResponder()
     }
 }
 

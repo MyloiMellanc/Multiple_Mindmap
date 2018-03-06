@@ -20,8 +20,6 @@ enum P_NODE_TYPE : Int {
 }
 
 
-
-
 class PNode : NSView    //PNode를 상속하는 모든 노드가 기본 뷰를 가질 예정으로, 미리 상속받음
 {
     
@@ -30,6 +28,11 @@ class PNode : NSView    //PNode를 상속하는 모든 노드가 기본 뷰를 �
     
     let type : P_NODE_TYPE
     
+    func getType() -> P_NODE_TYPE {
+        return self.type
+    }
+    
+    
     let nodeID : Int
     
     func getID() -> Int {
@@ -37,15 +40,23 @@ class PNode : NSView    //PNode를 상속하는 모든 노드가 기본 뷰를 �
     }
     
     
+    
     ////////////////////////////////////////////////////////////////
     
     //노드 생성시 그래픽 기본값 관련
-    //차후 팩토리 객체화할것
-    static let baseWidth : CGFloat = 60.0
-    static let baseHeight : CGFloat = 30.0
+
+    static let gap : CGFloat = 3.0
     
-    static let gap : CGFloat = 2.0
-    
+    static func getNodeSize(type : P_NODE_TYPE) -> (CGFloat, CGFloat) {
+        switch (type) {
+        case .TEXT:
+            return (60.0, 30.0)
+        case .CRAWLING:
+            return (80.0, 80.0)
+        default:
+            return (100.0, 100.0)
+        }
+    }
     
     ////////////////////////////////////////////////////////////////
     
@@ -69,16 +80,17 @@ class PNode : NSView    //PNode를 상속하는 모든 노드가 기본 뷰를 �
         
         self.type = type
     
+        let nodeSize = PNode.getNodeSize(type: type)
         
-        let framePoint = CGPoint(x: touchPoint.x - (PNode.baseWidth / 2 + PNode.gap), y: touchPoint.y - (PNode.baseHeight / 2 + PNode.gap) )
-        let frameRect = NSRect(x: framePoint.x, y: framePoint.y, width: PNode.baseWidth + (PNode.gap * 2), height: PNode.baseHeight + (PNode.gap * 2))
+        let framePoint = CGPoint(x: touchPoint.x - (nodeSize.0 / 2 + PNode.gap), y: touchPoint.y - (nodeSize.1 / 2 + PNode.gap) )
+        let frameRect = NSRect(x: framePoint.x, y: framePoint.y, width: nodeSize.0 + (PNode.gap * 2), height: nodeSize.1 + (PNode.gap * 2))
         super.init(frame : frameRect)
         
         
-        self.layer = CAShapeLayer()
         self.wantsLayer = true
+        self.layer = CAShapeLayer()
         
-        self.layer?.backgroundColor = CGColor.black
+        self.layer?.backgroundColor = NSColor.black.cgColor
         
         let scale_animation = CASpringAnimation(keyPath: "transform.scale")
         scale_animation.duration = 0.6
@@ -145,13 +157,20 @@ class PNode : NSView    //PNode를 상속하는 모든 노드가 기본 뷰를 �
     
     ////////////////////////////////////////////////////////////////
     
-    
-    
-    
     //오버라이드 전용 노드 편집 매서드
+    
+    func toggle() {
+        self.layer?.backgroundColor = NSColor.red.cgColor
+    }
+    
+    func untoggle() {
+        self.layer?.backgroundColor = NSColor.black.cgColor
+    }
+    
     func focus() {
         
     }
+    
 }
 
 
@@ -159,39 +178,5 @@ class PNode : NSView    //PNode를 상속하는 모든 노드가 기본 뷰를 �
 
 
 
-
-
-/*
-    
-    //var trackingarea : NSTrackingArea?
-    
-    /*
-    override func updateTrackingAreas() {
-        if (trackingarea != nil)
-        {
-            self.removeTrackingArea(trackingarea!)
-        }
-        
-        let options : NSTrackingArea.Options = [.activeWhenFirstResponder, .mouseMoved]
-        
-        trackingarea = NSTrackingArea(rect: self.bounds, options: options, owner: self, userInfo: nil)
-        
-        self.addTrackingArea(trackingarea!)
-    }*/
-    
-    
-    
-    
-    //ID
-    //Position
-    //Scale
-    //TextSize
-    //Alpha
-    //Color
-    //Zorder
-    //
-}
-
-*/
 
 

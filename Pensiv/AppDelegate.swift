@@ -18,7 +18,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Insert code here to initialize your application
     
         
-        /*
+        
         if let x : NSWindow? = NSApplication.shared.windows.first
         {
             let macResolution = NSScreen.main
@@ -26,7 +26,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             x?.setFrame((macResolution?.visibleFrame)!, display: true)
             
             x?.contentView?.viewDidEndLiveResize()
-        }*/
+        }
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
