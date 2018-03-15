@@ -166,6 +166,7 @@ class PCustomDocumentView : NSView
     
     
     //노드가 마우스 이벤트를 받았을 떄, 메인 뷰로 다시 호출하는 매서드
+    //PNode의 다중 활성화 형성을 위해 본 클래스에서 담당
     //활성화와 링크 생성에 관련됨
     override func PSelectNode(target node: PNode, key event : NSEvent) {
         //이미 활성화 되어있는지 여부, 특정 키 눌려있는지 여부, 그리고 둘다 눌려있다면 시프트가 적용됨
