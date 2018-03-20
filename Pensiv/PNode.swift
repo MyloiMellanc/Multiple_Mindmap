@@ -127,6 +127,21 @@ class PNode : NSView    //PNode를 상속하는 모든 노드가 기본 뷰를 �
         self.linkList.remove(link)
     }
     
+    func getSubNodeListWithPass() -> Array<PNode> {
+        var nodeList = Array<PNode>()
+        
+        for link in self.linkList {
+            if link.isPassed() == false {
+                link.pass()
+                let node = link.getOtherNode(callBy: self)
+                nodeList.append(node)
+            }
+        }
+        
+        return nodeList
+    }
+    
+    
     ////////////////////////////////////////////////////////////////
     
     //마우스 터치 관련 매서드

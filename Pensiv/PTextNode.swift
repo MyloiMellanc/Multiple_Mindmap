@@ -90,6 +90,9 @@ class PTextNode : PNode
         self.textfield.setText(str: str)
     }
     
+    func getText() -> String {
+        return self.textfield.stringValue
+    }
     
     ////////////////////////////////////////////////////////////////
     

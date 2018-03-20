@@ -75,7 +75,29 @@ class PLink : Hashable, Equatable
     func getNodes() -> (PNode, PNode) {
         return (PNode(position: CGPoint(), type: .ERROR), PNode(position: CGPoint(), type: .ERROR))
     }
+    
+    func getOtherNode(callBy node : PNode) -> PNode {
+        print("Accessing Inappropriate LinkNode")
+        return PNode(position: CGPoint(), type: .ERROR)
+    }
+    
+    
+    
+    var passed = false
+    
+    func isPassed() -> Bool {
+        return self.passed
+    }
+    
+    func pass() {
+        self.passed = true
+    }
+    
+    func clearPass() {
+        self.passed = false
+    }
 }
+
 
 
 class PFreeLink : PLink
@@ -128,6 +150,19 @@ class PFreeLink : PLink
     override func getNodes() -> (PNode, PNode) {
         return (self.node_1, self.node_2)
     }
+    
+    override func getOtherNode(callBy node: PNode) -> PNode {
+        if node == self.node_1 {
+            return self.node_2
+        }
+        else if node == self.node_2 {
+            return self.node_1
+        }
+        else {
+            print("Accessing Inappropriate LinkNode")
+            return PNode(position: CGPoint(), type: .ERROR)
+        }
+    }
 }
 
 
@@ -166,6 +201,16 @@ class PArrowLink : PLink
     
     override func getNodes() -> (PNode, PNode) {
         return (self.parentNode, self.childNode)
+    }
+    
+    override func getOtherNode(callBy node: PNode) -> PNode {
+        if node == self.parentNode {
+            return self.childNode
+        }
+        else {
+            print("Accessing Inappropriate LinkNode")
+            return PNode(position: CGPoint(), type: .ERROR)
+        }
     }
 }
 

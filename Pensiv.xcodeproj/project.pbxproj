@@ -21,6 +21,7 @@
 		BFB1501B1FB1F04A008D0BCE /* PensivUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB1501A1FB1F04A008D0BCE /* PensivUITests.swift */; };
 		BFB150291FB1F569008D0BCE /* PNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB150281FB1F569008D0BCE /* PNode.swift */; };
 		BFB1502B1FB1F574008D0BCE /* PLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB1502A1FB1F574008D0BCE /* PLink.swift */; };
+		BFC18F892061346A00581219 /* PNodeMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC18F882061346A00581219 /* PNodeMap.swift */; };
 		BFD2B80C2008F9230043509D /* PDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2B80B2008F9230043509D /* PDataManager.swift */; };
 		BFFF40E21FC09CCD00A83D59 /* PCustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFF40E11FC09CCD00A83D59 /* PCustomView.swift */; };
 		D8C4004C1EC18549B362C055 /* Pods_PensivTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3101B677C23271C50C1C900 /* Pods_PensivTests.framework */; };
@@ -68,6 +69,7 @@
 		BFB1501C1FB1F04A008D0BCE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BFB150281FB1F569008D0BCE /* PNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PNode.swift; sourceTree = "<group>"; };
 		BFB1502A1FB1F574008D0BCE /* PLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLink.swift; sourceTree = "<group>"; };
+		BFC18F882061346A00581219 /* PNodeMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PNodeMap.swift; sourceTree = "<group>"; };
 		BFD2B80B2008F9230043509D /* PDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDataManager.swift; sourceTree = "<group>"; };
 		BFFF40E11FC09CCD00A83D59 /* PCustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCustomView.swift; sourceTree = "<group>"; };
 		D6C04BC82B1CB0440B8928BF /* Pods-Pensiv.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pensiv.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Pensiv/Pods-Pensiv.debug.xcconfig"; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 				BF9BE8662032059A00F2B269 /* PTextNode.swift */,
 				BF4B28312010F61200FE943B /* PCrawlingNode.swift */,
 				BFB1502A1FB1F574008D0BCE /* PLink.swift */,
+				BFC18F882061346A00581219 /* PNodeMap.swift */,
 				BFB150001FB1F049008D0BCE /* Assets.xcassets */,
 				BFB150021FB1F049008D0BCE /* Main.storyboard */,
 				BFB150051FB1F049008D0BCE /* Info.plist */,
@@ -485,6 +488,7 @@
 				BFB150291FB1F569008D0BCE /* PNode.swift in Sources */,
 				BFFF40E21FC09CCD00A83D59 /* PCustomView.swift in Sources */,
 				BFB1502B1FB1F574008D0BCE /* PLink.swift in Sources */,
+				BFC18F892061346A00581219 /* PNodeMap.swift in Sources */,
 				BFB14FFC1FB1F049008D0BCE /* ViewController.swift in Sources */,
 				BFB14FFA1FB1F049008D0BCE /* AppDelegate.swift in Sources */,
 				BFD2B80C2008F9230043509D /* PDataManager.swift in Sources */,

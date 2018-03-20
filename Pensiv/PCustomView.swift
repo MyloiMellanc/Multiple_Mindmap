@@ -26,6 +26,8 @@ import QuartzCore
 
 //노드들이 superview를 통해서 메인 뷰에 요청하는 매서드들
 //superview가 NSView로 레퍼런스되어있어, 부득이하게 Extension으로 인터페이스를 생성해서 사용
+
+
 extension NSView
 {
     //Announce superview that subview is touched
@@ -43,6 +45,9 @@ extension NSView
         
     }
     
+    @objc func PClearLinkPass() {
+        
+    }
 }
 
 
@@ -85,6 +90,15 @@ class PCustomDocumentView : NSView
         return textnode
     }
     
+    func createCrawlingNode(position : CGPoint) -> PCrawlingNode {
+        let crawlingnode = PCrawlingNode(position: position)
+        
+        self.nodeList.insert(crawlingnode)
+        self.addSubview(crawlingnode)
+        
+        return crawlingnode
+    }
+    
     ////////////////////////////////////////////////////////////////
     
     
@@ -118,6 +132,11 @@ class PCustomDocumentView : NSView
     }
     
     
+    override func PClearLinkPass() {
+        for link in self.linkList {
+            link.clearPass()
+        }
+    }
     
     
     ////////////////////////////////////////////////////////////////
@@ -259,18 +278,14 @@ class PCustomDocumentView : NSView
     }
     
     
-    
+    //Line들이 먼저 그려져야하므로, 모든 라인 드로우를 여기에서 담당
+    //서브 뷰의 드로잉은 여기서 처리하지 않고, 각자의 드로잉 매서드에서 처리된다
     
     
     override func draw(_ dirtyRect: NSRect) {
-        
-        //Line들이 먼저 그려져야하므로, 모든 라인 드로우를 여기에서 담당
         for link in linkList {
             link.draw()
         }
-        
-        
-        //서브 뷰의 드로잉은 여기서 처리하지 않고, 각자의 드로잉 매서드에서 처리된다
     }
     
     
@@ -341,8 +356,7 @@ class PCustomDocumentView : NSView
         let pos = self.convert(event.locationInWindow, from: nil)
         
         if (event.clickCount == 2) && (event.modifierFlags.contains(.control)) {
-            let crawlingNode = PCrawlingNode(position: pos)
-            self.addSubview(crawlingNode)
+            let crawlingNode = createCrawlingNode(position: pos)
         }
         else if (event.clickCount == 2) && (event.modifierFlags.contains(.option)) {
             let textnode = self.createTextNode(position: pos)

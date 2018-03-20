@@ -64,7 +64,34 @@ class PCrawlingNode : PNode
     
     ////////////////////////////////////////////////////////////////
     
+    func collectNode(item : PTextItem, target : PTextNode) {
+        let relatedNodes = target.getSubNodeListWithPass()
+        
+        for node in relatedNodes {
+            if node.getType() == .TEXT {
+                let textNode = node as! PTextNode
+                let nodeItem = PTextItem(depth: item.depth + 1, text: textNode.getText())
+                
+                item.addSubNode(target: nodeItem)
+                collectNode(item: nodeItem, target: textNode)
+            }
+        }
+        
+    }
     
+    func collectMap(root : PTextNode) -> PTextItem {
+        let textItem = PTextItem(depth: 0, text: root.getText())
+        
+        collectNode(item: textItem, target: root)
+        
+        
+        return textItem
+    }
+    
+    
+    func clearMap() {
+        
+    }
     
     ////////////////////////////////////////////////////////////////
     
@@ -82,24 +109,39 @@ class PCrawlingNode : PNode
     var isRunning = false
     
     override func focus() {
-        //스레드 가동
-        
-        //let thread = Thread(target: self, selector: Selector("demoCrawling"), object: nil)
-        //thread.start()
-        
         if self.isRunning == false {
-            
+            self.markView.layer?.backgroundColor = NSColor.orange.cgColor
             
             //스레드 시작
             
+            //let thread = Thread(target: self, selector: Selector("demoCrawling"), object: nil)
+            //thread.start()
             
-            self.markView.layer?.backgroundColor = NSColor.orange.cgColor
+            self.superview?.PClearLinkPass()
+            
+            let nodeList = self.getSubNodeListWithPass()
+            
+            var mapList = Array<PTextItem>()
+            for node in nodeList {
+                if node.getType() == .TEXT {
+                    let textnode = node as! PTextNode
+                    let textItem = collectMap(root: textnode)
+                    
+                    mapList.append(textItem)
+                }
+            }
+            
+            for map in mapList {
+                map.printMap()
+            }
+            
+            
             self.isRunning = true
         }
         else {
             
             
-            //스레드 종료
+            //스레드 강제 종료
             
             
             self.markView.layer?.backgroundColor = NSColor.systemBlue.cgColor
