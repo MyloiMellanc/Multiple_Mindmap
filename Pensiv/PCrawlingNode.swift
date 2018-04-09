@@ -64,6 +64,26 @@ class PCrawlingNode : PNode
     
     ////////////////////////////////////////////////////////////////
     
+    
+    func collectConnectedMaps() -> Array<PTextItem>{
+        self.superview?.PClearLinkPass()
+        
+        let nodeList = self.getSubNodeListWithPass()
+        
+        var mapList = Array<PTextItem>()
+        for node in nodeList {
+            if node.getType() == .TEXT {
+                let textnode = node as! PTextNode
+                let textItem = collectMap(root: textnode)
+                
+                mapList.append(textItem)
+            }
+        }
+        
+        return mapList
+        
+    }
+    
     func collectNode(item : PTextItem, target : PTextNode) {
         let relatedNodes = target.getSubNodeListWithPass()
         
@@ -93,12 +113,50 @@ class PCrawlingNode : PNode
         
     }
     
+    
+    
+    ////////////////////////////////////////////////////////////////
+    
+    
+    func createNodeFromArray(depth : Int, width : CGFloat, parent : PNode, arr : Array<String>) {
+        let depthDistance = CGFloat(depth) * 100.0
+        
+        let division = arr.count - 1
+        let distance = width / CGFloat(division)
+        let position_x_start = self.frame.origin.x - (width / 2.0) + (self.frame.size.width / 2.0)
+        let position_y = self.frame.origin.y - depthDistance - 100.0
+        
+        for (n,text) in arr.enumerated() {
+            let position = CGPoint(x: position_x_start + (distance * CGFloat(n)), y: position_y)
+            
+            let textnode = PTextNode(position: position, text: text)
+            
+            self.superview?.PAddNode(target: textnode)
+            self.superview?.PCreateLink(node_1: parent, node_2: textnode)
+        }
+    }
+    
+    
     ////////////////////////////////////////////////////////////////
     
     
     
+    let dataManager = Neo4jWrapper()
     
-    @objc func demoCrawling() {
+    func crawl() {
+        let mapList = self.collectConnectedMaps()
+        
+        
+        var arr = Array<String>()
+        for node in mapList {
+            arr.append(node.text)
+        }
+        
+        
+        self.createNodeFromArray(depth: 0, width: 300, parent: self, arr: arr)
+    }
+    
+    @objc func crawlMapByThread() {
         
     }
     
@@ -114,27 +172,12 @@ class PCrawlingNode : PNode
             
             //스레드 시작
             
-            //let thread = Thread(target: self, selector: Selector("demoCrawling"), object: nil)
+            //let thread = Thread(target: self, selector: Selector("crawl"), object: nil)
             //thread.start()
+            //Thread.detachNewThreadSelector("crawl", toTarget: self, with: nil)
             
-            self.superview?.PClearLinkPass()
-            
-            let nodeList = self.getSubNodeListWithPass()
-            
-            var mapList = Array<PTextItem>()
-            for node in nodeList {
-                if node.getType() == .TEXT {
-                    let textnode = node as! PTextNode
-                    let textItem = collectMap(root: textnode)
-                    
-                    mapList.append(textItem)
-                }
-            }
-            
-            for map in mapList {
-                map.printMap()
-            }
-            
+            print("Starting Crawling.")
+            self.crawl()
             
             self.isRunning = true
         }

@@ -20,17 +20,17 @@ class PTextItem
         self.text = text
     }
     
-    var link_list = Array<PLinkItem>()
+    var linkList = Array<PLinkItem>()
     
     func addSubNode(target : PTextItem) {
         let linkItem = PLinkItem(target: target)
         
-        self.link_list.append(linkItem)
+        self.linkList.append(linkItem)
     }
     
     func printMap() {
         print("\(self.depth) : \(self.text)")
-        for linkitem in self.link_list {
+        for linkitem in self.linkList {
             linkitem.subNode.printMap()
         }
     }
@@ -42,10 +42,10 @@ class PTextItem
 
 class PLinkItem
 {
-    var relatedText_list = Array<String>()
+    var relatedTextList = Array<String>()
     
     func addRelatedText(text : String) {
-        self.relatedText_list.append(text)
+        self.relatedTextList.append(text)
     }
     
     

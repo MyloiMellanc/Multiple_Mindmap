@@ -48,6 +48,18 @@ extension NSView
     @objc func PClearLinkPass() {
         
     }
+    
+    
+    
+    //Used for PCrawlingNode
+    @objc func PAddNode(target node : PNode) {
+        
+    }
+    
+    //Used for PCrawlingNode
+    @objc func PCreateLink(node_1 node1 : PNode, node_2 node2 : PNode) {
+        
+    }
 }
 
 
@@ -78,7 +90,6 @@ class PCustomDocumentView : NSView
         self.addSubview(textnode)
         
         return textnode
-
     }
     
     func createTextNode(position : CGPoint, text : String) -> PTextNode {
@@ -99,6 +110,11 @@ class PCustomDocumentView : NSView
         return crawlingnode
     }
     
+    override func PAddNode(target node: PNode) {
+        self.nodeList.insert(node)
+        self.addSubview(node)
+    }
+    
     ////////////////////////////////////////////////////////////////
     
     
@@ -110,6 +126,13 @@ class PCustomDocumentView : NSView
     
     func createLink(node_1 node1 : PNode, node_2 node2 : PNode)
     {
+        let link = PArrowLink(view : self, parent : node1, child : node2)
+        self.linkList.insert(link)
+        node1.addLink(link: link)
+        node2.addLink(link: link)
+    }
+    
+    override func PCreateLink(node_1 node1: PNode, node_2 node2: PNode) {
         let link = PArrowLink(view : self, parent : node1, child : node2)
         self.linkList.insert(link)
         node1.addLink(link: link)
@@ -130,6 +153,8 @@ class PCustomDocumentView : NSView
         link.detachNode()
         self.linkList.remove(link)
     }
+    
+    
     
     
     override func PClearLinkPass() {

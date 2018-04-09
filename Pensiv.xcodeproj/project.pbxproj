@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		6D96A6D38CBD01936B15F1AA /* Pods_PensivUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DB0A5E8AD6C890F53B2F75F /* Pods_PensivUITests.framework */; };
 		75BFB02A3DD147ADA5D536A4 /* Pods_Pensiv.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1659FEF55C078500372B467C /* Pods_Pensiv.framework */; };
+		BF001DE02074B25E0008338B /* Neo4jManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF001DDE2074B25E0008338B /* Neo4jManager.cpp */; };
+		BF001DE52074B2C00008338B /* Neo4jWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF001DE42074B2C00008338B /* Neo4jWrapper.mm */; };
+		BF001DE72074B3BE0008338B /* libneo4j-client.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF001DE62074B3BE0008338B /* libneo4j-client.a */; };
 		BF4B28322010F61200FE943B /* PCrawlingNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4B28312010F61200FE943B /* PCrawlingNode.swift */; };
 		BF907E7E200D207D002257D3 /* WordCrawlingDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF907E7D200D207D002257D3 /* WordCrawlingDemo.swift */; };
 		BF9BE8672032059A00F2B269 /* PTextNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9BE8662032059A00F2B269 /* PTextNode.swift */; };
@@ -50,6 +53,12 @@
 		2DB0A5E8AD6C890F53B2F75F /* Pods_PensivUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PensivUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F91D93FBF7FF743D86B7FC0 /* Pods-PensivTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PensivTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PensivTests/Pods-PensivTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B3101B677C23271C50C1C900 /* Pods_PensivTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PensivTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BF001DDD2074B25D0008338B /* Pensiv-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Pensiv-Bridging-Header.h"; sourceTree = "<group>"; };
+		BF001DDE2074B25E0008338B /* Neo4jManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Neo4jManager.cpp; sourceTree = "<group>"; };
+		BF001DDF2074B25E0008338B /* Neo4jManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Neo4jManager.hpp; sourceTree = "<group>"; };
+		BF001DE12074B2890008338B /* Neo4jWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Neo4jWrapper.h; sourceTree = "<group>"; };
+		BF001DE42074B2C00008338B /* Neo4jWrapper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = Neo4jWrapper.mm; sourceTree = "<group>"; };
+		BF001DE62074B3BE0008338B /* libneo4j-client.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libneo4j-client.a"; path = "../../../../usr/local/Cellar/libneo4j-client/2.2.0/lib/libneo4j-client.a"; sourceTree = "<group>"; };
 		BF4B28312010F61200FE943B /* PCrawlingNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCrawlingNode.swift; sourceTree = "<group>"; };
 		BF907E7D200D207D002257D3 /* WordCrawlingDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordCrawlingDemo.swift; sourceTree = "<group>"; };
 		BF9BE8662032059A00F2B269 /* PTextNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PTextNode.swift; sourceTree = "<group>"; };
@@ -83,6 +92,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF001DE72074B3BE0008338B /* libneo4j-client.a in Frameworks */,
 				75BFB02A3DD147ADA5D536A4 /* Pods_Pensiv.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -109,6 +119,7 @@
 		0FB9AA02CD389144C4A499B0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BF001DE62074B3BE0008338B /* libneo4j-client.a */,
 				1659FEF55C078500372B467C /* Pods_Pensiv.framework */,
 				B3101B677C23271C50C1C900 /* Pods_PensivTests.framework */,
 				2DB0A5E8AD6C890F53B2F75F /* Pods_PensivUITests.framework */,
@@ -169,6 +180,11 @@
 				BFB150061FB1F049008D0BCE /* Pensiv.entitlements */,
 				BFB14FFD1FB1F049008D0BCE /* Pensiv.xcdatamodeld */,
 				BF907E7D200D207D002257D3 /* WordCrawlingDemo.swift */,
+				BF001DDE2074B25E0008338B /* Neo4jManager.cpp */,
+				BF001DDF2074B25E0008338B /* Neo4jManager.hpp */,
+				BF001DDD2074B25D0008338B /* Pensiv-Bridging-Header.h */,
+				BF001DE12074B2890008338B /* Neo4jWrapper.h */,
+				BF001DE42074B2C00008338B /* Neo4jWrapper.mm */,
 			);
 			path = Pensiv;
 			sourceTree = "<group>";
@@ -268,6 +284,7 @@
 				TargetAttributes = {
 					BFB14FF51FB1F049008D0BCE = {
 						CreatedOnToolsVersion = 9.1;
+						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
 					};
 					BFB1500A1FB1F04A008D0BCE = {
@@ -487,7 +504,9 @@
 				BF907E7E200D207D002257D3 /* WordCrawlingDemo.swift in Sources */,
 				BFB150291FB1F569008D0BCE /* PNode.swift in Sources */,
 				BFFF40E21FC09CCD00A83D59 /* PCustomView.swift in Sources */,
+				BF001DE02074B25E0008338B /* Neo4jManager.cpp in Sources */,
 				BFB1502B1FB1F574008D0BCE /* PLink.swift in Sources */,
+				BF001DE52074B2C00008338B /* Neo4jWrapper.mm in Sources */,
 				BFC18F892061346A00581219 /* PNodeMap.swift in Sources */,
 				BFB14FFC1FB1F049008D0BCE /* ViewController.swift in Sources */,
 				BFB14FFA1FB1F049008D0BCE /* AppDelegate.swift in Sources */,
@@ -651,13 +670,24 @@
 			baseConfigurationReference = D6C04BC82B1CB0440B8928BF /* Pods-Pensiv.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Pensiv/Pensiv.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(SDKROOT)/usr/include/libxml2",
+					"/usr/local/Cellar/libneo4j-client/2.2.0/include",
+				);
 				INFOPLIST_FILE = Pensiv/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"/usr/local/Cellar/libneo4j-cliend/2.2.0/lib",
+					"/usr/local/Cellar/libneo4j-client/2.2.0/lib",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = prototype.Pensiv;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Pensiv/Pensiv-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
@@ -667,13 +697,23 @@
 			baseConfigurationReference = 0F925F66C094AA95B7625064 /* Pods-Pensiv.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Pensiv/Pensiv.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(SDKROOT)/usr/include/libxml2",
+					"/usr/local/Cellar/libneo4j-client/2.2.0/include",
+				);
 				INFOPLIST_FILE = Pensiv/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"/usr/local/Cellar/libneo4j-cliend/2.2.0/lib",
+					"/usr/local/Cellar/libneo4j-client/2.2.0/lib",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = prototype.Pensiv;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Pensiv/Pensiv-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
