@@ -65,25 +65,6 @@ class PCrawlingNode : PNode
     ////////////////////////////////////////////////////////////////
     
     
-    func collectConnectedMaps() -> Array<PTextItem>{
-        self.superview?.PClearLinkPass()
-        
-        let nodeList = self.getSubNodeListWithPass()
-        
-        var mapList = Array<PTextItem>()
-        for node in nodeList {
-            if node.getType() == .TEXT {
-                let textnode = node as! PTextNode
-                let textItem = collectMap(root: textnode)
-                
-                mapList.append(textItem)
-            }
-        }
-        
-        return mapList
-        
-    }
-    
     func collectNode(item : PTextItem, target : PTextNode) {
         let relatedNodes = target.getSubNodeListWithPass()
         
@@ -109,102 +90,46 @@ class PCrawlingNode : PNode
     }
     
     
+    func collectConnectedMaps() -> Array<PTextItem>{
+        self.superview?.PClearLinkPass()
+        
+        let nodeList = self.getSubNodeListWithPass()
+        
+        var mapList = Array<PTextItem>()
+        for node in nodeList {
+            if node.getType() == .TEXT {
+                let textnode = node as! PTextNode
+                let textItem = collectMap(root: textnode)
+                
+                mapList.append(textItem)
+            }
+        }
+        
+        return mapList
+        
+    }
+    
     func clearMap() {
         
     }
     
     
-    
-    ////////////////////////////////////////////////////////////////
-    
-    
-    func createNodeFromArray(depth : Int, width : CGFloat, parent : PNode, arr : Array<String>) {
-        let depthDistance = CGFloat(depth) * 70.0
-        
-        let division = arr.count - 1
-        let distance = width / CGFloat(division)
-        let position_x_start = self.frame.origin.x - (width / 2.0) + (self.frame.size.width / 2.0)
-        let position_y = self.frame.origin.y - depthDistance - 100.0
-        
-        for (n,text) in arr.enumerated() {
-            let position = CGPoint(x: position_x_start + (distance * CGFloat(n)), y: position_y)
-            
-            let textnode = PTextNode(position: position, text: text)
-            
-            self.superview?.PAddNode(target: textnode)
-            self.superview?.PCreateLink(node_1: parent, node_2: textnode)
-        }
-    }
-    
-    
     ////////////////////////////////////////////////////////////////
     
     
     
-    let dataManager = Neo4jWrapper()
     
-    @objc func crawl() {
-        let mapList = self.collectConnectedMaps()
-        
-        
-        var arr = Array<String>()
-        
-        
-        
-        let query = """
-                    match p=(a)-[*..3]-(b) where a.Name = '리니지' AND b.Name = '로그라이크'
-                    with nodes(p) as nds limit 4
-                    unwind nds as nd
-                    return distinct nd.Name
-                    """
-        
-        if dataManager.runQuery(query) == true {
-            while let data = dataManager.fetchNextResult() {
-                arr.append(data)
-            }
-        }
-        
-        
-        self.createNodeFromArray(depth: 0, width: 300, parent: self, arr: arr)
-        
-        
-    }
-    
-    @objc func crawlMapByThread() {
-        
-    }
     
     
     ////////////////////////////////////////////////////////////////
     
-    
-    var isRunning = false
     
     override func focus() {
-        if self.isRunning == false {
-            self.markView.layer?.backgroundColor = NSColor.orange.cgColor
-            
-            //스레드 시작
-            
-            let thread = Thread(target: self, selector: Selector("crawl"), object: nil)
-            thread.start()
-            //Thread.detachNewThreadSelector("crawl", toTarget: self, with: nil)
-            
-            //print("Starting Crawling.")
-            //self.crawl()
-            
-            self.isRunning = true
-        }
-        else {
-            
-            
-            //스레드 강제 종료
-            
-            
-            self.markView.layer?.backgroundColor = NSColor.systemBlue.cgColor
-            self.isRunning = false
-        }
+        self.markView.layer?.backgroundColor = NSColor.orange.cgColor
+          
+        let mapList = self.collectConnectedMaps()
         
+        PDataThread.pInstance.startThread(parent: self, maps: mapList)
     }
     
     

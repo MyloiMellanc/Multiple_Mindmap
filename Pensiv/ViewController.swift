@@ -18,7 +18,6 @@ class ViewController: NSViewController
     
     @IBOutlet var scrollview: PCustomView!
     
-    let dataManager = Neo4jWrapper()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,8 +36,8 @@ class ViewController: NSViewController
 
         
         
-        dataManager.initWrapper()
-        if dataManager.connect() == false {
+        PDataThread.pInstance.initWrapper()
+        if PDataThread.pInstance.connect() == false {
             print("Database Connect error")
             exit(0)
         }
@@ -61,7 +60,7 @@ class ViewController: NSViewController
     
     
     deinit {
-        self.dataManager.disconnect()
+        PDataThread.pInstance.disconnect()
     }
     
 }
