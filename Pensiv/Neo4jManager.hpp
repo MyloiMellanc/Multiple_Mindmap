@@ -21,8 +21,9 @@ public:
     
     void initNeo4j();
     bool connectClient();
+    void disconnect();
     
-    bool createSearchPathResult(const char* str1, const char* str2);
+    bool runQuery(const char* query);
     
     const char* fetchNextResult();
     

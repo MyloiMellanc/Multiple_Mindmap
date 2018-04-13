@@ -7,6 +7,9 @@
 //
 
 #include "Neo4jManager.hpp"
+#include <string>
+#include <iostream>
+
 
 Neo4jManager* Neo4jManager::_pInstance = nullptr;
 
@@ -44,9 +47,16 @@ bool Neo4jManager::connectClient()
     return true;
 }
 
-bool Neo4jManager::createSearchPathResult(const char* str1, const char* str2)
+void Neo4jManager::disconnect()
 {
-    _results = neo4j_run(_connection, " ", neo4j_null);
+    neo4j_close(_connection);
+    neo4j_client_cleanup();
+}
+
+
+bool Neo4jManager::runQuery(const char* query)
+{
+    _results = neo4j_run(_connection, query, neo4j_null);
     
     if(_results == NULL)
         return false;
@@ -54,12 +64,20 @@ bool Neo4jManager::createSearchPathResult(const char* str1, const char* str2)
     return true;
 }
 
+
+
 const char* Neo4jManager::fetchNextResult()
 {
     neo4j_result* result = neo4j_fetch_next(_results);
     if (result != NULL)
     {
         neo4j_value_t value = neo4j_result_field(result, 0);
+        
+        //unsigned int length = neo4j_string_length(value) + 3;
+        //char* str = (char*)calloc(length, sizeof(char));
+        
+        //str = neo4j_tostring(value, str, length);
+        
         
         const char* str = neo4j_ustring_value(value);
         

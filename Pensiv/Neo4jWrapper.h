@@ -14,8 +14,9 @@
 @interface Neo4jWrapper : NSObject
 - (void) initWrapper;
 - (bool) connect;
-- (bool) createSearchPathResult:(NSString*)str1 another: (NSString*)str2;
+- (bool) runQuery: (NSString*) query;
 - (NSString*) fetchNextResult;
+- (void) disconnect;
 @end
 
 

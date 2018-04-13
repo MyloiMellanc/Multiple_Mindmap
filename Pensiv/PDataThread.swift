@@ -11,8 +11,13 @@ import Cocoa
 
 
 
-class PDataManager
+class PDataThread
 {
-   
+    static let pInstance = PDataThread()
+    
+    private init() {
+        print("Singleton Thread is created.")
+    }
+    
     
 }

@@ -119,7 +119,7 @@ class PCrawlingNode : PNode
     
     
     func createNodeFromArray(depth : Int, width : CGFloat, parent : PNode, arr : Array<String>) {
-        let depthDistance = CGFloat(depth) * 100.0
+        let depthDistance = CGFloat(depth) * 70.0
         
         let division = arr.count - 1
         let distance = width / CGFloat(division)
@@ -143,17 +143,31 @@ class PCrawlingNode : PNode
     
     let dataManager = Neo4jWrapper()
     
-    func crawl() {
+    @objc func crawl() {
         let mapList = self.collectConnectedMaps()
         
         
         var arr = Array<String>()
-        for node in mapList {
-            arr.append(node.text)
+        
+        
+        
+        let query = """
+                    match p=(a)-[*..3]-(b) where a.Name = '리니지' AND b.Name = '로그라이크'
+                    with nodes(p) as nds limit 4
+                    unwind nds as nd
+                    return distinct nd.Name
+                    """
+        
+        if dataManager.runQuery(query) == true {
+            while let data = dataManager.fetchNextResult() {
+                arr.append(data)
+            }
         }
         
         
         self.createNodeFromArray(depth: 0, width: 300, parent: self, arr: arr)
+        
+        
     }
     
     @objc func crawlMapByThread() {
@@ -172,12 +186,12 @@ class PCrawlingNode : PNode
             
             //스레드 시작
             
-            //let thread = Thread(target: self, selector: Selector("crawl"), object: nil)
-            //thread.start()
+            let thread = Thread(target: self, selector: Selector("crawl"), object: nil)
+            thread.start()
             //Thread.detachNewThreadSelector("crawl", toTarget: self, with: nil)
             
-            print("Starting Crawling.")
-            self.crawl()
+            //print("Starting Crawling.")
+            //self.crawl()
             
             self.isRunning = true
         }

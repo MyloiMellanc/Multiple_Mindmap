@@ -17,22 +17,21 @@
 @implementation Neo4jWrapper
 - (void) initWrapper
 {
-    //self.neo4jManager->initNeo4j();
     Neo4jManager::getInstance()->initNeo4j();
 }
+
 - (bool) connect
 {
-    //return self.neo4jManager->connectClient();
     return Neo4jManager::getInstance()->connectClient();
 }
-- (bool) createSearchPathResult: (NSString*) str1 another: (NSString*)str2;
+
+- (bool) runQuery: (NSString*) query
 {
-    //return self.neo4jManager->createSearchPathResult([str1 UTF8String], [str2 UTF8String]);
-    return Neo4jManager::getInstance()->createSearchPathResult([str1 UTF8String], [str2 UTF8String]);
+    return Neo4jManager::getInstance()->runQuery([query UTF8String]);
 }
+
 - (NSString*) fetchNextResult
 {
-    //const char* str = self.neo4jManager->fetchNextResult();
     const char* str = Neo4jManager::getInstance()->fetchNextResult();
     if (str != NULL)
     {
@@ -41,6 +40,11 @@
     
     
     return NULL;
+}
+
+- (void) disconnect
+{
+    Neo4jManager::getInstance()->disconnect();
 }
 
 @end
