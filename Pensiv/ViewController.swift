@@ -41,7 +41,7 @@ class ViewController: NSViewController
             print("Database Connect error")
             exit(0)
         }
-        
+ 
         
         
     }

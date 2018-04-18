@@ -30,11 +30,45 @@ class PTextItem
     
     func printMap() {
         print("\(self.depth) : \(self.text)")
-        for linkitem in self.linkList {
-            linkitem.subNode.printMap()
+        for link in self.linkList {
+            link.textItem.printMap()
         }
     }
     
+    func getHighestDepth() -> Int {
+        var highestDepth = 0
+        
+        if self.linkList.count == 0 {
+            highestDepth = self.depth
+        }
+        else {
+            for link in self.linkList {
+                let next_depth = link.textItem.getHighestDepth()
+                if next_depth > highestDepth {
+                    highestDepth = next_depth
+                }
+            }
+        }
+        
+        return highestDepth
+    }
+    
+    func getTextsByDepth(depth : Int) -> Array<String> {
+        var arr = Array<String>()
+        
+        if self.depth == depth {
+            arr.append(self.text)
+        }
+        else {
+            for link in self.linkList {
+                let next_arr = link.textItem.getTextsByDepth(depth: depth)
+                
+                arr.append(contentsOf: next_arr)
+            }
+        }
+        
+        return arr
+    }
 }
 
 
@@ -49,10 +83,10 @@ class PLinkItem
     }
     
     
-    let subNode : PTextItem
+    let textItem : PTextItem
     
     init(target : PTextItem) {
-        self.subNode = target
+        self.textItem = target
     }
     
     

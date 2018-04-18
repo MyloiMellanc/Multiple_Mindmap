@@ -190,7 +190,7 @@ class PCustomDocumentView : NSView
             node.untoggle()
         }
         
-        print("Activated Count : \(self.activatedNodeList.count)")
+        //print("Activated Count : \(self.activatedNodeList.count)")
     }
     
     
@@ -385,7 +385,7 @@ class PCustomDocumentView : NSView
         }
         else if (event.clickCount == 2) && (event.modifierFlags.contains(.option)) {
             let textnode = self.createTextNode(position: pos)
-            //textnode.focus()
+            textnode.focus()
         }
         else {
             //이 뷰를 다시 첫 리스폰더로 지정
@@ -393,7 +393,7 @@ class PCustomDocumentView : NSView
             
             //활성화 초기화
             self.clearActivatedNode()
-            print("Activated Clear")
+            //print("Activated Clear")
         }
         
     }
