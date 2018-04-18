@@ -42,8 +42,8 @@ class ViewController: NSViewController
             exit(0)
         }
         
-        
-        
+        PDataThread.pInstance.superview = scrollview.documentView as? PCustomDocumentView
+ 
     }
     
     override func viewWillAppear() {

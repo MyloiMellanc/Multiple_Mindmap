@@ -12,7 +12,7 @@ import Foundation
 
 class PTextItem
 {
-    var depth : Int
+    let depth : Int
     let text : String
     
     init(depth : Int, text : String) {
@@ -30,11 +30,53 @@ class PTextItem
     
     func printMap() {
         print("\(self.depth) : \(self.text)")
-        for linkitem in self.linkList {
-            linkitem.subNode.printMap()
+        for link in self.linkList {
+            link.textItem.printMap()
         }
     }
     
+    func createRelatedTexts(instance : PDataThread, limit : Int) {
+        for link in self.linkList {
+            link.createRelatedTexts(instance: instance, text: self.text, limit: limit)
+            
+            link.textItem.createRelatedTexts(instance: instance, limit: limit)
+        }
+    }
+    
+    
+    func getTextsByDepth(depth : Int) -> Array<String> {
+        var arr = Array<String>()
+        
+        if self.depth == depth {
+            arr.append(self.text)
+        }
+        else {
+            for link in self.linkList {
+                let next_arr = link.textItem.getTextsByDepth(depth: depth)
+                
+                arr.append(contentsOf: next_arr)
+            }
+        }
+        
+        return arr
+    }
+    
+    func getItemsByDepth(depth : Int) -> Array<PTextItem> {
+        var arr = Array<PTextItem>()
+        
+        if self.depth == depth {
+            arr.append(self)
+        }
+        else {
+            for link in self.linkList {
+                let next_arr = link.textItem.getItemsByDepth(depth: depth)
+                
+                arr.append(contentsOf: next_arr)
+            }
+        }
+        
+        return arr
+    }
 }
 
 
@@ -44,15 +86,17 @@ class PLinkItem
 {
     var relatedTextList = Array<String>()
     
-    func addRelatedText(text : String) {
-        self.relatedTextList.append(text)
+    func createRelatedTexts(instance : PDataThread, text : String, limit : Int) {
+        let related_texts = instance.getRelatedTexts(str_1: text, str_2: self.textItem.text, limit: limit)
+        
+        self.relatedTextList.append(contentsOf: related_texts)
     }
     
     
-    let subNode : PTextItem
+    let textItem : PTextItem
     
     init(target : PTextItem) {
-        self.subNode = target
+        self.textItem = target
     }
     
     

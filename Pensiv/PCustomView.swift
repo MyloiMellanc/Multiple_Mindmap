@@ -117,6 +117,67 @@ class PCustomDocumentView : NSView
     
     ////////////////////////////////////////////////////////////////
     
+    /*
+    private func createNodeFromArray(depth : Int, width : CGFloat, parent : PNode, arr : Array<String>) -> Array<PNode> {
+        let depthDistance = CGFloat(depth) * 70.0
+        
+        let division = arr.count - 1
+        let distance = width / CGFloat(division)
+        let position_x_start = parent.frame.origin.x - (width / 2.0) + (parent.frame.size.width / 2.0)
+        let position_y = parent.frame.origin.y - depthDistance - 100.0
+        
+        var nodes = Array<PNode>()
+        
+        for (n,text) in arr.enumerated() {
+            let position = CGPoint(x: position_x_start + (distance * CGFloat(n)), y: position_y)
+            
+            let textnode = PTextNode(position: position, text: text)
+            
+            parent.superview?.PAddNode(target: textnode)
+            parent.superview?.PCreateLink(node_1: parent, node_2: textnode)
+            
+            nodes.append(textnode)
+        }
+        
+        return nodes
+    }
+    
+    */
+    
+    private func createNodeFromItem(parent : PNode, item : PTextItem) {
+        var position = parent.frame.origin
+        
+        position.y = position.y - 50
+        
+        let node = PTextNode(position: position, text: item.text)
+        self.PAddNode(target: node)
+        
+        self.PCreateLink(node_1: parent, node_2: node)
+        
+        for link in item.linkList {
+            self.createNodeFromItem(parent: node, item: link.textItem)
+        }
+    }
+    
+    func createNodeFromMap(parent : PNode, map : Array<PTextItem>) {
+        /*
+        var directions = Array<CGPoint>()
+        let parent_point = parent.frame.origin
+        
+        for link in parent.linkList {
+            let sub_point = link.getOtherNode(callBy: parent).frame.origin
+            
+        }
+        */
+        
+        for item in map {
+            self.createNodeFromItem(parent: parent, item: item)
+        }
+    }
+    
+    
+    ////////////////////////////////////////////////////////////////
+    
     
     //노드간의 링크를 나타내는 객체는 생성될때 본 메인 뷰, 각 두 노드, 총 3곳에서 참조된다.
     var linkList = Set<PLink>()
@@ -190,7 +251,7 @@ class PCustomDocumentView : NSView
             node.untoggle()
         }
         
-        print("Activated Count : \(self.activatedNodeList.count)")
+        //print("Activated Count : \(self.activatedNodeList.count)")
     }
     
     
@@ -385,7 +446,7 @@ class PCustomDocumentView : NSView
         }
         else if (event.clickCount == 2) && (event.modifierFlags.contains(.option)) {
             let textnode = self.createTextNode(position: pos)
-            //textnode.focus()
+            textnode.focus()
         }
         else {
             //이 뷰를 다시 첫 리스폰더로 지정
@@ -393,7 +454,7 @@ class PCustomDocumentView : NSView
             
             //활성화 초기화
             self.clearActivatedNode()
-            print("Activated Clear")
+            //print("Activated Clear")
         }
         
     }
