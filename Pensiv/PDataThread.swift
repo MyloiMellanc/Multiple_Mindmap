@@ -42,17 +42,14 @@ class PDataThread
     }
     
     ///////////////////////////////////////////////////////////////////////////
-    
     var parent : PNode?
     var maps : Array<PTextItem>?
     
-    
-    
-    private func getTextItemsByDepth(depth : Int) -> Array<PTextItem> {
-        var arr = Array<PTextItem>()
+    private func getTextsByDepth(depth : Int) -> Array<String> {
+        var arr = Array<String>()
         
         for item in self.maps! {
-            let text_arr = item.getItemsByDepth(depth: depth)
+            let text_arr = item.getTextsByDepth(depth: depth)
             
             arr.append(contentsOf: text_arr)
         }
@@ -61,21 +58,33 @@ class PDataThread
     }
     
     
+    private func getTextItemsByDepth(depth : Int) -> Array<PTextItem> {
+        var arr = Array<PTextItem>()
+        
+        for item in self.maps! {
+            let text_arr = item.getTextItemsByDepth(depth: depth)
+            
+            arr.append(contentsOf: text_arr)
+        }
+        
+        return arr
+    }
+    
     
     ///////////////////////////////////////////////////////////////////////////
     
     
     
     func getRelatedTexts(str_1 : String, str_2 : String, limit : Int) -> Array<String> {
-        let query = """
-        match p=(a)-[*..4]-(b) where a.Name = '\(str_1)' AND b.Name = '\(str_2)'
-        with nodes(p) as nds limit 10
-        unwind nds as nd
-        return distinct nd.Name
-        """
-        
         var arr = Array<String>()
         
+        let query = """
+                    match p=(a)-[*..3]-(b) where a.Name = '\(str_1)' AND b.Name = '\(str_2)'
+                    with nodes(p) as nds limit 10
+                    unwind nds as nd
+                    return distinct nd.Name
+                    """
+
         if dataManager.runQuery(query) == true {
             while let data = dataManager.fetchNextResult() {
                 if arr.count < limit {
@@ -86,6 +95,7 @@ class PDataThread
             }
         }
         
+
         return arr
     }
     
@@ -99,8 +109,6 @@ class PDataThread
             items.append(text_item)
         }
         
-        print(depth)
-        print(texts)
         
         return items
     }

@@ -35,14 +35,23 @@ class PTextItem
         }
     }
     
-    func createRelatedTexts(instance : PDataThread, limit : Int) {
-        for link in self.linkList {
-            link.createRelatedTexts(instance: instance, text: self.text, limit: limit)
-            
-            link.textItem.createRelatedTexts(instance: instance, limit: limit)
+    func getHighestDepth() -> Int {
+        var highestDepth = 0
+        
+        if self.linkList.count == 0 {
+            highestDepth = self.depth
         }
+        else {
+            for link in self.linkList {
+                let next_depth = link.textItem.getHighestDepth()
+                if next_depth > highestDepth {
+                    highestDepth = next_depth
+                }
+            }
+        }
+        
+        return highestDepth
     }
-    
     
     func getTextsByDepth(depth : Int) -> Array<String> {
         var arr = Array<String>()
@@ -53,6 +62,7 @@ class PTextItem
         else {
             for link in self.linkList {
                 let next_arr = link.textItem.getTextsByDepth(depth: depth)
+
                 
                 arr.append(contentsOf: next_arr)
             }
@@ -61,7 +71,7 @@ class PTextItem
         return arr
     }
     
-    func getItemsByDepth(depth : Int) -> Array<PTextItem> {
+    func getTextItemsByDepth(depth : Int) -> Array<PTextItem> {
         var arr = Array<PTextItem>()
         
         if self.depth == depth {
@@ -69,13 +79,20 @@ class PTextItem
         }
         else {
             for link in self.linkList {
-                let next_arr = link.textItem.getItemsByDepth(depth: depth)
+                let next_arr = link.textItem.getTextItemsByDepth(depth: depth)
+                
                 
                 arr.append(contentsOf: next_arr)
             }
         }
         
         return arr
+    }
+    
+    func createRelatedTexts(instance : PDataThread, limit : Int) {
+        for link in self.linkList {
+            link.createRelatedTexts(instance: instance, text: self.text, limit: limit)
+        }
     }
 }
 
