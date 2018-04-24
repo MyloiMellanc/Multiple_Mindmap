@@ -134,6 +134,7 @@ class PFreeLink : PLink
     override func detachNode() {
         self.node_1.detachLink(link: self)
         self.node_2.detachLink(link: self)
+        
     }
     
     override func itContains(view: NSView, node1: PNode, node2: PNode) -> Bool {
@@ -186,6 +187,7 @@ class PArrowLink : PLink
     override func detachNode() {
         self.parentNode.detachLink(link: self)
         self.childNode.detachLink(link: self)
+        
     }
     
     override func itContains(view: NSView, node1: PNode, node2: PNode) -> Bool {

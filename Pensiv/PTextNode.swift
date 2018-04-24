@@ -133,6 +133,23 @@ class PTextNode : PNode
         self.addSubview(textfield)   //super.init 이후에 self 사용가능
     }
     
+    init(id : Int, position touchPoint : CGPoint, text str : String) {
+        let nodeSize = PNode.getNodeSize(type: .TEXT)
+        
+        let frameRect = NSRect(x: PNode.gap, y: PNode.gap, width: nodeSize.0, height: nodeSize.1)
+        
+        
+        self.textfield = PTextField(frame : frameRect, text : str)
+        //super.init 전에 내부 변수를 모두 초기화해야함
+        
+        self.textfield.isEditable = false
+        
+        
+        super.init(id : id, position : touchPoint, type : .TEXT)
+        
+        self.addSubview(textfield)   //super.init 이후에 self 사용가능
+    }
+    
     required init?(coder decoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

@@ -67,7 +67,17 @@ extension NSView
 
 class PCustomDocumentView : NSView
 {
-    
+    func initViewItem() {
+        for link in self.linkList {
+            link.detachNode()
+        }
+        self.linkList.removeAll()
+        
+        for node in self.nodeList {
+            node.removeFromSuperview()
+        }
+        self.nodeList.removeAll()
+    }
     
     ////////////////////////////////////////////////////////////////
     
@@ -108,6 +118,16 @@ class PCustomDocumentView : NSView
         self.addSubview(crawlingnode)
         
         return crawlingnode
+    }
+    
+    func getNodeByID(id : Int) -> PNode? {
+        for node in self.nodeList {
+            if node.getID() == id {
+                return node
+            }
+        }
+        
+        return nil
     }
     
     override func PAddNode(target node: PNode) {
@@ -198,6 +218,21 @@ class PCustomDocumentView : NSView
         self.linkList.insert(link)
         node1.addLink(link: link)
         node2.addLink(link: link)
+    }
+    
+    func createLinkByID(id_1 : Int, id_2 : Int) {
+        let node_1 = self.getNodeByID(id: id_1)
+        let node_2 = self.getNodeByID(id: id_2)
+        if node_1 == nil || node_2 == nil {
+            print("ID is didn't matched.")
+            return
+        }
+        else {
+            let link = PArrowLink(view: self, parent: node_1!, child: node_2!)
+            self.linkList.insert(link)
+            node_1?.addLink(link: link)
+            node_2?.addLink(link: link)
+        }
     }
     
     func searchLink(node_1 node1 : PNode, node_2 node2 : PNode) -> PLink? {
@@ -423,10 +458,27 @@ class PCustomDocumentView : NSView
                 self.activatedNodeList.first?.focus()
             }
         }
+        else if event.keyCode == 48 {   //TAB
+            let panel = NSOpenPanel()
+            panel.title = "Select File"
+            panel.allowsMultipleSelection = false
+            panel.canChooseFiles = true
+            panel.canChooseDirectories = false
+            panel.canCreateDirectories = false
+            panel.allowedFileTypes = ["xml"]
+            panel.directoryURL = URL(fileURLWithPath: "/Users/mellanc/Desktop")
+            
+            let i = panel.runModal()
+            if i.rawValue == NSOKButton {
+                print(panel.url)
+                
+            }
+        }
         else {
             //이 뷰에서 사용하지 않는 키는 밑으로 보낸다
             super.keyUp(with: event)
         }
+        
         
         self.needsDisplay = true
     }
@@ -539,11 +591,11 @@ class PCustomView : NSScrollView
     
     // 해당 이벤트를 여기서 사용한다 라는 의미
     // 하지만 그냥 true를 리턴하면 모든 키 이벤트를 여기로 보내므로, 종료 단축키와 같은 것도 안됨
-    override func performKeyEquivalent(with event: NSEvent) -> Bool {
+   /* override func performKeyEquivalent(with event: NSEvent) -> Bool {
         return true
         
         //필요한 키들만 true를 리턴하게 만든다
-    }
+    }*/
     
     
     override var acceptsFirstResponder: Bool {

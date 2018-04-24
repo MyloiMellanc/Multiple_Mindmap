@@ -35,7 +35,7 @@ class ViewController: NSViewController
         self.nextResponder = scrollview
 
         
-        
+        /*
         PDataThread.pInstance.initWrapper()
         if PDataThread.pInstance.connect() == false {
             print("Database Connect error")
@@ -43,7 +43,9 @@ class ViewController: NSViewController
         }
         
         PDataThread.pInstance.superview = scrollview.documentView as? PCustomDocumentView
- 
+ */
+        
+        
     }
     
     override func viewWillAppear() {

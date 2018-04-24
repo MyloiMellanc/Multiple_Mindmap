@@ -26,6 +26,7 @@
 		BFB1502B1FB1F574008D0BCE /* PLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB1502A1FB1F574008D0BCE /* PLink.swift */; };
 		BFC18F892061346A00581219 /* PNodeMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC18F882061346A00581219 /* PNodeMap.swift */; };
 		BFD2B80C2008F9230043509D /* PDataThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2B80B2008F9230043509D /* PDataThread.swift */; };
+		BFE9CF1B208F70B100F53D77 /* PFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE9CF1A208F70B100F53D77 /* PFileManager.swift */; };
 		BFFF40E21FC09CCD00A83D59 /* PCustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFF40E11FC09CCD00A83D59 /* PCustomView.swift */; };
 		D8C4004C1EC18549B362C055 /* Pods_PensivTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3101B677C23271C50C1C900 /* Pods_PensivTests.framework */; };
 /* End PBXBuildFile section */
@@ -80,6 +81,7 @@
 		BFB1502A1FB1F574008D0BCE /* PLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLink.swift; sourceTree = "<group>"; };
 		BFC18F882061346A00581219 /* PNodeMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PNodeMap.swift; sourceTree = "<group>"; };
 		BFD2B80B2008F9230043509D /* PDataThread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDataThread.swift; sourceTree = "<group>"; };
+		BFE9CF1A208F70B100F53D77 /* PFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PFileManager.swift; sourceTree = "<group>"; };
 		BFFF40E11FC09CCD00A83D59 /* PCustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCustomView.swift; sourceTree = "<group>"; };
 		D6C04BC82B1CB0440B8928BF /* Pods-Pensiv.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pensiv.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Pensiv/Pods-Pensiv.debug.xcconfig"; sourceTree = "<group>"; };
 		E1B64440433443826258EA44 /* Pods-PensivTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PensivTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PensivTests/Pods-PensivTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 				BFB14FF91FB1F049008D0BCE /* AppDelegate.swift */,
 				BFB14FFB1FB1F049008D0BCE /* ViewController.swift */,
 				BFFF40E11FC09CCD00A83D59 /* PCustomView.swift */,
+				BFE9CF1A208F70B100F53D77 /* PFileManager.swift */,
 				BFB150281FB1F569008D0BCE /* PNode.swift */,
 				BF9BE8662032059A00F2B269 /* PTextNode.swift */,
 				BF4B28312010F61200FE943B /* PCrawlingNode.swift */,
@@ -508,6 +511,7 @@
 				BFB1502B1FB1F574008D0BCE /* PLink.swift in Sources */,
 				BF001DE52074B2C00008338B /* Neo4jWrapper.mm in Sources */,
 				BFC18F892061346A00581219 /* PNodeMap.swift in Sources */,
+				BFE9CF1B208F70B100F53D77 /* PFileManager.swift in Sources */,
 				BFB14FFC1FB1F049008D0BCE /* ViewController.swift in Sources */,
 				BFB14FFA1FB1F049008D0BCE /* AppDelegate.swift in Sources */,
 				BFD2B80C2008F9230043509D /* PDataThread.swift in Sources */,

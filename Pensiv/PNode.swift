@@ -22,16 +22,31 @@ enum P_NODE_TYPE : Int {
 
 class PNode : NSView    //PNode를 상속하는 모든 노드가 기본 뷰를 가질 예정으로, 미리 상속받음
 {
-    
-    //노드 고유 인식 번호 부여 관련
-    static var nodeCount : Int = 0
-    
     let type : P_NODE_TYPE
     
     func getType() -> P_NODE_TYPE {
         return self.type
     }
     
+    
+    //노드 고유 인식 번호 부여 관련
+    static var nodeCount = 0
+    static var IDTable = Set<Int>()
+    
+    static func initIDTable() {
+        PNode.nodeCount = 0
+        PNode.IDTable.removeAll()
+    }
+    
+    static func getNewID() -> Int {
+        repeat {
+            PNode.nodeCount = PNode.nodeCount + 1
+        } while PNode.IDTable.contains(PNode.nodeCount) == true
+        
+        PNode.IDTable.insert(PNode.nodeCount)
+        
+        return PNode.nodeCount
+    }
     
     let nodeID : Int
     
@@ -72,12 +87,10 @@ class PNode : NSView    //PNode를 상속하는 모든 노드가 기본 뷰를 �
     
     ////////////////////////////////////////////////////////////////
     
+    
     init(position touchPoint : CGPoint, type : P_NODE_TYPE)
     {
-        //Init Node Number 
-        PNode.nodeCount = PNode.nodeCount + 1
-        self.nodeID = PNode.nodeCount
-        
+        self.nodeID = PNode.getNewID()
         self.type = type
     
         let nodeSize = PNode.getNodeSize(type: type)
@@ -105,6 +118,39 @@ class PNode : NSView    //PNode를 상속하는 모든 노드가 기본 뷰를 �
         self.layer?.add(scale_animation, forKey: "scale")
         self.layer?.add(position_animation, forKey: "move")
     }
+    
+    init(id : Int, position touchPoint : CGPoint, type : P_NODE_TYPE) {
+        self.nodeID = id
+        PNode.IDTable.insert(self.nodeID)
+        
+        self.type = type
+        
+        let nodeSize = PNode.getNodeSize(type: type)
+        
+        let framePoint = CGPoint(x: touchPoint.x - (nodeSize.0 / 2 + PNode.gap), y: touchPoint.y - (nodeSize.1 / 2 + PNode.gap) )
+        let frameRect = NSRect(x: framePoint.x, y: framePoint.y, width: nodeSize.0 + (PNode.gap * 2), height: nodeSize.1 + (PNode.gap * 2))
+        super.init(frame : frameRect)
+        
+        
+        self.wantsLayer = true
+        self.layer = CAShapeLayer()
+        
+        self.layer?.backgroundColor = NSColor.black.cgColor
+        
+        let scale_animation = CASpringAnimation(keyPath: "transform.scale")
+        scale_animation.duration = 0.6
+        scale_animation.fromValue = 0
+        scale_animation.toValue = 1
+        
+        let position_animation = CASpringAnimation(keyPath: "position")
+        position_animation.duration = 0.6
+        position_animation.fromValue = touchPoint
+        position_animation.toValue = framePoint
+        
+        self.layer?.add(scale_animation, forKey: "scale")
+        self.layer?.add(position_animation, forKey: "move")
+    }
+    
     
     required init?(coder decoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

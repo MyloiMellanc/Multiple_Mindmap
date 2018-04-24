@@ -56,6 +56,41 @@ class PCrawlingNode : PNode
         
     }
     
+    init(id : Int, position touchPoint: CGPoint) {
+        let nodeSize = PNode.getNodeSize(type: .CRAWLING)
+        
+        markView = NSView(frame: NSRect(x: PNode.gap, y: PNode.gap, width: nodeSize.0, height: nodeSize.1))
+        
+        markView.wantsLayer = true
+        markView.layer = CAShapeLayer()
+        markView.layer?.backgroundColor = NSColor.systemBlue.cgColor
+        
+        /*
+         let path = CGMutablePath()
+         path.move(to: CGPoint(x: 0, y: 0))
+         path.addLine(to: CGPoint(x: 0, y: PNode.baseHeight))
+         path.addLine(to: CGPoint(x: PNode.baseWidth, y: PNode.baseHeight))
+         path.addLine(to: CGPoint(x: PNode.baseWidth, y: 0))
+         path.addLine(to: CGPoint(x: 0, y: 0))
+         path.closeSubpath()
+         
+         let layer = CAShapeLayer()
+         layer.frame = view.bounds
+         layer.path = path
+         layer.fillColor = NSColor.orange.cgColor
+         layer.fillRule = kCAFillRuleEvenOdd
+         layer.strokeColor = NSColor.black.cgColor
+         layer.lineWidth = 7
+         
+         view.layer?.addSublayer(layer)
+         */
+        
+        super.init(id : id, position: touchPoint, type : .CRAWLING)
+        
+        self.addSubview(markView)
+        
+        
+    }
     
     required init?(coder decoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
