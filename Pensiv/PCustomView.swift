@@ -79,6 +79,7 @@ class PCustomDocumentView : NSView
         self.nodeList.removeAll()
     }
     
+    
     ////////////////////////////////////////////////////////////////
     
     
@@ -458,8 +459,9 @@ class PCustomDocumentView : NSView
                 self.activatedNodeList.first?.focus()
             }
         }
-        else if event.keyCode == 48 {   //TAB
+        else if event.modifierFlags.contains(.option) == true && event.keyCode == 31  {   //alt + o
             let panel = NSOpenPanel()
+            
             panel.title = "Select File"
             panel.allowsMultipleSelection = false
             panel.canChooseFiles = true
@@ -468,10 +470,22 @@ class PCustomDocumentView : NSView
             panel.allowedFileTypes = ["xml"]
             panel.directoryURL = URL(fileURLWithPath: "/Users/mellanc/Desktop")
             
-            let i = panel.runModal()
-            if i.rawValue == NSOKButton {
-                print(panel.url)
-                
+            let result = panel.runModal()
+            if result == NSApplication.ModalResponse.OK {
+                PFileManager.pInstance.load(view: self, filepath: panel.url!)
+            }
+        }
+        else if event.modifierFlags.contains(.option) == true && event.keyCode == 1 { //alt + s
+            let panel = NSSavePanel()
+            
+            panel.message = "Save Map to xml File"
+            panel.allowsOtherFileTypes = false
+            panel.allowedFileTypes = ["xml"]
+            panel.directoryURL = URL(fileURLWithPath: "/Users/mellanc/Desktop")
+            
+            let result = panel.runModal()
+            if result == NSApplication.ModalResponse.OK {
+                PFileManager.pInstance.save(filepath: panel.url!, nodes: self.nodeList, links: self.linkList)
             }
         }
         else {
@@ -482,6 +496,8 @@ class PCustomDocumentView : NSView
         
         self.needsDisplay = true
     }
+    
+    
     
     
     override func mouseUp(with event: NSEvent) {
