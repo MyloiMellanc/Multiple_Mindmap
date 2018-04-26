@@ -89,10 +89,14 @@ class PTextItem
         return arr
     }
     
-    func createRelatedTexts(instance : PDataThread, limit : Int) {
+    func createRelatedTexts(instance : PDataThread) {
         for link in self.linkList {
-            link.createRelatedTexts(instance: instance, text: self.text, limit: limit)
+            link.createRelatedTexts(instance: instance, text: self.text)
         }
+    }
+    
+    func expandTextItem() {
+        
     }
 }
 
@@ -101,10 +105,10 @@ class PTextItem
 
 class PLinkItem
 {
-    var relatedTextList = Array<String>()
+    var relatedTextList = Array<(String, Int)>()
     
-    func createRelatedTexts(instance : PDataThread, text : String, limit : Int) {
-        let related_texts = instance.getRelatedTexts(str_1: text, str_2: self.textItem.text, limit: limit)
+    func createRelatedTexts(instance : PDataThread, text : String) {
+        let related_texts = instance.getRelatedTextsAndCounts(str_1: text, str_2: self.textItem.text)
         
         self.relatedTextList.append(contentsOf: related_texts)
     }

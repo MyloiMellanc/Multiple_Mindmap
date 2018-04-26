@@ -25,7 +25,9 @@ public:
     
     bool runQuery(const char* query);
     
-    const char* fetchNextResult();
+    bool fetchNext();
+    const char* fetchString();
+    int fetchCount();
     
     ~Neo4jManager();
     
@@ -38,6 +40,7 @@ private:
     neo4j_connection_t* _connection;
     
     neo4j_result_stream_t* _results;
+    neo4j_result* _result;
 };
 
 

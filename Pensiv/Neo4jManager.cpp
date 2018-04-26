@@ -24,7 +24,7 @@ Neo4jManager* Neo4jManager::getInstance()
 
 Neo4jManager::Neo4jManager()
 {
-    
+    _result = nullptr;
 }
 
 Neo4jManager::~Neo4jManager()
@@ -65,19 +65,21 @@ bool Neo4jManager::runQuery(const char* query)
 }
 
 
-
-const char* Neo4jManager::fetchNextResult()
+bool Neo4jManager::fetchNext()
 {
-    neo4j_result* result = neo4j_fetch_next(_results);
-    if (result != NULL)
+    _result = neo4j_fetch_next(_results);
+    
+    if (_result != NULL)
+        return true;
+    
+    return false;
+}
+
+const char* Neo4jManager::fetchString()
+{
+    if (_result != NULL)
     {
-        neo4j_value_t value = neo4j_result_field(result, 0);
-        
-        //unsigned int length = neo4j_string_length(value) + 3;
-        //char* str = (char*)calloc(length, sizeof(char));
-        
-        //str = neo4j_tostring(value, str, length);
-        
+        neo4j_value_t value = neo4j_result_field(_result, 0);
         
         const char* str = neo4j_ustring_value(value);
         
@@ -85,6 +87,20 @@ const char* Neo4jManager::fetchNextResult()
     }
     
     return NULL;
+}
+
+int Neo4jManager::fetchCount()
+{
+    if (_result != NULL)
+    {
+        neo4j_value_t value = neo4j_result_field(_result, 1);
+        
+        int count = neo4j_int_value(value);
+        
+        return count;
+    }
+    
+    return -1;
 }
 
 /*

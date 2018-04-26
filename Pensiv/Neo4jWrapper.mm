@@ -30,9 +30,14 @@
     return Neo4jManager::getInstance()->runQuery([query UTF8String]);
 }
 
-- (NSString*) fetchNextResult
+- (bool) fetchNext
 {
-    const char* str = Neo4jManager::getInstance()->fetchNextResult();
+    return Neo4jManager::getInstance()->fetchNext();
+}
+
+- (NSString*) fetchString
+{
+    const char* str = Neo4jManager::getInstance()->fetchString();
     if (str != NULL)
     {
         return [[NSString alloc] initWithUTF8String:str];
@@ -40,6 +45,18 @@
     
     
     return NULL;
+}
+
+- (int) fetchCount
+{
+    int count = Neo4jManager::getInstance()->fetchCount();
+    
+    if (count > -1)
+    {
+        return count;
+    }
+    
+    return -1;
 }
 
 - (void) disconnect

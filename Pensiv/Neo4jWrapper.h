@@ -15,7 +15,9 @@
 - (void) initWrapper;
 - (bool) connect;
 - (bool) runQuery: (NSString*) query;
-- (NSString*) fetchNextResult;
+- (bool) fetchNext;
+- (NSString*) fetchString;
+- (int) fetchCount;
 - (void) disconnect;
 @end
 

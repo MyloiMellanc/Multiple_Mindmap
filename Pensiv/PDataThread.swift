@@ -9,8 +9,6 @@
 import Foundation
 import Cocoa
 
-
-
 class PDataThread
 {
     static let pInstance = PDataThread()
@@ -75,23 +73,29 @@ class PDataThread
     
     
     
-    func getRelatedTexts(str_1 : String, str_2 : String, limit : Int) -> Array<String> {
-        var arr = Array<String>()
+    func getRelatedTextsAndCounts(str_1 : String, str_2 : String) -> Array<(String, Int)> {
+        var arr = Array<(String,Int)>()
         
         let query = """
-                    match p=(a)-[*..3]-(b) where a.Name = '\(str_1)' AND b.Name = '\(str_2)'
-                    with nodes(p) as nds limit 10
+                    match p=(a)-[*2..5]-(b) where a.Name="\(str_1)" AND b.Name="\(str_2)"
+                    with nodes(p) as nds limit 40
                     unwind nds as nd
-                    return distinct nd.Name
+                    with nd.Name as n, count(nd) as c
+                    return n,c order by c DESC
                     """
-
+        
+        
         if dataManager.runQuery(query) == true {
-            while let data = dataManager.fetchNextResult() {
-                if arr.count < limit {
-                    if (data != str_1) && (data != str_2) {
-                        arr.append(data)
+            while dataManager.fetchNext() == true {
+                if let str = dataManager.fetchString() {
+                    let count = dataManager.fetchCount()
+                    if (str == str_1) || (str == str_2) {
+                        continue
                     }
+                    
+                    arr.append((str, Int(count)))
                 }
+                
             }
         }
         
@@ -100,19 +104,6 @@ class PDataThread
     }
     
     
-    func getRelatedTextItems(depth : Int, str_1 : String, str_2 : String, limit : Int) -> Array<PTextItem> {
-        let texts = self.getRelatedTexts(str_1: str_1, str_2: str_2, limit: limit)
-        
-        var items = Array<PTextItem>()
-        for text in texts {
-            let text_item = PTextItem(depth: depth, text: text)
-            items.append(text_item)
-        }
-        
-        
-        return items
-    }
-    
     
     
     
@@ -123,49 +114,76 @@ class PDataThread
     
     
     ///////////////////////////////////////////////////////////////////////////
-    
-    private func createRelatedTextsToLink(limit : Int) {
-        for item in self.maps! {
-            item.createRelatedTexts(instance: self, limit: limit)
-        }
-    }
-    
     
     var relatedMap = Array<PTextItem>()
     
     
-    func make(depth : Int, item : PTextItem, arr : Array<PTextItem>, limit : Int) {
-        for text in arr {
-            let results = self.getRelatedTextItems(depth: depth, str_1: item.text, str_2: text.text, limit: limit)
+    private func createFirstArr() -> Array<(String, Int)> {
+        var related_arr = Array<(String, Int)>()
+        
+        let first_arr = self.getTextItemsByDepth(depth: 0)
+        switch first_arr.count {
+        case 2:
+            let arr = self.getRelatedTextsAndCounts(str_1: first_arr[0].text, str_2: first_arr[1].text)
+            related_arr.append(contentsOf: arr)
             
-            for result in results {
-                text.addSubNode(target: result)
+        case 3:
+            let arr_1 = self.getRelatedTextsAndCounts(str_1: first_arr[0].text, str_2: first_arr[1].text)
+            let arr_2 = self.getRelatedTextsAndCounts(str_1: first_arr[0].text, str_2: first_arr[2].text)
+            let arr_3 = self.getRelatedTextsAndCounts(str_1: first_arr[1].text, str_2: first_arr[2].text)
+            related_arr.append(contentsOf: arr_1)
+            related_arr.append(contentsOf: arr_2)
+            related_arr.append(contentsOf: arr_3)
+            
+        default:
+            print("Not Suitable arrCount")
+        }
+        
+        //중복 제거
+        var main_arr = Array<(String, Int)>()
+        for tuple in related_arr {
+            let duplicated = main_arr.contains{ element in
+                if element.0 == tuple.0 {
+                    return true
+                }
+                else {
+                    return false
+                }
             }
-            
-            for next in item.linkList {
-                self.make(depth: depth + 1, item: next.textItem, arr: results, limit: limit)
+            if duplicated == false {
+                main_arr.append(tuple)
             }
         }
+        
+        //참조 횟수 순 정렬
+        main_arr.sort { $0.1 > $1.1 }
+        
+        return main_arr
     }
     
+    
+    
     private func createRelatedMap() {
-        self.createRelatedTextsToLink(limit: 1)
-        
         //첫 목록 생성
-        let first_items = self.getRelatedTextItems(depth: 0, str_1: "리니지", str_2: "로그라이크", limit: 4)
+        //0깊이 배열을 생성 후, 참조횟수 순으로 메인노드 생성
+        var main_arr = self.createFirstArr()
         
-        self.relatedMap.append(contentsOf: first_items)
         
-        
-        let items = self.getTextItemsByDepth(depth: 1)
-        for item in items {
-            self.make(depth: 1, item: item, arr: first_items, limit: 1)
+        //main_arr을 관계 개수에 따른 비율을 토대로 맵 형성
+        var count = 0
+        for tuple in main_arr {
+            count += tuple.1
         }
         
+        print(main_arr)
+        print(main_arr.count)
+        print(count)
         
         
         
-        self.superview?.createNodeFromMap(parent: self.parent!, map: self.relatedMap)
+        
+        
+        //self.superview?.createNodeFromMap(parent: self.parent!, map: self.relatedMap)
         
     }
     
@@ -185,3 +203,9 @@ class PDataThread
         self.createRelatedMap()
     }
 }
+
+
+
+
+
+
