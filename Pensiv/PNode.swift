@@ -88,7 +88,7 @@ class PNode : NSView    //PNode를 상속하는 모든 노드가 기본 뷰를 �
     ////////////////////////////////////////////////////////////////
     
     
-    init(position touchPoint : CGPoint, type : P_NODE_TYPE)
+    init(position touchPoint : CGPoint, type : P_NODE_TYPE, delay : CFTimeInterval = 0.0)
     {
         self.nodeID = PNode.getNewID()
         self.type = type
@@ -105,21 +105,33 @@ class PNode : NSView    //PNode를 상속하는 모든 노드가 기본 뷰를 �
         
         self.layer?.backgroundColor = NSColor.black.cgColor
         
+        
+        if delay != 0 {
+            let visible_animation = CABasicAnimation(keyPath: "transform.scale")
+            visible_animation.duration = delay
+            visible_animation.fromValue = 0
+            visible_animation.toValue = 0
+            
+            self.layer?.add(visible_animation, forKey: "visible")
+        }
+        
         let scale_animation = CASpringAnimation(keyPath: "transform.scale")
         scale_animation.duration = 0.6
         scale_animation.fromValue = 0
         scale_animation.toValue = 1
+        scale_animation.beginTime = CACurrentMediaTime() + delay
         
         let position_animation = CASpringAnimation(keyPath: "position")
         position_animation.duration = 0.6
         position_animation.fromValue = touchPoint
         position_animation.toValue = framePoint
+        position_animation.beginTime = CACurrentMediaTime() + delay
         
         self.layer?.add(scale_animation, forKey: "scale")
         self.layer?.add(position_animation, forKey: "move")
     }
     
-    init(id : Int, position touchPoint : CGPoint, type : P_NODE_TYPE) {
+    init(id : Int, position touchPoint : CGPoint, type : P_NODE_TYPE, delay : CFTimeInterval = 0.0) {
         self.nodeID = id
         PNode.IDTable.insert(self.nodeID)
         
@@ -137,15 +149,26 @@ class PNode : NSView    //PNode를 상속하는 모든 노드가 기본 뷰를 �
         
         self.layer?.backgroundColor = NSColor.black.cgColor
         
+        if delay != 0.0 {
+            let visible_animation = CABasicAnimation(keyPath: "transform.scale")
+            visible_animation.duration = delay
+            visible_animation.fromValue = 0
+            visible_animation.toValue = 0
+        
+            self.layer?.add(visible_animation, forKey: "visible")
+        }
+            
         let scale_animation = CASpringAnimation(keyPath: "transform.scale")
         scale_animation.duration = 0.6
         scale_animation.fromValue = 0
         scale_animation.toValue = 1
+        scale_animation.beginTime = CACurrentMediaTime() + delay
         
         let position_animation = CASpringAnimation(keyPath: "position")
         position_animation.duration = 0.6
         position_animation.fromValue = touchPoint
         position_animation.toValue = framePoint
+        position_animation.beginTime = CACurrentMediaTime() + delay
         
         self.layer?.add(scale_animation, forKey: "scale")
         self.layer?.add(position_animation, forKey: "move")

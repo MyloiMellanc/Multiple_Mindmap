@@ -20,7 +20,7 @@ class PCrawlingNode : PNode
     let markView : NSView
     
     
-    init(position touchPoint: CGPoint) {
+    init(position touchPoint: CGPoint, delay : CFTimeInterval = 0.0) {
         let nodeSize = PNode.getNodeSize(type: .CRAWLING)
         
         markView = NSView(frame: NSRect(x: PNode.gap, y: PNode.gap, width: nodeSize.0, height: nodeSize.1))
@@ -49,14 +49,14 @@ class PCrawlingNode : PNode
         view.layer?.addSublayer(layer)
         */
         
-        super.init(position: touchPoint, type : .CRAWLING)
+        super.init(position: touchPoint, type : .CRAWLING, delay : delay)
         
         self.addSubview(markView)
         
         
     }
     
-    init(id : Int, position touchPoint: CGPoint) {
+    init(id : Int, position touchPoint: CGPoint, delay : CFTimeInterval = 0.0) {
         let nodeSize = PNode.getNodeSize(type: .CRAWLING)
         
         markView = NSView(frame: NSRect(x: PNode.gap, y: PNode.gap, width: nodeSize.0, height: nodeSize.1))
@@ -85,7 +85,7 @@ class PCrawlingNode : PNode
          view.layer?.addSublayer(layer)
          */
         
-        super.init(id : id, position: touchPoint, type : .CRAWLING)
+        super.init(id : id, position: touchPoint, type : .CRAWLING, delay : delay)
         
         self.addSubview(markView)
         

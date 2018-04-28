@@ -37,11 +37,11 @@ extension NSView
     
     
     //Rendering Request by Link Instance
-    @objc func PDrawFreeLink(pos_1 pos1 : CGPoint, pos_2 pos2 : CGPoint) {
+    @objc func PDrawFreeLink(pos_1 pos1 : CGPoint, pos_2 pos2 : CGPoint, progress : CGFloat = 1.0) {
         
     }
     
-    @objc func PDrawArrowLink(pos_1 pos1 : CGPoint, pos_2 pos2 : CGPoint) {
+    @objc func PDrawArrowLink(pos_1 pos1 : CGPoint, pos_2 pos2 : CGPoint, progress : CGFloat = 1.0) {
         
     }
     
@@ -181,16 +181,6 @@ class PCustomDocumentView : NSView
     }
     
     func createNodeFromMap(parent : PNode, map : Array<PTextItem>) {
-        /*
-        var directions = Array<CGPoint>()
-        let parent_point = parent.frame.origin
-        
-        for link in parent.linkList {
-            let sub_point = link.getOtherNode(callBy: parent).frame.origin
-            
-        }
-        */
-        
         for item in map {
             self.createNodeFromItem(parent: parent, item: item)
         }
@@ -360,7 +350,7 @@ class PCustomDocumentView : NSView
     //렌더링 관련 매서드들
     //본 메인 뷰 드로잉 매서드가 먼저 호출된 뒤에 노드들의 드로잉 매서드가 호출되므로
     //노드 뒤에 가려지게 그려질 링크는 노드들보다 먼저 그려져야하므로, 본 메인 뷰에서 링크 드로잉을 담당한다.
-    override func PDrawFreeLink(pos_1 pos1: CGPoint, pos_2 pos2: CGPoint) {
+    override func PDrawFreeLink(pos_1 pos1: CGPoint, pos_2 pos2: CGPoint, progress : CGFloat = 1.0) {
         let line = NSBezierPath()
         line.move(to: pos1)
         line.line(to: pos2)
@@ -369,7 +359,7 @@ class PCustomDocumentView : NSView
     }
     
     
-    override func PDrawArrowLink(pos_1 pos1: CGPoint, pos_2 pos2: CGPoint) {
+    override func PDrawArrowLink(pos_1 pos1: CGPoint, pos_2 pos2: CGPoint, progress : CGFloat = 1.0) {
         func rotatePoint(target: CGPoint, aroundOrigin origin: CGPoint, byDegrees: CGFloat) -> CGPoint {
             let dx = target.x - origin.x
             let dy = target.y - origin.y
@@ -383,12 +373,13 @@ class PCustomDocumentView : NSView
         
         let line = NSBezierPath()
         line.move(to: pos1)
+        
         line.line(to: pos2)
         line.lineWidth = 2.0
         line.stroke()
         
-        let sidePoint1 = CGPoint(x: pos1.x + (pos2.x - pos1.x) * 0.45 , y: pos1.y + (pos2.y - pos1.y) * 0.45)
-        let sidePoint2 = CGPoint(x: pos1.x + (pos2.x - pos1.x) * 0.55 , y: pos1.y + (pos2.y - pos1.y) * 0.55)
+        let sidePoint1 = CGPoint(x: pos1.x + (pos2.x - pos1.x) * 0.85 , y: pos1.y + (pos2.y - pos1.y) * 0.85)
+        let sidePoint2 = CGPoint(x: pos1.x + (pos2.x - pos1.x) * 0.90 , y: pos1.y + (pos2.y - pos1.y) * 0.90)
         
         line.move(to: sidePoint2)
         line.line(to: rotatePoint(target: sidePoint1, aroundOrigin: sidePoint2, byDegrees: 20.0))

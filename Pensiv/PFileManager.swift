@@ -109,7 +109,7 @@ class PFileManager
     
     var targetView : PCustomDocumentView?
     
-    private func createNodeFromXML(id : Int, type : String, position : CGPoint, text : String?) {
+    private func createNodeFromXML(id : Int, type : String, position : CGPoint, text : String?, delay : CFTimeInterval) {
         if self.targetView == nil {
             print("Target View doesn't exist.")
             return
@@ -117,10 +117,10 @@ class PFileManager
         else {
             switch (type) {
             case "TEXT":
-                let textnode = PTextNode(id: id, position: position, text: text!)
+                let textnode = PTextNode(id: id, position: position, text: text!, delay: delay)
                 self.targetView?.PAddNode(target: textnode)
             case "CRAWLING":
-                let crawlingnode = PCrawlingNode(id: id, position: position)
+                let crawlingnode = PCrawlingNode(id: id, position: position, delay: delay)
                 self.targetView?.PAddNode(target: crawlingnode)
             default:
                 print("Node Type Error.")
@@ -151,6 +151,8 @@ class PFileManager
             
             let nodes = content?.at_css("NODES")
             
+            var delay = 0.0
+            
             for node in (nodes?.css("node"))! {
                 let id = Int((node.at_css("id")?.content)!)!
                 let type = (node.at_css("type")?.content)!
@@ -158,7 +160,10 @@ class PFileManager
                 let ypos = Float((node.at_css("ypos")?.content)!)!
                 let text : String? = node.at_css("text")?.content
                 
-                self.createNodeFromXML(id: id, type: type, position: CGPoint(x: CGFloat(xpos), y: CGFloat(ypos)), text: text)
+                self.createNodeFromXML(id: id, type: type, position: CGPoint(x: CGFloat(xpos), y: CGFloat(ypos)), text: text, delay: delay)
+                
+                
+                delay += 0.2
             }
             
             

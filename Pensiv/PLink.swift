@@ -31,7 +31,10 @@ class PLink : Hashable, Equatable
     }
     
     
-    
+    var timer : Timer? = nil
+    @objc func updateTimer() {
+        //이차함수를 사용하여 만들 것
+    }
     
     static var linkCount : Int = 0
     
@@ -48,13 +51,17 @@ class PLink : Hashable, Equatable
         return self.type
     }
     
-    init(view : NSView, type : P_LINK_TYPE) {
+    init(view : NSView, type : P_LINK_TYPE, animate : Bool = false) {
         PLink.linkCount = PLink.linkCount + 1
         self.linkID = PLink.linkCount
         
         
         self.superview = view
         self.type = type
+        
+        if animate == true {
+            
+        }
     }
     
     
@@ -106,7 +113,7 @@ class PFreeLink : PLink
     let node_2 : PNode
     
 
-    init(view : NSView, node1 : PNode, node2 : PNode) {
+    init(view : NSView, node1 : PNode, node2 : PNode, animate : Bool = false) {
         var n1 = node1
         var n2 = node2
         
@@ -124,7 +131,7 @@ class PFreeLink : PLink
         self.node_2 = n2
         
         
-        super.init(view: view, type : .FREE)
+        super.init(view: view, type : .FREE, animate : animate)
     }
     
     override func draw() {
@@ -173,11 +180,11 @@ class PArrowLink : PLink
     let childNode : PNode
     
     
-    init(view : NSView, parent : PNode, child : PNode) {
+    init(view : NSView, parent : PNode, child : PNode, animate : Bool = false) {
         self.parentNode = parent
         self.childNode = child
         
-        super.init(view: view, type : .ARROW)
+        super.init(view: view, type : .ARROW, animate : animate)
     }
     
     override func draw() {

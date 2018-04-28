@@ -96,7 +96,7 @@ class PTextNode : PNode
     
     ////////////////////////////////////////////////////////////////
     
-    init(position touchPoint : CGPoint)
+    init(position touchPoint : CGPoint, delay : CFTimeInterval = 0.0)
     {
         let nodeSize = PNode.getNodeSize(type: .TEXT)
         
@@ -109,12 +109,12 @@ class PTextNode : PNode
         
         
         
-        super.init(position : touchPoint, type : .TEXT)
+        super.init(position : touchPoint, type : .TEXT, delay : delay)
         
         self.addSubview(textfield)   //super.init 이후에 self 사용가능
     }
     
-    init(position touchPoint : CGPoint, text str : String)
+    init(position touchPoint : CGPoint, text str : String, delay : CFTimeInterval = 0.0)
     {
         let nodeSize = PNode.getNodeSize(type: .TEXT)
         
@@ -128,12 +128,12 @@ class PTextNode : PNode
         
         
         
-        super.init(position : touchPoint, type : .TEXT)
+        super.init(position : touchPoint, type : .TEXT, delay : delay)
         
         self.addSubview(textfield)   //super.init 이후에 self 사용가능
     }
     
-    init(id : Int, position touchPoint : CGPoint, text str : String) {
+    init(id : Int, position touchPoint : CGPoint, text str : String, delay : CFTimeInterval = 0.0) {
         let nodeSize = PNode.getNodeSize(type: .TEXT)
         
         let frameRect = NSRect(x: PNode.gap, y: PNode.gap, width: nodeSize.0, height: nodeSize.1)
@@ -145,7 +145,7 @@ class PTextNode : PNode
         self.textfield.isEditable = false
         
         
-        super.init(id : id, position : touchPoint, type : .TEXT)
+        super.init(id : id, position : touchPoint, type : .TEXT, delay : delay)
         
         self.addSubview(textfield)   //super.init 이후에 self 사용가능
     }

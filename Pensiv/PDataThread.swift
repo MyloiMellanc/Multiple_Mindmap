@@ -161,29 +161,106 @@ class PDataThread
         return main_arr
     }
     
+    var firstArr = Array<(String, Int)>()
+    
+    let BASIC_MAP_NODES = 20
+    
+    private func connectPastAndCurrentItems(past : Array<PTextItem>, current : Array<PTextItem>) {
+        var past_iterator = 0
+        for item in current {
+            past[past_iterator].addSubNode(target: item)
+            past_iterator = (past_iterator + 1) % past.count
+        }
+        
+    }
+    
+    private func createFirstRelatedMap() {
+        //main_arr을 관계 개수에 따른 비율을 토대로 맵 형성
+        var num = 0
+        for tuple in self.firstArr {
+            num += tuple.1
+        }
+        
+        var average = num / self.firstArr.count
+        var tier = 0
+        
+        var past_tier_textitems = Array<PTextItem>()
+        
+        while self.firstArr.isEmpty != true && tier < 3 {
+            print("average : \(average)")
+            
+            print("Tier \(tier)")
+            
+            var tier_count = 0
+            var index = 0
+            
+            var current_tier_textitems = Array<PTextItem>()
+            for tuple in self.firstArr {
+                print(tuple.0)
+                
+                let textitem = PTextItem(depth: tier, text: tuple.0)
+                current_tier_textitems.append(textitem)
+                
+                tier_count += tuple.1
+                index += 1
+                
+                if tier_count > average {
+                    break
+                }
+            }
+            
+            if tier == 0 {
+                self.relatedMap = current_tier_textitems
+            }
+            else {
+                self.connectPastAndCurrentItems(past: past_tier_textitems, current: current_tier_textitems)
+            }
+            
+            past_tier_textitems = current_tier_textitems
+            
+            self.firstArr.removeFirst(index)
+            
+            tier += 1
+            
+            average = tier_count
+        }
+    }
+    
+    
+    private func modifyRelatedMapWithDepthItems() {
+        
+    }
     
     
     private func createRelatedMap() {
         //첫 목록 생성
         //0깊이 배열을 생성 후, 참조횟수 순으로 메인노드 생성
-        var main_arr = self.createFirstArr()
-        
-        
-        //main_arr을 관계 개수에 따른 비율을 토대로 맵 형성
-        var count = 0
-        for tuple in main_arr {
-            count += tuple.1
+        self.firstArr = self.createFirstArr()
+        if self.firstArr.isEmpty == true {
+            return
         }
         
-        print(main_arr)
-        print(main_arr.count)
-        print(count)
+        while self.firstArr.count > self.BASIC_MAP_NODES {
+            self.firstArr.removeLast()
+        }
+        
+        print(self.firstArr)
+        
+        self.createFirstRelatedMap()
+        
+        /*
+        var max_depth = 0
+        for item in self.maps! {
+            let depth = item.getHighestDepth()
+            if max_depth < depth {
+                max_depth = depth
+            }
+        }*/
         
         
         
         
-        
-        //self.superview?.createNodeFromMap(parent: self.parent!, map: self.relatedMap)
+        self.superview?.createNodeFromMap(parent: self.parent!, map: self.relatedMap)
         
     }
     
@@ -192,6 +269,7 @@ class PDataThread
     func startThread(parent : PNode, maps : Array<PTextItem>) {
         self.parent = parent
         self.maps = maps
+        self.firstArr.removeAll()
         
         
         //let thread = Thread(target: self, selector: Selector("run"), object: nil)
