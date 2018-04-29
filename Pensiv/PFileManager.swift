@@ -181,7 +181,7 @@ class PFileManager
             print("Load Failed : \(error.localizedDescription)")
         }
         
-        
+        self.targetView?.playLinkAnimation()
         self.targetView = nil
     }
     

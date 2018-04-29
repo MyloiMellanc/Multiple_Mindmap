@@ -10,7 +10,6 @@ import Foundation
 import Cocoa
 
 
-
 enum P_LINK_TYPE : Int {
     case FREE = 0
     case ARROW = 1
@@ -31,11 +30,6 @@ class PLink : Hashable, Equatable
     }
     
     
-    var timer : Timer? = nil
-    @objc func updateTimer() {
-        //이차함수를 사용하여 만들 것
-    }
-    
     static var linkCount : Int = 0
     
     let linkID : Int
@@ -51,22 +45,17 @@ class PLink : Hashable, Equatable
         return self.type
     }
     
-    init(view : NSView, type : P_LINK_TYPE, animate : Bool = false) {
+    init(view : NSView, type : P_LINK_TYPE) {
         PLink.linkCount = PLink.linkCount + 1
         self.linkID = PLink.linkCount
         
-        
         self.superview = view
         self.type = type
-        
-        if animate == true {
-            
-        }
     }
     
     
     
-    func draw() {
+    func draw(progress : CGFloat = 1.0) {
         
     }
     
@@ -113,7 +102,7 @@ class PFreeLink : PLink
     let node_2 : PNode
     
 
-    init(view : NSView, node1 : PNode, node2 : PNode, animate : Bool = false) {
+    init(view : NSView, node1 : PNode, node2 : PNode) {
         var n1 = node1
         var n2 = node2
         
@@ -130,12 +119,11 @@ class PFreeLink : PLink
         self.node_1 = n1
         self.node_2 = n2
         
-        
-        super.init(view: view, type : .FREE, animate : animate)
+        super.init(view: view, type : .FREE)
     }
     
-    override func draw() {
-        self.superview.PDrawFreeLink(pos_1: self.node_1.centerPoint, pos_2: self.node_2.centerPoint)
+    override func draw(progress : CGFloat = 1.0) {
+        self.superview.PDrawFreeLink(pos_1: self.node_1.centerPoint, pos_2: self.node_2.centerPoint, progress: progress)
     }
     
     override func detachNode() {
@@ -180,15 +168,16 @@ class PArrowLink : PLink
     let childNode : PNode
     
     
-    init(view : NSView, parent : PNode, child : PNode, animate : Bool = false) {
+    init(view : NSView, parent : PNode, child : PNode) {
         self.parentNode = parent
         self.childNode = child
         
-        super.init(view: view, type : .ARROW, animate : animate)
+        super.init(view: view, type : .ARROW)
+        
     }
     
-    override func draw() {
-        self.superview.PDrawArrowLink(pos_1: self.parentNode.centerPoint, pos_2: self.childNode.centerPoint)
+    override func draw(progress : CGFloat = 1.0) {
+        self.superview.PDrawArrowLink(pos_1: self.parentNode.centerPoint, pos_2: self.childNode.centerPoint, progress: progress)
     }
     
     override func detachNode() {

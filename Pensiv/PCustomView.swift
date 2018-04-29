@@ -353,7 +353,7 @@ class PCustomDocumentView : NSView
     override func PDrawFreeLink(pos_1 pos1: CGPoint, pos_2 pos2: CGPoint, progress : CGFloat = 1.0) {
         let line = NSBezierPath()
         line.move(to: pos1)
-        line.line(to: pos2)
+        line.line(to: CGPoint(x: pos1.x + (pos2.x - pos1.x) * progress, y: pos1.y + (pos2.y - pos1.y) * progress))
         line.lineWidth = 2.0
         line.stroke()
     }
@@ -374,12 +374,13 @@ class PCustomDocumentView : NSView
         let line = NSBezierPath()
         line.move(to: pos1)
         
-        line.line(to: pos2)
+        let target = CGPoint(x: pos1.x + (pos2.x - pos1.x) * progress, y: pos1.y + (pos2.y - pos1.y) * progress)
+        line.line(to: target)
         line.lineWidth = 2.0
         line.stroke()
         
-        let sidePoint1 = CGPoint(x: pos1.x + (pos2.x - pos1.x) * 0.85 , y: pos1.y + (pos2.y - pos1.y) * 0.85)
-        let sidePoint2 = CGPoint(x: pos1.x + (pos2.x - pos1.x) * 0.90 , y: pos1.y + (pos2.y - pos1.y) * 0.90)
+        let sidePoint1 = CGPoint(x: pos1.x + (target.x - pos1.x) * 0.85 , y: pos1.y + (target.y - pos1.y) * 0.85)
+        let sidePoint2 = CGPoint(x: pos1.x + (target.x - pos1.x) * 0.90 , y: pos1.y + (target.y - pos1.y) * 0.90)
         
         line.move(to: sidePoint2)
         line.line(to: rotatePoint(target: sidePoint1, aroundOrigin: sidePoint2, byDegrees: 20.0))
@@ -394,11 +395,25 @@ class PCustomDocumentView : NSView
     //Line들이 먼저 그려져야하므로, 모든 라인 드로우를 여기에서 담당
     //서브 뷰의 드로잉은 여기서 처리하지 않고, 각자의 드로잉 매서드에서 처리된다
     
+    var progress : CGFloat = 1.0
+    
+    func playLinkAnimation() {
+        self.progress = 0.0
+        self.needsDisplay = true
+        self.displayIfNeeded()
+    }
     
     override func draw(_ dirtyRect: NSRect) {
         for link in linkList {
-            link.draw()
+            link.draw(progress: self.progress)
         }
+        
+        if progress < 1.0 {
+            self.progress += 0.002
+            self.needsDisplay = true
+            self.displayIfNeeded()
+        }
+        
     }
     
     
@@ -435,6 +450,9 @@ class PCustomDocumentView : NSView
     //INPUT EVENT
     
     //메인 뷰의 인풋 이벤트 관련 매서드
+    
+    
+
     
     override func keyUp(with event: NSEvent) {
         //

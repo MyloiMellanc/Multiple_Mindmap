@@ -76,13 +76,21 @@ class PDataThread
     func getRelatedTextsAndCounts(str_1 : String, str_2 : String) -> Array<(String, Int)> {
         var arr = Array<(String,Int)>()
         
-        let query = """
+        /*let query = """
                     match p=(a)-[*2..5]-(b) where a.Name="\(str_1)" AND b.Name="\(str_2)"
                     with nodes(p) as nds limit 40
                     unwind nds as nd
                     with nd.Name as n, count(nd) as c
                     return n,c order by c DESC
                     """
+        */
+        let query = """
+        match p=(a)-[*1..4]-(b) where a.Name="\(str_1)" AND b.Name="\(str_2)"
+        with nodes(p) as nds limit 10
+        unwind nds as nd
+        with nd.Name as n, count(nd) as c
+        return n,c order by c DESC
+        """
         
         
         if dataManager.runQuery(query) == true {
@@ -104,6 +112,32 @@ class PDataThread
     }
     
     
+    func getRelatedTextByDirection(str_1 : String, str_2 : String) -> String? {
+        //let rand_num = arc4random() % 150000
+        //skip \(rand_num)
+        let query = """
+                    match (a)-[*..1]-(target)-[*..4]-(b)
+                    where a.Name="\(str_1)" AND b.Name="\(str_2)"
+                    return target.Name limit 1
+                    """
+        
+        //이거 그냥 ShortestPath로 바꾸고, 길이 2이면 걍 패스하는 것로 하자
+        
+        
+        var result : String? = nil
+        
+        if dataManager.runQuery(query) == true {
+            if dataManager.fetchNext() == true {
+                if let str = dataManager.fetchString() {
+                    result = str
+                }
+            }
+        }
+        
+        
+        return result
+    }
+    
     
     
     
@@ -115,8 +149,8 @@ class PDataThread
     
     ///////////////////////////////////////////////////////////////////////////
     
-    var relatedMap = Array<PTextItem>()
-    
+    var relatedMap : Array<PTextItem>?
+    var firstMapDepth = 0
     
     private func createFirstArr() -> Array<(String, Int)> {
         var related_arr = Array<(String, Int)>()
@@ -226,8 +260,85 @@ class PDataThread
         }
     }
     
+    private func modifyTextItems(target_arr : Array<PTextItem>, arr : Array<PTextItem>) {
+        var target_index = 0
+        var arr_index = 0
+        
+        while(arr_index < arr.count) {
+            if let str = self.getRelatedTextByDirection(str_1: target_arr[target_index].text, str_2: arr[arr_index].text) {
+                let item = target_arr[target_index]
+                item.addSubNode(target: PTextItem(depth: item.depth + 1, text: str))
+            }
+            
+            
+            target_index = (target_index + 1) % target_arr.count
+            arr_index += 1
+        }
+    }
     
-    private func modifyRelatedMapWithDepthItems() {
+    private func modifyFirstRelatedMap() {
+        var map_max_depth = 0
+        for item in self.maps! {
+            let depth = item.getHighestDepth()
+            if map_max_depth < depth {
+                map_max_depth = depth
+            }
+        }
+        
+        var related_max_depth = 0
+        for item in self.relatedMap! {
+            let depth = item.getHighestDepth()
+            if related_max_depth < depth {
+                related_max_depth = depth
+            }
+        }
+        
+        
+        if map_max_depth < 1 {
+            return
+        }
+        else if map_max_depth < related_max_depth {
+            var map_tier = 1
+            var item_arr = Array<PTextItem>()
+            
+            for tier in 0...(related_max_depth - 1) {
+                var target_arr = Array<PTextItem>()
+                for item in self.relatedMap! {
+                    let items = item.getTextItemsByDepth(depth: tier)
+                    target_arr.append(contentsOf: items)
+                }
+                
+                if map_tier <= map_max_depth {
+                    item_arr = Array<PTextItem>()
+                    for item in self.maps! {
+                        let items = item.getTextItemsByDepth(depth: map_tier)
+                        item_arr.append(contentsOf: items)
+                    }
+                }
+                
+                self.modifyTextItems(target_arr: target_arr, arr: item_arr)
+                
+                map_tier += 1
+            }
+        }
+        else {
+            for tier in 1...map_max_depth {
+                var item_arr = Array<PTextItem>()
+                for item in self.maps! {
+                    let items = item.getTextItemsByDepth(depth: tier)
+                    item_arr.append(contentsOf: items)
+                }
+                
+                var target_arr = Array<PTextItem>()
+                for item in self.relatedMap! {
+                    let items = item.getTextItemsByDepth(depth: tier - 1)
+                    target_arr.append(contentsOf: items)
+                }
+                
+                self.modifyTextItems(target_arr: target_arr, arr: item_arr)
+            }
+        }
+        
         
     }
     
@@ -248,19 +359,14 @@ class PDataThread
         
         self.createFirstRelatedMap()
         
-        /*
-        var max_depth = 0
-        for item in self.maps! {
-            let depth = item.getHighestDepth()
-            if max_depth < depth {
-                max_depth = depth
-            }
-        }*/
+        self.modifyFirstRelatedMap()
         
         
         
         
-        self.superview?.createNodeFromMap(parent: self.parent!, map: self.relatedMap)
+        
+        
+        self.superview?.createNodeFromMap(parent: self.parent!, map: self.relatedMap!)
         
     }
     

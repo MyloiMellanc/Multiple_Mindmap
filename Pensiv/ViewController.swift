@@ -18,7 +18,7 @@ class ViewController: NSViewController
     
     @IBOutlet var scrollview: PCustomView!
     
-    var dd : Timer?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -35,20 +35,18 @@ class ViewController: NSViewController
         self.nextResponder = scrollview
         
 
-        dd = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: Selector("xx"), userInfo: nil, repeats: true)
         
-        /*PDataThread.pInstance.initWrapper()
+        PDataThread.pInstance.initWrapper()
         if PDataThread.pInstance.connect() == false {
             print("Database Connect error")
             exit(0)
         }
         
         PDataThread.pInstance.superview = scrollview.documentView as? PCustomDocumentView
-        */
+        
     }
-    @objc func xx() {
-        print(1)
-    }
+    
+
     override func viewWillAppear() {
     
     }
