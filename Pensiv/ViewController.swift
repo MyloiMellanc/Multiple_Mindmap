@@ -43,7 +43,6 @@ class ViewController: NSViewController
         }
         
         PDataThread.pInstance.superview = scrollview.documentView as? PCustomDocumentView
-        
     }
     
 

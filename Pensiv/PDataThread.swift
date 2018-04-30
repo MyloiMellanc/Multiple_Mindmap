@@ -76,21 +76,13 @@ class PDataThread
     func getRelatedTextsAndCounts(str_1 : String, str_2 : String) -> Array<(String, Int)> {
         var arr = Array<(String,Int)>()
         
-        /*let query = """
-                    match p=(a)-[*2..5]-(b) where a.Name="\(str_1)" AND b.Name="\(str_2)"
-                    with nodes(p) as nds limit 40
+        let query = """
+                    match p=(a)-[*1..5]-(b) where a.Name="\(str_1)" AND b.Name="\(str_2)"
+                    with nodes(p) as nds limit 20
                     unwind nds as nd
                     with nd.Name as n, count(nd) as c
                     return n,c order by c DESC
                     """
-        */
-        let query = """
-        match p=(a)-[*1..4]-(b) where a.Name="\(str_1)" AND b.Name="\(str_2)"
-        with nodes(p) as nds limit 10
-        unwind nds as nd
-        with nd.Name as n, count(nd) as c
-        return n,c order by c DESC
-        """
         
         
         if dataManager.runQuery(query) == true {
@@ -115,21 +107,35 @@ class PDataThread
     func getRelatedTextByDirection(str_1 : String, str_2 : String) -> String? {
         //let rand_num = arc4random() % 150000
         //skip \(rand_num)
-        let query = """
+        /*let query = """
                     match (a)-[*..1]-(target)-[*..4]-(b)
                     where a.Name="\(str_1)" AND b.Name="\(str_2)"
                     return target.Name limit 1
                     """
-        
+        */
         //이거 그냥 ShortestPath로 바꾸고, 길이 2이면 걍 패스하는 것로 하자
+        
+        let query = """
+                    match p=shortestpath((a)-[*]-(b))
+                    where a.Name="\(str_1)" AND b.Name="\(str_2)"
+                    with nodes(p) as nds
+                    unwind nds as nd
+                    return nd.Name
+                    """
         
         
         var result : String? = nil
         
         if dataManager.runQuery(query) == true {
-            if dataManager.fetchNext() == true {
+            while dataManager.fetchNext() == true {
                 if let str = dataManager.fetchString() {
-                    result = str
+                    if (str == str_1) || (str == str_2) {
+                        continue
+                    }
+                    else {
+                        print(str)
+                        result = str
+                    }
                 }
             }
         }

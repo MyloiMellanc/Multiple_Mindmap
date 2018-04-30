@@ -217,14 +217,23 @@ class PNode : NSView    //PNode를 상속하는 모든 노드가 기본 뷰를 �
     //노드를 드래그한 이후에도 mouseUp을 호출하지 않도록 토큰 사용
     var moved : Bool = false
     
-    override func mouseDragged(with event: NSEvent) {
+    func moveNode(with event: NSEvent) {
         self.frame.origin.x += event.deltaX
         self.frame.origin.y -= event.deltaY //어째서 Y 변화량의 축이 다르지?
         
-        //y축이 인버트되어있음
-        //print("\(event.deltaX), \(event.deltaY)")
+        if event.modifierFlags.contains(.shift) {
+            for link in self.linkList {
+                if link.isParent(node: self) == true {
+                    link.getOtherNode(callBy: self).moveNode(with: event)
+                }
+            }
+        }
         
         self.superview?.needsDisplay = true
+    }
+    
+    override func mouseDragged(with event: NSEvent) {
+        moveNode(with: event)
         
         self.moved = true
     }

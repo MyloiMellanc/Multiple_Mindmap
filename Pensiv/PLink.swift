@@ -45,6 +45,10 @@ class PLink : Hashable, Equatable
         return self.type
     }
     
+    func isParent(node : PNode) -> Bool {
+        return false
+    }
+    
     init(view : NSView, type : P_LINK_TYPE) {
         PLink.linkCount = PLink.linkCount + 1
         self.linkID = PLink.linkCount
@@ -159,6 +163,10 @@ class PFreeLink : PLink
             return PNode(position: CGPoint(), type: .ERROR)
         }
     }
+    
+    override func isParent(node : PNode) -> Bool {
+        return false
+    }
 }
 
 
@@ -209,6 +217,14 @@ class PArrowLink : PLink
             print("Accessing Inappropriate LinkNode")
             return PNode(position: CGPoint(), type: .ERROR)
         }
+    }
+    
+    override func isParent(node : PNode) -> Bool {
+        if node == self.parentNode {
+            return true
+        }
+        
+        return false
     }
 }
 

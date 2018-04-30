@@ -12,6 +12,25 @@ import CoreGraphics
 import QuartzCore
 
 
+public extension CGFloat {
+    ///Returns radians if given degrees
+    var radians: CGFloat{return self * .pi / 180}
+}
+
+public extension CGPoint {
+    ///Rotates point by given degrees
+    func rotate(origin: CGPoint? = CGPoint(x: 0.0, y: 0.0), _ byDegrees: CGFloat) -> CGPoint {
+        guard let origin = origin else {return self}
+        
+        let rotationSin = sin(byDegrees.radians)
+        let rotationCos = cos(byDegrees.radians)
+        
+        let x = (self.x * rotationCos - self.y * rotationSin) + origin.x
+        let y = (self.x * rotationSin + self.y * rotationCos) + origin.y
+        
+        return CGPoint(x: x, y: y)
+    }
+}
 
 /*
  *
@@ -164,26 +183,65 @@ class PCustomDocumentView : NSView
     }
     
     */
+    var delay : CFTimeInterval = 0.0
     
-    private func createNodeFromItem(parent : PNode, item : PTextItem) {
-        var position = parent.frame.origin
+    private func createNodeFromItem(parent : PNode, item : PTextItem, direction : CGPoint, delay : CFTimeInterval = 0.0) {
+        var position = parent.centerPoint
         
-        position.y = position.y - 50
+        position.x += direction.x
+        position.y += direction.y
         
-        let node = PTextNode(position: position, text: item.text)
+        let node = PTextNode(position: position, text: item.text, delay: self.delay)
+
+        self.delay += 0.06
+        
         self.PAddNode(target: node)
         
         self.PCreateLink(node_1: parent, node_2: node)
         
-        for link in item.linkList {
-            self.createNodeFromItem(parent: node, item: link.textItem)
+        ///////////////////////////////////////////////////////////////////////////
+        
+        if item.linkList.isEmpty != true {
+            let base_degree = Int(log(Double(item.linkList.count)) / log(1.0116))
+            let start_degree = -(CGFloat(base_degree) / 2.0)
+            
+            var degree_interval = 0
+            if item.linkList.count != 1 {
+                degree_interval = Int(Float(base_degree) / Float(item.linkList.count - 1))
+            }
+            
+            for (index, link) in item.linkList.enumerated() {
+                let degree : CGFloat = start_degree + CGFloat(degree_interval * index)
+                let next_direction = direction.rotate(degree)
+                
+                self.createNodeFromItem(parent: node, item: link.textItem, direction: next_direction, delay: delay)
+            }
         }
     }
     
     func createNodeFromMap(parent : PNode, map : Array<PTextItem>) {
-        for item in map {
-            self.createNodeFromItem(parent: parent, item: item)
+        // 1 : 0, 2 : 60, 3 : 90, 4 : 100, 5 : 120, 6 : 144, 7 : 168 8 : 180
+        // 1.0116
+        let base_degree = Int(log(Double(map.count)) / log(1.0116))
+        let start_degree = -(CGFloat(base_degree) / 2.0)
+        
+        var degree_interval = 0
+        if map.count != 1 {
+            degree_interval = Int(Float(base_degree) / Float(map.count - 1))
         }
+        
+        let base_direction = CGPoint(x: 0.0, y: -130.0)
+        
+        self.delay = 0.0
+        
+        for (index, item) in map.enumerated() {
+            let degree : CGFloat = start_degree + CGFloat(degree_interval * index)
+            let direction = base_direction.rotate(degree)
+
+            self.createNodeFromItem(parent: parent, item: item, direction: direction)
+        }
+        
+        self.delay = 0.0
     }
     
     
@@ -346,6 +404,17 @@ class PCustomDocumentView : NSView
     
     ////////////////////////////////////////////////////////////////
     
+    func rotatePoint(target: CGPoint, aroundOrigin origin: CGPoint, byDegrees: CGFloat) -> CGPoint {
+        let dx = target.x - origin.x
+        let dy = target.y - origin.y
+        let radius = sqrt(dx * dx + dy * dy)
+        let azimuth = atan2(dy, dx) // in radians
+        let newAzimuth = azimuth + byDegrees * CGFloat(Float.pi / 180.0) // convert it to radians
+        let x = origin.x + radius * cos(newAzimuth)
+        let y = origin.y + radius * sin(newAzimuth)
+        return CGPoint(x: x, y: y)
+    }
+    
     
     //렌더링 관련 매서드들
     //본 메인 뷰 드로잉 매서드가 먼저 호출된 뒤에 노드들의 드로잉 매서드가 호출되므로
@@ -360,17 +429,6 @@ class PCustomDocumentView : NSView
     
     
     override func PDrawArrowLink(pos_1 pos1: CGPoint, pos_2 pos2: CGPoint, progress : CGFloat = 1.0) {
-        func rotatePoint(target: CGPoint, aroundOrigin origin: CGPoint, byDegrees: CGFloat) -> CGPoint {
-            let dx = target.x - origin.x
-            let dy = target.y - origin.y
-            let radius = sqrt(dx * dx + dy * dy)
-            let azimuth = atan2(dy, dx) // in radians
-            let newAzimuth = azimuth + byDegrees * CGFloat(Float.pi / 180.0) // convert it to radians
-            let x = origin.x + radius * cos(newAzimuth)
-            let y = origin.y + radius * sin(newAzimuth)
-            return CGPoint(x: x, y: y)
-        }
-        
         let line = NSBezierPath()
         line.move(to: pos1)
         
