@@ -18,6 +18,16 @@ class ViewController: NSViewController
     
     @IBOutlet var scrollview: PCustomView!
     
+    func initDataThread() -> Bool {
+        PDataThread.pInstance.initWrapper()
+        if PDataThread.pInstance.connect() == false {
+            return false
+        }
+        
+        PDataThread.pInstance.superview = scrollview.documentView as? PCustomDocumentView
+        
+        return true
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,40 +39,32 @@ class ViewController: NSViewController
         
         
         self.scrollview.documentView = PCustomDocumentView(frame : NSRect(x: 0, y: 0, width: 4000, height: 3000))
-        
         self.scrollview.wantsLayer = true
         
         self.nextResponder = scrollview
         
-
         
-        PDataThread.pInstance.initWrapper()
-        if PDataThread.pInstance.connect() == false {
+        
+        if self.initDataThread() != true {
             print("Database Connect error")
-            exit(0)
         }
-        
-        PDataThread.pInstance.superview = scrollview.documentView as? PCustomDocumentView
     }
+    
+    deinit {
+        PDataThread.pInstance.disconnect()
+    }
+    
     
 
     override func viewWillAppear() {
     
     }
     
-
-    
     override var representedObject: Any? {
         didSet {
         // Update the view, if already loaded.
         }
     }
-    
-    
-    deinit {
-        PDataThread.pInstance.disconnect()
-    }
-    
 }
 
 

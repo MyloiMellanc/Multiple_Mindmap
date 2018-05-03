@@ -10,17 +10,33 @@ import Foundation
 import Kanna
 
 
+/*
+ *  Save / Load Function for mind map of Custom View
+ *
+ *  XML file format is used
+ *
+ *  Singleton type
+ *
+ *  After managing multiple custom view is implemented, It needs to check id of custom view
+ */
 
 class PFileManager
 {
+    ////////////////////////////////////////////////////////////////
+    //Instance of Singleton object
     static let pInstance = PFileManager()
     
     private init() {
     
     }
     
+    deinit {
+        
+    }
     
-    //let fileManager = FileManager()
+    
+    ////////////////////////////////////////////////////////////////
+    //Save Function
     
     private func createNodeXML(node : PNode) -> String {
         let position = node.frame.origin
@@ -50,6 +66,7 @@ class PFileManager
         return str
     }
     
+    
     private func createLinkXML(node_1 : PNode, node_2 : PNode) -> String {
         let str = """
                   \t\t<link>
@@ -60,6 +77,8 @@ class PFileManager
         
         return str
     }
+    
+    
     
     func save(filepath : URL, nodes : Set<PNode>, links : Set<PLink>) {
         var xml_str = """
@@ -94,7 +113,7 @@ class PFileManager
         xml_str.append(cover_2)
         
         
-        //xml 확장자 파일로 변환
+        //XML 확장자 파일로 변환
         do {
             try xml_str.write(to: filepath, atomically: false, encoding: .utf8)
             print("Save Completed.")
@@ -106,41 +125,33 @@ class PFileManager
     }
     
     
+    ////////////////////////////////////////////////////////////////
+    //Load Function
     
+    //Custom View which called load function
     var targetView : PCustomDocumentView?
     
     private func createNodeFromXML(id : Int, type : String, position : CGPoint, text : String?, delay : CFTimeInterval) {
-        if self.targetView == nil {
-            print("Target View doesn't exist.")
-            return
-        }
-        else {
-            switch (type) {
-            case "TEXT":
-                let textnode = PTextNode(id: id, position: position, text: text!, delay: delay)
-                self.targetView?.PAddNode(target: textnode)
-            case "CRAWLING":
-                let crawlingnode = PCrawlingNode(id: id, position: position, delay: delay)
-                self.targetView?.PAddNode(target: crawlingnode)
-            default:
-                print("Node Type Error.")
-            }
+        switch (type) {
+        case "TEXT":
+            let textnode = PTextNode(id: id, position: position, text: text!, delay: delay)
+            self.targetView?.PAddNode(target: textnode)
+        case "CRAWLING":
+            let crawlingnode = PCrawlingNode(id: id, position: position, delay: delay)
+            self.targetView?.PAddNode(target: crawlingnode)
+        default:
+            print("Node Type Error.")
         }
     }
     
     private func createLinkFromXML(node_1 : Int, node_2 : Int) {
-        if self.targetView == nil {
-            print("Target View doesn't exist.")
-            return
-        }
-        else {
-            self.targetView?.createLinkByID(id_1: node_1, id_2: node_2)
-        }
+        self.targetView?.createLinkByID(id_1: node_1, id_2: node_2)
     }
     
     
     func load(view : PCustomDocumentView, filepath : URL) {
         view.initViewItem()
+        
         
         self.targetView = view
         
@@ -148,11 +159,9 @@ class PFileManager
             let xml = try XML(url: filepath, encoding: .utf8)
             
             let content = xml.at_css("CONTENTS")
-            
             let nodes = content?.at_css("NODES")
-            
+        
             var delay = 0.0
-            
             for node in (nodes?.css("node"))! {
                 let id = Int((node.at_css("id")?.content)!)!
                 let type = (node.at_css("type")?.content)!
@@ -184,6 +193,9 @@ class PFileManager
         self.targetView?.playLinkAnimation()
         self.targetView = nil
     }
+    
+    ////////////////////////////////////////////////////////////////
+    
     
 }
 

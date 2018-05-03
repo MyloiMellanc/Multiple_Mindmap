@@ -11,13 +11,13 @@ import Cocoa
 import CoreGraphics
 
 
-
-
 enum P_NODE_TYPE : Int {
     case ERROR = 0
     case TEXT = 1
     case CRAWLING = 2
 }
+
+
 
 
 class PNode : NSView    //PNode를 상속하는 모든 노드가 기본 뷰를 가질 예정으로, 미리 상속받음

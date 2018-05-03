@@ -70,12 +70,12 @@ extension NSView
     
     
     
-    //Used for PCrawlingNode
+    //Used for crawling map process
     @objc func PAddNode(target node : PNode) {
         
     }
     
-    //Used for PCrawlingNode
+    //Used for crawling map process
     @objc func PCreateLink(node_1 node1 : PNode, node_2 node2 : PNode) {
         
     }
@@ -86,6 +86,7 @@ extension NSView
 
 class PCustomDocumentView : NSView
 {
+    ////////////////////////////////////////////////////////////////
     func initViewItem() {
         for link in self.linkList {
             link.detachNode()
@@ -100,7 +101,7 @@ class PCustomDocumentView : NSView
     
     
     ////////////////////////////////////////////////////////////////
-    
+    //MANAGE NODE
     
     //갖고있는 노드들을 관리, 순서 상관없으므로 집합으로 관리
     //모든 노드들은 본 리스트 컬렉션과 서브뷰 컬렉션에서 참조된다.
@@ -131,6 +132,8 @@ class PCustomDocumentView : NSView
         return textnode
     }
     
+    
+    
     func createCrawlingNode(position : CGPoint) -> PCrawlingNode {
         let crawlingnode = PCrawlingNode(position: position)
         
@@ -156,34 +159,11 @@ class PCustomDocumentView : NSView
     }
     
     ////////////////////////////////////////////////////////////////
+    //CREATE MAP FROM DATA THREAD
     
-    /*
-    private func createNodeFromArray(depth : Int, width : CGFloat, parent : PNode, arr : Array<String>) -> Array<PNode> {
-        let depthDistance = CGFloat(depth) * 70.0
-        
-        let division = arr.count - 1
-        let distance = width / CGFloat(division)
-        let position_x_start = parent.frame.origin.x - (width / 2.0) + (parent.frame.size.width / 2.0)
-        let position_y = parent.frame.origin.y - depthDistance - 100.0
-        
-        var nodes = Array<PNode>()
-        
-        for (n,text) in arr.enumerated() {
-            let position = CGPoint(x: position_x_start + (distance * CGFloat(n)), y: position_y)
-            
-            let textnode = PTextNode(position: position, text: text)
-            
-            parent.superview?.PAddNode(target: textnode)
-            parent.superview?.PCreateLink(node_1: parent, node_2: textnode)
-            
-            nodes.append(textnode)
-        }
-        
-        return nodes
-    }
-    
-    */
+    //Creating delay for node which will be created
     var delay : CFTimeInterval = 0.0
+    
     
     private func createNodeFromItem(parent : PNode, item : PTextItem, direction : CGPoint, delay : CFTimeInterval = 0.0) {
         var position = parent.centerPoint
@@ -246,7 +226,7 @@ class PCustomDocumentView : NSView
     
     
     ////////////////////////////////////////////////////////////////
-    
+    //MANAGE LINK
     
     //노드간의 링크를 나타내는 객체는 생성될때 본 메인 뷰, 각 두 노드, 총 3곳에서 참조된다.
     var linkList = Set<PLink>()
@@ -310,7 +290,6 @@ class PCustomDocumentView : NSView
     
     
     ////////////////////////////////////////////////////////////////
-    
     //MANAGE ACTIVATION STATE OF NODE
     
     //맵 편집을 위한 활성화 노드 관리는 전부 본 뷰에서 담당한다
@@ -352,7 +331,7 @@ class PCustomDocumentView : NSView
     
     
     ////////////////////////////////////////////////////////////////
-    
+    //Select node from Touch event of PNode
     
     //노드가 마우스 이벤트를 받았을 떄, 메인 뷰로 다시 호출하는 매서드
     //PNode의 다중 활성화 형성을 위해 본 클래스에서 담당
@@ -403,6 +382,7 @@ class PCustomDocumentView : NSView
     
     
     ////////////////////////////////////////////////////////////////
+    //Rendering Link command called from PLink objects
     
     func rotatePoint(target: CGPoint, aroundOrigin origin: CGPoint, byDegrees: CGFloat) -> CGPoint {
         let dx = target.x - origin.x
@@ -453,6 +433,8 @@ class PCustomDocumentView : NSView
     //Line들이 먼저 그려져야하므로, 모든 라인 드로우를 여기에서 담당
     //서브 뷰의 드로잉은 여기서 처리하지 않고, 각자의 드로잉 매서드에서 처리된다
     
+    //Link Animation
+    
     var progress : CGFloat = 1.0
     
     func playLinkAnimation() {
@@ -475,42 +457,14 @@ class PCustomDocumentView : NSView
     }
     
     
-    
-    
     ////////////////////////////////////////////////////////////////
+    //Input Event of Custom View
     
-    /*
-     
-     
-     //해당 히트 테스트는 스크롤 뷰로 바꾼 뒤 정상적으로 작동하지 않음, 위치에 대한 조정이 필요
-     //이 매서드 오버라이드를 없애면 정상적으로 작동
-     
-     override func hitTest(_ point: NSPoint) -> NSView? {
-     for subview in (self.documentView?.subviews)!
-     {
-     let converted_point = subview.convert(point, from: subview)
-     let hittestview : NSView? = subview.hitTest(converted_point)
-     if (hittestview != nil)
-     {
-     return hittestview
-     }
-     }
-     
-     return self
-     }
-     
-     
-     */
-    
-    ////////////////////////////////////////////////////////////////
     
     
     //INPUT EVENT
     
     //메인 뷰의 인풋 이벤트 관련 매서드
-    
-    
-
     
     override func keyUp(with event: NSEvent) {
         //
@@ -526,7 +480,7 @@ class PCustomDocumentView : NSView
                 self.activatedNodeList.first?.focus()
             }
         }
-        else if event.modifierFlags.contains(.option) == true && event.keyCode == 31  {   //alt + o
+        else if event.modifierFlags.contains(.option) == true && event.keyCode == 31  {   //Alt + o
             let panel = NSOpenPanel()
             
             panel.title = "Select File"
@@ -542,7 +496,7 @@ class PCustomDocumentView : NSView
                 PFileManager.pInstance.load(view: self, filepath: panel.url!)
             }
         }
-        else if event.modifierFlags.contains(.option) == true && event.keyCode == 1 { //alt + s
+        else if event.modifierFlags.contains(.option) == true && event.keyCode == 1 { //Alt + s
             let panel = NSSavePanel()
             
             panel.message = "Save Map to xml File"
@@ -648,12 +602,13 @@ class PCustomDocumentView : NSView
 
 
 
+
+
 //나중에 view controller 설정할 때, 노드처럼 넘버를 부여할 것
 class PCustomView : NSScrollView
 {
-        
     ////////////////////////////////////////////////////////////////
-    
+    //Control Size of Custom View
     
     //윈도우 창이 변경되었을 떄 호출
     override func viewDidEndLiveResize() {
@@ -668,8 +623,10 @@ class PCustomView : NSScrollView
     }
     
     
-    ////////////////////////////////////////////////////////////////
     
+    
+    ////////////////////////////////////////////////////////////////
+    //Set First Responder
     
     
     // 해당 이벤트를 여기서 사용한다 라는 의미
@@ -691,3 +648,32 @@ class PCustomView : NSScrollView
 
 
 
+
+
+
+////////////////////////////////////////////////////////////////
+
+/*
+ //HIT Test Demo
+ 
+ //해당 히트 테스트는 스크롤 뷰로 바꾼 뒤 정상적으로 작동하지 않음, 위치에 대한 조정이 필요
+ //이 매서드 오버라이드를 없애면 정상적으로 작동
+ 
+ override func hitTest(_ point: NSPoint) -> NSView? {
+ for subview in (self.documentView?.subviews)!
+ {
+ let converted_point = subview.convert(point, from: subview)
+ let hittestview : NSView? = subview.hitTest(converted_point)
+ if (hittestview != nil)
+ {
+ return hittestview
+ }
+ }
+ 
+ return self
+ }
+ 
+ 
+ */
+
+////////////////////////////////////////////////////////////////
